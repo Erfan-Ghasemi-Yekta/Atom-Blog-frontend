@@ -1,6 +1,3 @@
-/* ====== slider.css (cleaned v2) ====== */
-/* Visual parity preserved. Consolidated @media (max-width: 768px). Escaping & missing blocks fixed. */
-
 /* Base layout */
 .container{
   width: min(1200px, 92vw);
@@ -13,6 +10,7 @@
   font-weight: 800;
 }
 
+/* Root */
 .slider-root{
   position: relative;
   width: 100%;
@@ -29,11 +27,12 @@
   height: 100%;
 }
 
+/* Sidebar list (news cards) */
 .slider-sidebar{
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* restored */
+  justify-content: space-between;
   gap: 10px;
   overflow: hidden; 
   padding: 5px;
@@ -90,7 +89,7 @@
   text-shadow: 0 2px 12px rgba(0,0,0,.55);
 }
 
-/* Restored overlay and date blocks */
+/* Overlay & date on cards */
 .news-card::after{
   content:"";
   position:absolute;
@@ -121,13 +120,13 @@
   text-align: right;
 }
 
+/* Hero / slides */
 .slider-hero{
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   background: #111;
 }
-
 .slide{
   position: absolute;
   inset: 0;
@@ -136,8 +135,6 @@
   transition: opacity .7s cubic-bezier(.22,.61,.36,1), visibility .7s cubic-bezier(.22,.61,.36,1);
 }
 .slide.active{ opacity: 1; visibility: visible; }
-
-/* Smooth hero image motion */
 .slide img{
   position: absolute;
   inset: 0;
@@ -147,9 +144,7 @@
   transform: scale(1.02);
   transition: transform 1.2s ease, filter .7s ease;
 }
-.slide.active img{
-  transform: scale(1);
-}
+.slide.active img{ transform: scale(1); }
 
 .slide-overlay{
   position: relative;
@@ -159,7 +154,6 @@
   align-items: end;
   height: 100%;
 }
-
 .slide .content{
   width: 100%;
   padding: 24px;
@@ -181,16 +175,15 @@
   opacity: 1;
   transform: translateY(0);
 }
-/* Stagger a touch */
-.slide .content h2{ transition-delay: .06s; }
-.slide .content .btn{ transition-delay: .12s; }
-.slide .content h2{
+.slide .content h2{ 
+  transition-delay: .06s; 
   font-size: clamp(20px, 2.5vw, 32px);
   font-weight: 800;
   margin: 8px 0 14px;
   text-shadow: 0 2px 18px rgba(0,0,0,.6);
 }
-.slide .content .btn{
+.slide .content .btn{ 
+  transition-delay: .12s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -214,6 +207,7 @@
   transform: translateY(-1px);
 }
 
+/* Controls */
 .slider-controls{
   position: absolute;
   inset-inline: 8px;
@@ -236,7 +230,7 @@
   pointer-events: auto;
 }
 
-/* Utilities / Tailwind-like helpers */
+/* Utilities */
 *,*::before,*::after{box-sizing:border-box}
 
 .container{width:100%;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
@@ -257,12 +251,12 @@
 .right-4{right:1rem}
 .right-0{right:0}
 .left-0{left:0}
-.top-1\/2{top:50%}               /* escaped */
+.top-1\/2{top:50%}
 .bottom-0{bottom:0}
 .bottom-4{bottom:1rem}
-.left-1\/2{left:50%}             /* escaped */
+.left-1\/2{left:50%}
 .z-10{z-index:10}
-.-translate-y-1\/2{transform:translateY(-50%)}  /* escaped */
+.-translate-y-1\/2{transform:translateY(-50%)}
 
 .w-full{width:100%}
 .overflow-hidden{overflow:hidden}
@@ -276,10 +270,10 @@
 .text-gray-800{color:#1f2937}
 .text-white{color:#fff}
 
-.bg-black\/30{background-color:rgba(0,0,0,.3)} /* escaped */
-.hover\:bg-black\/50:hover{background-color:rgba(0,0,0,.5)} /* escaped */
+.bg-black\/30{background-color:rgba(0,0,0,.3)}
+.hover\:bg-black\/50:hover{background-color:rgba(0,0,0,.5)}
 .bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-from,rgba(0,0,0,.7)), var(--tw-gradient-to,transparent))}
-.from-black\/70{--tw-gradient-from:rgba(0,0,0,.7)} /* escaped */
+.from-black\/70{--tw-gradient-from:rgba(0,0,0,.7)}
 .to-transparent{--tw-gradient-to:transparent}
 
 .transition-all{transition:all .2s}
@@ -289,9 +283,9 @@
 .rounded-full{border-radius:9999px}
 
 .translate-x-0{transform:translateX(0)}
-.-translate-x-1\/2{transform:translateX(-50%)}  /* escaped */
+.-translate-x-1\/2{transform:translateX(-50%)}
 
-.h-\[70vh\]{height:70vh} /* escaped */
+.h-\[70vh\]{height:70vh}
 
 .scrollbar-hide{scrollbar-width:none}
 .scrollbar-hide::-webkit-scrollbar{display:none}
@@ -303,8 +297,7 @@
 @media (min-width:1280px){.container{max-width:1280px}}
 @media (min-width:1536px){.container{max-width:1536px}}
 
-/* --- Focus/active dimming for sidebar cards --- */
-/* Progressive enhancement with :has() */
+/* Focus/active dim for cards */
 .slider-sidebar:has(.news-card.active-card) .news-card{
   opacity: .9;
   filter: grayscale(.05) brightness(.7);
@@ -313,8 +306,7 @@
   opacity: 1;
   filter: none;
 }
-
-/* JS fallback for wider support */
+/* Fallback */
 .slider-sidebar.has-active .news-card{
   opacity: .9;
   filter: grayscale(.05) brightness(.7);
@@ -324,18 +316,19 @@
   filter: none;
 }
 
-/* prevent overlays in index.html from capturing clicks */
+/* Prevent overlays capturing clicks */
 #news-cards{ pointer-events: none; }
 #pagination{ pointer-events: auto; }
 
-/* ===== Responsive upgrades ===== */
+/* Global height control */
 :root{
   --hero-max-h: 680px;
   --sidebar-w-desktop: 280px;
   --sidebar-w-laptop: 240px;
 }
+#hero-slides{ max-height: var(--hero-max-h); }
 
-/* Desktop/Laptop setup */
+/* Desktop/Laptop tweaks */
 @media (min-width: 769px){
   .slider-layout{ grid-template-columns: var(--sidebar-w-desktop) 1fr; }
 }
@@ -344,141 +337,7 @@
   .news-card .title{ font-size: 12px; }
 }
 
-/* Global height control */
-#hero-slides{ max-height: var(--hero-max-h); }
-
-/* ======= CONSOLIDATED: Mobile (<= 768px) ======= */
-@media (max-width: 768px){
-  /* From early mobile block */
-  .slider-root{ height: auto; }
-  .slider-layout{ grid-template-columns: 1fr; }
-  .slider-hero{ height: min(50vh, 460px); }
-  .slider-sidebar{ margin-top: 10px; height: auto; }
-  .news-card{ min-height: 96px; }
-
-  /* Main mobile layout (one column, hero then sidebar) */
-  #hero-slides{ height: auto; }
-  .slider-layout{ grid-auto-rows: auto; }
-  .slider-hero{
-    grid-row: 1;
-    height: auto;
-    aspect-ratio: 16/9;
-    max-height: 60vh;
-  }
-  .slider-sidebar{
-    grid-row: 2;
-    flex-direction: row;
-    gap: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 8px 6px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-  .slider-sidebar::-webkit-scrollbar{ display: none; }
-
-  /* Horizontal cards with snap */
-  .news-card{
-    flex: 0 0 auto;
-    min-width: clamp(200px, 74vw, 320px);
-    height: 112px;
-    min-height: unset;
-    scroll-snap-align: start;
-  }
-  .news-card .overlay{ padding: 8px 10px; }
-  .news-card .title{ font-size: 12px; }
-
-  /* Larger touch targets for controls */
-  .slider-controls{ inset-inline: 6px; }
-  .icon-btn{ width: 44px; height: 44px; }
-
-  /* Hide arrows when sidebar is horizontal */
-  .slider-controls{ display: none !important; }
-
-  /* Move hero text to top */
-  .slide .content{
-    position: absolute;
-    top: 0;
-    bottom: auto;
-    transform: none;
-    padding-top: 16px;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  .slide .content h2,
-  .slide .content p,
-  .slide .content .btn{ text-align: left; }
-
-  /* RTL overrides for mobile */
-  .slide .content{
-    direction: rtl;
-    text-align: right;
-  }
-  .slide .content h2,
-  .slide .content p,
-  .slide .content .btn{ text-align: right; }
-
-  /* Keep text at top; push button to bottom */
-  .slide .content{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100%;
-    direction: rtl;
-    text-align: right;
-  }
-  .slide .content .btn{
-    margin-top: auto;
-    align-self: flex-start;
-  }
-
-  /* Soft entrance on slide change */
-  .slide .content h2,
-  .slide .content .btn{
-    will-change: transform, opacity;
-    transform: translateY(6px);
-    opacity: 0;
-  }
-  .slide.active .content h2{
-    animation: heroSoftIn .50s cubic-bezier(.22,.61,.36,1) .05s both;
-  }
-  .slide.active .content .btn{
-    animation: heroSoftIn .55s cubic-bezier(.22,.61,.36,1) .12s both;
-  }
-}
-
-/* Very small phones */
-@media (max-width: 420px){
-  .news-card{ min-width: 78vw; height: 104px; }
-  .slide .content{ padding: 16px; }
-  .slide .content h2{ font-size: clamp(16px, 5.2vw, 22px); }
-  .slide .content .btn{ padding: 8px 12px; font-size: 14px; }
-}
-
-/* Short devices (landscape phones) */
-@media (max-height: 520px) and (orientation: landscape){
-  .slider-hero{ aspect-ratio: auto; height: 58vh; }
-}
-
-/* Respect user’s Reduce Motion setting */
-@media (prefers-reduced-motion: reduce){
-  .slide{ transition: none !important; }
-  .slide .content h2,
-  .slide .content .btn{
-    animation: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-}
-
-/* Keyframes */
-@keyframes heroSoftIn{
-  from{ opacity: 0; transform: translateY(6px); }
-  to{ opacity: 1; transform: translateY(0); }
-}
-
-/* === Pagination dots under hero === */
+/* ===== Pagination dots (mobile-only visibility) ===== */
 #pagination .dots{
   display:flex;
   gap:8px;
@@ -504,8 +363,110 @@
   outline:2px solid #fff;
   outline-offset:2px;
 }
+/* پیش‌فرض: روی دسکتاپ/تبلت مخفی باشد */
+#pagination{ display: none; }
 
-/* === Mobile-specific layout: hide sidebar list and keep only hero === */
+/* ===== Mobile (<=768px): فیکس ارتفاع و نمایش دات‌ها ===== */
+@media (max-width: 768px){
+  /* مهم‌ترین فیکس: بی‌اثر کردن h-[70vh] در موبایل */
+  #hero-slides{ height: auto !important; }
+
+  .slider-root{ height: auto; }
+  .slider-layout{ grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .slider-hero{
+    height: auto;
+    aspect-ratio: 16/9;      /* ارتفاع بر اساس عرض کنترل می‌شود */
+    max-height: 60vh;        /* سقف ایمن برای جلوگیری از بزرگ شدن */
+  }
+  .slider-sidebar{
+    margin-top: 10px;
+    height: auto;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 6px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slider-sidebar::-webkit-scrollbar{ display: none; }
+
+  .news-card{
+    flex: 0 0 auto;
+    min-width: clamp(200px, 74vw, 320px);
+    height: 112px;
+    min-height: unset;
+    scroll-snap-align: start;
+  }
+  .news-card .overlay{ padding: 8px 10px; }
+  .news-card .title{ font-size: 12px; }
+
+  .slider-controls{ inset-inline: 6px; display: none !important; }
+  .icon-btn{ width: 44px; height: 44px; }
+
+  .slide .content{
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    direction: rtl;
+    text-align: right;
+    height: 100%;
+  }
+  .slide .content .btn{ margin-top: auto; align-self: flex-start; }
+
+  .slide .content h2,
+  .slide .content .btn{
+    will-change: transform, opacity;
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  .slide.active .content h2{
+    animation: heroSoftIn .50s cubic-bezier(.22,.61,.36,1) .05s both;
+  }
+  .slide.active .content .btn{
+    animation: heroSoftIn .55s cubic-bezier(.22,.61,.36,1) .12s both;
+  }
+
+  /* نمایش دات‌های صفحه‌بندی فقط در موبایل */
+  #pagination{ display: block; }
+}
+
+/* Very small phones */
+@media (max-width: 420px){
+  .news-card{ min-width: 78vw; height: 104px; }
+  .slide .content{ padding: 16px; }
+  .slide .content h2{ font-size: clamp(16px, 5.2vw, 22px); }
+  .slide .content .btn{ padding: 8px 12px; font-size: 14px; }
+}
+
+/* Landscape phones (short height) */
+@media (max-height: 520px) and (orientation: landscape){
+  .slider-hero{ aspect-ratio: auto; height: 58vh; }
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce){
+  .slide{ transition: none !important; }
+  .slide .content h2,
+  .slide .content .btn{
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Keyframes */
+@keyframes heroSoftIn{
+  from{ opacity: 0; transform: translateY(6px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* اگر بخواهی فقط هیرو باشد در موبایل: سایدبار را مخفی کن */
 @media (max-width: 768px){
   .slider-sidebar{ display:none !important; }
   .slider-layout{ grid-template-columns: 1fr !important; }
