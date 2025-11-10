@@ -1,0 +1,241 @@
+        :root {
+            --background-color: #0F172A;
+            --cart-color: #1E293B;
+            --borders-color: #374151;
+            --white-color: #FFFFFF;
+            --primary-color: #00F5FF;
+            --delete-exit-buttons: #587171;
+            --some-buttons-color: #D99F09;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .blog-wrapper {
+            background-color: var(--background-color);
+            color: var(--white-color);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .blog-card {
+            background-color: var(--cart-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--borders-color);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 245, 255, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .blog-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--white-color);
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--primary-color);
+        }
+
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid var(--borders-color);
+        }
+
+        .blog-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+        }
+
+        .blog-read-more {
+            background-color: var(--white-color);
+            color: var(--background-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .blog-read-more:hover {
+            background-color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        /* انیمیشن برای کارت های جدید */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .blog-content {
+                padding: 15px;
+            }
+
+            .blog-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-wrapper {
+                padding: 10px;
+            }
+        }
+
+        /* Wrapper وبلاگ */
+        .blog-wrapper {
+            background-color: var(--background-color);
+            color: var(--white-color);
+            padding: 0;
+            /* حذف padding اضافی */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        /* Container کارت‌ها */
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* چهار کارت در هر ردیف */
+            gap: 36px;
+            /* فاصله بین کارت‌ها */
+            width: 100%;
+            /* پر کردن کل عرض wrapper */
+            max-width: 1200px;
+            /* عرض هم‌تراز با اسلایدر */
+            padding: 0;
+            /* حذف padding اضافی */
+            margin: 0 auto;
+        }
+
+        /* کارت وبلاگ */
+        .blog-card {
+            margin: 0;
+            height: 100%;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1280px) {
+            .blog-container {
+                grid-template-columns: repeat(2, 1fr);
+                /* لپ‌تاپ بزرگ: 3 کارت */
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .blog-container {
+                grid-template-columns: repeat(2, 1fr);
+                /* لپ‌تاپ متوسط: 2 کارت */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+                /* موبایل: 1 کارت */
+            }
+        }

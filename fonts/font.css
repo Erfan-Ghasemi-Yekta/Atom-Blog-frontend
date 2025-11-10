@@ -1,0 +1,9 @@
+@font-face{
+    font-family: "vazir bold";
+    src: local(Vazirmatn-Bold) , local(vazir-bold) ,
+    url(.//ttf/Vazirmatn-Bold.ttf) format(truetype),
+    url(.//woff2/Vazirmatn-Bold.woff2) format(woff2);
+}
+*{
+    font-family: "vazir bold";
+}

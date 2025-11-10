@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta name="asset-base" content=".">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index.html</title>
+    <link rel="stylesheet" href="../fonts/font.css">
+    <link rel="stylesheet" href="../css/box.css">
+    <link rel="stylesheet" href="../css/slider.css">
+    <link rel="stylesheet" href="../css/box.css">
+    <link rel="stylesheet" href="../css/load-more-btn.css">
+    <script src="../js/feather-icons.min.js"></script>
+</head>
+
+<body style="background-color: #0F172A;">
+    <div id="header">
+        <script type="module" src="../js/header.js"></script>
+    </div>
+    <main>
+        <div class="container mx-auto px-4 py-8">
+            <!-- Hero Slider Container -->
+            <div class="relative overflow-hidden rounded-lg shadow-xl">
+                <!-- Hero Slides -->
+                <div id="hero-slides" class="relative h-[70vh] w-full transition-transform duration-500 ease-in-out">
+                    <!-- Slides will be injected here by JavaScript -->
+                </div>
+
+                <!-- Pagination Dots -->
+                <div id="pagination" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                    <!-- Dots will be injected here by JavaScript -->
+                </div>
+
+                <!-- News Cards Strip -->
+                <div id="news-cards"
+                    class="absolute bottom-0 right-0 left-0 bg-gradient-to-t from-black/70 to-transparent py-4 px-6">
+                    <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                        <!-- Cards will be injected here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="blog-wrapper">
+                <div class="blog-container" id="blogContainer">
+                    <!-- محتوای وبلاگ از طریق JS اضافه خواهد شد -->
+                </div>
+            </div>
+            <!-- دکمه مشاهده بیشتر -->
+            <div class="load-more-wrapper" style="display:flex;justify-content:center;margin:28px 0;">
+                <button id="loadMoreBtn" class="load-more-btn" type="button">مشاهده بیشتر</button>
+            </div>
+            <div id="cards-container" class="cards-container">
+                <!-- کارت‌ها با JS اضافه میشن -->
+            </div>
+
+        </div>
+
+        <footer>
+            <div id="footer"></div>
+            <script type="module" src="../js/footer.js"></script>
+        </footer>
+
+
+        <script src="../js/slider.js"></script>
+        <script>feather.replace();</script>
+        <script src="../js/box.js"></script>
+    </main>
+
+</body>
+
+</html>

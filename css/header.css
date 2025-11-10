@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  border-bottom: 1px solid #374151;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  direction: rtl;
+  padding: 0;
+  gap: 24px;
+  transition: backdrop-filter .28s ease, background-color .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+.brand-logo {
+  margin-right: 300px;
+  width: 160px;
+  height: auto;
+  display: block;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  color: #FEFEFE;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 0;
+  position: relative;
+  line-height: 1.6;
+  opacity: 0.9;
+  transition: color .38s cubic-bezier(.2, .6, .2, 1), opacity .25s ease;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: #00F5FF;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .48s cubic-bezier(.2, .8, .2, 1);
+  border-radius: 2px;
+  will-change: transform;
+}
+
+nav a:hover,
+nav a:focus-visible {
+  color: #00F5FF;
+  opacity: 1;
+}
+
+nav a:hover::after,
+nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+nav a.active::after {
+  transform: scaleX(1);
+}
+
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #374151;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+.menu-btn span {
+  width: 20px;
+  height: 2px;
+  background: #FEFEFE;
+  border-radius: 2px;
+}
+
+@media (max-width: 900px) {
+  nav {
+    display: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 64px;
+    background: linear-gradient(90deg, rgba(30, 41, 59, .98) 0%, rgba(15, 23, 42, .98) 100%);
+    border-top: 1px solid #374151;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    padding: 14px 24px;
+    border-bottom: 1px solid #374151;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+}
+
+.header-actions {
+  margin-left: 300px;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid #374151;
+  color: #FEFEFE;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, transform .1s ease;
+}
+
+.icon-btn:hover {
+  color: #00F5FF;
+  border-color: #00F5FF;
+  transform: translateY(-1px);
+}
+
+.icon-btn svg {
+  display: block;
+}
+
+.search-inline {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transform: translateX(8px) scaleX(.9);
+  transform-origin: right;
+  transition: width .28s ease, opacity .22s ease, transform .28s ease;
+  border: 1px solid #374151;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(30, 41, 59, .95) 0%, rgba(15, 23, 42, .95) 100%);
+  margin-inline-start: 8px;
+}
+
+.search-inline.open {
+  width: 260px;
+  opacity: 1;
+  transform: translateX(0) scaleX(1);
+}
+
+.search-inline form {
+  position: relative;
+  width: 100%;
+}
+
+.search-inline .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.search-inline input {
+  width: 100%;
+  padding: 10px 36px 10px 10px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: #FEFEFE;
+  font-weight: 600;
+}
+
+.flying-icon {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: transform .32s cubic-bezier(.2, .8, .2, 1), opacity .32s ease;
+  will-change: transform, opacity;
+}
+
+#searchBtn.hidden {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 1280px) {
+  .brand-logo {
+    margin-right: 5vw;
+  }
+
+  .header-actions {
+    margin-left: 5vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .brand-logo {
+    margin-right: 24px;
+    width: 140px;
+  }
+
+  .header-actions {
+    margin-left: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-logo {
+    margin-right: 12px;
+    width: 128px;
+  }
+
+  .header-actions {
+    margin-left: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

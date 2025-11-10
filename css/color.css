@@ -1,0 +1,58 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+
+   /* رنگ های اصلی */
+
+--background-color:#0F172A;     /* رنگ اصلی پس زمینه  */
+--card-color:#1E293B;           /* رنگ مخصوص کارت ها  */
+--color-primary: #00F5FF;       /* رنگ اصلی برند (مثلا برای دکمه‌ها و لینک‌ها) */
+
+/* رنگ های شفاف */
+--color-half: #185262;       /* با شفافییت پایین */
+--header-gradiant: #0f172a75;       /* با شفافییت پایین */
+
+/* رنگ های فرعی */
+
+--white-color:#FEFEFE;     /* رنگ سفید برای متن ها  */
+--dark-color:#0F172A;      /* رنگ تیره برای متن ها*/
+--gray-color:#57667D;      /* رنگ تیره برای متن ها*/
+--logout-color:#F87171;         /* رنگ دکمه های حذف یا خروج */ 
+--yellow-color:#D99F09;         /* رنگ دکمه های ریپورت */ 
+      
+
+/* رنگ بوردر */
+
+--primary-border:var(--color-primary);             /* رنگ بوردر درحالت انتخاب با , رنگ اصلی*/ 
+--border-color:#374151;                          /* رنگ بوردر خاکستری برای حالت های غیر انتخاب*/ 
+
+/* رنگ سایه ها */
+
+--primary-color-shadow: #00f7ff49 ;       /* drop-shadow با رنگ اصلی*/ 
+
+/* گرادیانت */
+
+--gradient-smooth-fade: linear-gradient(
+    to top,
+    rgb(var(--background-color)),             /* رنگ کامل در پایین */
+    rgba(var(--background-color), 0)          /* همان رنگ با شفافیت کامل در بالا */
+  );
+
+/* overlay */
+
+--overlay-color:rgba(0, 0, 0, 0.3);
+
+
+/* discord bg color */
+--discord-bg:#811CDA;
+--red-color:#C97878;
+--green-color:#82E995;
+
+
+--shadow:#0000000d;
+}

@@ -1,0 +1,68 @@
+/* Container کارت‌ها */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* کارت‌ها */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0; /* برای fade-in */
+  transform: translateY(20px); /* برای انیمیشن ورود */
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.card .content {
+  padding: 15px;
+}
+
+.card .content h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.card .content p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* دکمه */
+.load-more-btn {
+  display: block;
+  margin: 30px auto;
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.load-more-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.load-more-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
