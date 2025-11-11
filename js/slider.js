@@ -20,7 +20,7 @@
       date_fa: '۲۷ مهر ۱۴۰۴',
       image_url: '../img/img-for-test/img-1.jpg',
       thumb_url: '../img/img-for-test/img-1.jpg',
-      post_url: 'https://www.youtube.com/'
+      post_url: 'https://atom-game.ir/'
     },
     {
       id: 'elden-ring-ip',
@@ -28,7 +28,7 @@
       date_fa: '۲۲ مهر ۱۴۰۴',
       image_url: '../img/img-for-test/img-2.jpg',
       thumb_url: '../img/img-for-test/img-2.jpg',
-      post_url: '#'
+      post_url: 'https://atom-game.ir/'
     },
     {
       id: 'sonic-x-shadow',
@@ -36,7 +36,7 @@
       date_fa: '۱۸ مهر ۱۴۰۴',
       image_url: '../img/img-for-test/img-3.jpg',
       thumb_url: '../img/img-for-test/img-3.jpg',
-      post_url: '#'
+      post_url: 'https://atom-game.ir/'
     },
     {
       id: 'ffvii-rebirth',
@@ -44,7 +44,7 @@
       date_fa: '۱۵ مهر ۱۴۰۴',
       image_url: '../img/img-for-test/img-4.jpg',
       thumb_url: '../img/img-for-test/img-4.jpg',
-      post_url: '#'
+      post_url: 'https://atom-game.ir/'
     },
     {
       id: 'starfield-mods',
@@ -52,7 +52,7 @@
       date_fa: '۱۰ مهر ۱۴۰۴',
       image_url: '../img/img-for-test/img-5.jpg',
       thumb_url: '../img/img-for-test/img-5.jpg',
-      post_url: '#'
+      post_url: 'https://atom-game.ir/'
     },
   ];
   const newsData = dataAll.slice(0, 5); // exactly 5
