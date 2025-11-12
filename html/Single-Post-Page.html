@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Single Post Page</title>
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="../css/Single-Post-Page.css" />
+    <link rel="stylesheet" href="../fonts/font.css">
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <main class="container">
+    <!-- ثابت‌ها: عنوان، متا، تصویر شاخص -->
+    <article class="post">
+      <header class="post__header">
+        <span class="post__category" id="post-category" aria-label="دسته‌بندی"></span>
+        <h1 class="post__title" id="post-title">...</h1>
+        <div class="post__meta">
+          <img class="post__author-avatar" id="post-author-avatar" alt="آواتار نویسنده" />
+          <div class="post__meta-col">
+            <div class="post__author"><span id="post-author">...</span></div>
+            <div class="post__date"><time id="post-date" datetime=""></time></div>
+          </div>
+          <div class="post__share" role="group" aria-label="اشتراک‌گذاری">
+            <button class="share-btn" id="share-copy" title="کپی لینک">کپی لینک</button>
+            <a class="share-btn" id="share-x" target="_blank" rel="noopener">X</a>
+            <a class="share-btn" id="share-telegram" target="_blank" rel="noopener">تلگرام</a>
+          </div>
+        </div>
+      </header>
+
+      <figure class="post__cover">
+        <img id="post-cover" alt="تصویر شاخص" />
+        <figcaption id="post-cover-caption"></figcaption>
+      </figure>
+
+      <!-- تگ‌ها -->
+      <ul class="post__tags" id="post-tags" aria-label="برچسب‌ها"></ul>
+
+      <!-- بدنهٔ داینامیک: از Markdown رندر می‌شود و ترتیب آزاد است -->
+      <section id="post-body" class="post__body" aria-label="محتوا"></section>
+
+      <!-- نویسنده -->
+      <aside class="post__author-box" id="author-box" aria-label="درباره نویسنده">
+        <img id="author-box-avatar" alt="آواتار نویسنده" />
+        <div>
+          <h3 id="author-box-name">...</h3>
+          <p id="author-box-bio">...</p>
+        </div>
+      </aside>
+
+      <!-- پست‌های مرتبط -->
+      <section class="post__related" aria-label="پست‌های مرتبط">
+        <h2>پست‌های مرتبط</h2>
+        <div id="related-list" class="related__grid"></div>
+      </section>
+
+      <!-- نظرات -->
+      <section class="post__comments" aria-label="نظرات">
+        <h2>نظرات</h2>
+        <div id="comments"></div>
+        <form id="comment-form" class="comment__form" novalidate>
+          <input type="text" name="name" placeholder="نام" required />
+          <input type="email" name="email" placeholder="ایمیل" required />
+          <textarea name="comment" placeholder="نظر شما..." rows="5" required></textarea>
+          <button type="submit">ارسال نظر</button>
+          <p class="form__hint">* این فرم دمو است. به بک‌اند متصل نیست.</p>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <script src="../js/Single-Post-Page.js"></script>
+</body>
+</html>
