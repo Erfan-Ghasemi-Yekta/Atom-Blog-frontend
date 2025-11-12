@@ -1,0 +1,40 @@
+{
+  "json_ld_samples": {
+    "video_game": {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Example Game",
+      "description": "An exciting game of adventure.",
+      "image": "http://example.com/game-cover.jpg",
+      "genre": ["Action", "Adventure"],
+      "publisher": "Example Studios",
+      "gamePlatform": "PC",
+      "releaseDate": "2023-01-01",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "120"
+      }
+    },
+    "article": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Example Article Title",
+      "author": {
+          "@type": "Person",
+          "name": "John Doe"
+      },
+      "datePublished": "2023-11-21T14:30:00Z",
+      "image": "http://example.com/article-image.jpg",
+      "articleBody": "This is the full text of the article.",
+      "publisher": {
+          "@type": "Organization",
+          "name": "Your Site Name",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "your-logo-url.png"
+          }
+      }
+    }
+  }
+}

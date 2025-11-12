@@ -1,0 +1,74 @@
+<!--
+HTML Snippets for Atom Game API Integration
+-->
+
+<!-- Snippet for displaying a list of latest games -->
+<div data-widget="latest-games">
+  <!-- This will be populated by atom-widgets.js -->
+  <p>Loading latest games...</p>
+</div>
+
+
+<!-- Snippet for displaying a list of top-rated games -->
+<div data-widget="top-rated-games">
+  <!-- This will be populated by atom-widgets.js -->
+  <p>Loading top-rated games...</p>
+</div>
+
+
+<!-- Snippet for the game search widget -->
+<div data-widget="game-search">
+  <!-- This will be populated by atom-widgets.js -->
+</div>
+
+
+<!-- Snippet for the genre filter widget -->
+<div data-widget="genre-filter">
+  <!-- This will be populated by atom-widgets.js -->
+</div>
+
+
+<!-- Snippet for displaying game details -->
+<div id="game-details-container">
+    <!-- Example of how you might structure the details page -->
+    <h1 id="game-title"></h1>
+    <img id="game-cover" src="" alt="">
+    <div id="game-description"></div>
+    <div id="game-gallery"></div>
+</div>
+
+<script>
+    // Example of how to populate game details
+    async function loadGameDetails(gameId) {
+        try {
+            const game = await getGameDetails(gameId);
+            document.getElementById('game-title').textContent = game.name;
+            document.getElementById('game-cover').src = game.images.length > 0 ? game.images[0].image : '';
+            document.getElementById('game-description').innerHTML = game.description;
+            // Generate and inject gallery images...
+            generateVideoGameJSONLD(game); // From atom-seo.js
+        } catch (error) {
+            document.getElementById('game-details-container').innerHTML = '<p>Could not load game details.</p>';
+        }
+    }
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const gameId = urlParams.get('id');
+    // if (gameId) {
+    //     loadGameDetails(gameId);
+    // }
+</script>
+
+<!-- Snippet for registering the service worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+</script>
