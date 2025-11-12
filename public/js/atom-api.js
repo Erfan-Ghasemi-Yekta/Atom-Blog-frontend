@@ -1,8 +1,8 @@
-const API_BASE_URL = 'http://atom-game.ir:8000/api';
+const API_BASE_URL = 'https://atom-game.ir/api'; // ✅ دامنه درست و https
 const PROXY_URL = '/api'; // Or your proxy server address
 const CACHE_NAME = 'atom-game-cache-v1';
 
-const FETCH_MODE = 'proxy'; // 'direct' or 'proxy'
+const FETCH_MODE = 'direct'; // 'direct' or 'proxy'
 
 async function fetchFromApi(endpoint, options = {}) {
   const url = FETCH_MODE === 'direct'
