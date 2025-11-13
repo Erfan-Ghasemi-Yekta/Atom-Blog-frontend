@@ -162,3 +162,24 @@
   direction: rtl;
   text-align: right;
 }
+/* موبایل: فقط فرم جستجو نمایش داده شود، بدون عنوان و بدون خط */
+@media (max-width: 768px) {
+
+  /* پنهان کردن تمام ویجت‌ها */
+  .blog-sidebar .blog-widget {
+    display: none;
+  }
+
+  /* فقط ویجت اول (فرم جستجو) نمایش داده شود */
+  .blog-sidebar .blog-widget:first-child {
+    display: block;
+    border-bottom: none !important;    /* حذف خط زیر */
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* حذف عنوان "جستجو در بلاگ" فقط در موبایل */
+  .blog-sidebar .blog-widget:first-child .blog-widget-title {
+    display: none !important;
+  }
+}
