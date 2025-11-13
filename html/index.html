@@ -17,8 +17,10 @@
     <div id="header">
         <script type="module" src="../js/header.js"></script>
     </div>
+
     <main>
         <div class="container mx-auto px-4 py-8">
+
             <!-- Hero Slider Container -->
             <div class="relative overflow-hidden rounded-lg shadow-xl">
                 <!-- Hero Slides -->
@@ -33,23 +35,60 @@
 
                 <!-- News Cards Strip -->
                 <div id="news-cards"
-                    class="absolute bottom-0 right-0 left-0 bg-gradient-to-t from-black/70 to-transparent py-4 px-6">
+                     class="absolute bottom-0 right-0 left-0 bg-gradient-to-t from-black/70 to-transparent py-4 px-6">
                     <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
                         <!-- Cards will be injected here by JavaScript -->
                     </div>
                 </div>
             </div>
+
+            <!-- Blog layout: Sidebar (left) + Posts (right) -->
             <div class="blog-wrapper">
-                <div class="blog-container" id="blogContainer">
-                    <!-- محتوای وبلاگ از طریق JS اضافه خواهد شد -->
+                <div class="blog-layout">
+
+                    <!-- Sidebar -->
+                    <aside class="blog-sidebar">
+
+                        <section class="blog-widget">
+                            <h3 class="blog-widget-title">جستجو در بلاگ</h3>
+                            <div data-widget="blog-search"></div>
+                        </section>
+
+                        <section class="blog-widget">
+                            <h3 class="blog-widget-title">آخرین پست‌ها</h3>
+                            <div data-widget="latest-posts"></div>
+                        </section>
+
+                        <section class="blog-widget">
+                            <h3 class="blog-widget-title">دسته‌بندی‌ها</h3>
+                            <div data-widget="blog-categories"></div>
+                        </section>
+
+                        <section class="blog-widget">
+                            <h3 class="blog-widget-title">پست‌های پیشنهادی</h3>
+                            <div data-widget="recommended-posts"></div>
+                        </section>
+
+                    </aside>
+
+                    <!-- Main blog posts column -->
+                    <main class="blog-main">
+                        <div class="blog-container" id="blogContainer">
+                            <!-- محتوای وبلاگ از طریق JS (box.js / بعداً API) اضافه خواهد شد -->
+                        </div>
+
+                        <!-- دکمه مشاهده بیشتر -->
+                        <div class="load-more-wrapper" style="display:flex;justify-content:center;margin:28px 0;">
+                            <button id="loadMoreBtn" class="load-more-btn" type="button">مشاهده بیشتر</button>
+                        </div>
+                    </main>
+
                 </div>
             </div>
-            <!-- دکمه مشاهده بیشتر -->
-            <div class="load-more-wrapper" style="display:flex;justify-content:center;margin:28px 0;">
-                <button id="loadMoreBtn" class="load-more-btn" type="button">مشاهده بیشتر</button>
-            </div>
+
+            <!-- اگر cards-container جایی دیگه نیاز شود، اینجا می‌ماند (فعلاً خالی) -->
             <div id="cards-container" class="cards-container">
-                <!-- کارت‌ها با JS اضافه میشن -->
+                <!-- کارت‌ها با JS اضافه میشن (در صورت نیاز) -->
             </div>
 
         </div>
@@ -59,10 +98,14 @@
             <script type="module" src="../js/footer.js"></script>
         </footer>
 
-
+        <!-- Scripts -->
         <script src="../js/slider.js"></script>
         <script>feather.replace();</script>
         <script src="../js/box.js"></script>
+
+        <!-- بعداً برای ویجت‌ها و API این‌ها را هم استفاده می‌کنیم -->
+        <script src="../public/js/blog-api.js"></script>
+        <script src="../public/js/blog-widgets.js"></script>
     </main>
 </body>
 
