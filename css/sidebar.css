@@ -1,21 +1,19 @@
-        
-
 .blog-wrapper {
   /* روی قبلی override می‌کنیم که کارت‌ها وسط عمودی نباشند */
   align-items: flex-start;
   justify-content: center;
 }
 
-/* گرید دو ستونی: سایدبار + ستون اصلی */
+/* گرید دو ستونی: سایدبار (چپ) + ستون اصلی (راست) */
 .blog-layout {
   display: grid;
   grid-template-columns: minmax(260px, 320px) 1fr;
   gap: 24px;
   width: 100%;
-  max-width: 1200px;  /* هم‌تراز با اسلایدر */
+  /* دیگه محدود به 1200px نیست تا مثل اسلایدر تا لبه‌های container بیاد */
   margin: 40px auto 0;
-  padding: 0 16px;
-  direction: ltr;     /* متن راست‌چین، سایدبار ستون اول (سمت چپ) */
+  padding: 0;           /* پدینگ را حذف کردیم تا دقیقا با اسلایدر هم‌تراز شود */
+  direction: ltr;       /* باعث می‌شود ستون اول در سمت چپ قرار بگیرد (سایدبار) */
 }
 
 /* ستون اصلی کارت‌ها */
@@ -158,6 +156,7 @@
     grid-template-columns: 1fr;
   }
 }
+
 .blog-sidebar,
 .blog-main {
   direction: rtl;

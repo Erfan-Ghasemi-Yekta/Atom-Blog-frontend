@@ -196,49 +196,38 @@
             margin-top: 50px;
         }
 
-        /* Container کارت‌ها */
-        .blog-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            /* چهار کارت در هر ردیف */
-            gap: 36px;
-            /* فاصله بین کارت‌ها */
-            width: 100%;
-            /* پر کردن کل عرض wrapper */
-            max-width: 1200px;
-            /* عرض هم‌تراز با اسلایدر */
-            padding: 0;
-            /* حذف padding اضافی */
-            margin: 0 auto;
-        }
+/* Container کارت‌ها */
+.blog-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* سه کارت در هر ردیف دسکتاپ */
+    gap: 36px;
+    /* فاصله بین کارت‌ها */
+    width: 100%;
+    /* پر کردن کل عرض ستون اصلی */
+    max-width: none;   /* دیگه محدود به 1200px نباشه */
+    padding: 0;
+    margin: 0;         /* margin auto را حذف کردیم تا به لبه ستون بچسبد */
+}
 
-        /* کارت وبلاگ */
-        .blog-card {
-            margin: 0;
-            height: 100%;
-        }
+/* ریسپانسیو */
+@media (max-width: 1280px) {
+    .blog-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        /* ریسپانسیو */
-        @media (max-width: 1280px) {
-            .blog-container {
-                grid-template-columns: repeat(2, 1fr);
-                /* لپ‌تاپ بزرگ: 3 کارت */
-            }
-        }
+@media (max-width: 1024px) {
+    .blog-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        @media (max-width: 1024px) {
-            .blog-container {
-                grid-template-columns: repeat(2, 1fr);
-                /* لپ‌تاپ متوسط: 2 کارت */
-            }
-        }
+@media (max-width: 768px) {
+    .blog-container {
+        grid-template-columns: 1fr;
+    }
+}
 
-        @media (max-width: 768px) {
-            .blog-container {
-                grid-template-columns: 1fr;
-                /* موبایل: 1 کارت */
-            }
-        }
+/* === Blog layout: sidebar + cards === */
 
-
-        /* === Blog layout: sidebar + cards === */
