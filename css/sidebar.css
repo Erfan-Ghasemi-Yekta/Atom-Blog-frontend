@@ -150,8 +150,8 @@
   transform: translateY(-1px);
 }
 
-/* ریسپانسیو: در تبلت/موبایل سایدبار میاد بالا */
-@media (max-width: 1024px) {
+/* فقط روی موبایل سایدبار بره بالا */
+@media (max-width: 768px) {
   .blog-layout {
     grid-template-columns: 1fr;
   }

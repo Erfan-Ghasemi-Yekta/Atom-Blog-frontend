@@ -214,20 +214,21 @@
 @media (max-width: 1280px) {
     .blog-container {
         grid-template-columns: repeat(2, 1fr);
+        /* بین 1024 تا 1280px → دو کارت */
     }
 }
 
 @media (max-width: 1024px) {
     .blog-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        /* تبلت: 1 کارت در هر ردیف */
     }
 }
 
 @media (max-width: 768px) {
     .blog-container {
         grid-template-columns: 1fr;
+        /* موبایل: همچنان 1 کارت */
     }
 }
-
-/* === Blog layout: sidebar + cards === */
 
