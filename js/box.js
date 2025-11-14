@@ -1,24 +1,29 @@
 // box.js
 // -----------------------------
-// لیست مقالات + دکمه «مشاهده بیشتر» متصل به API
+// لیست مقالات + دکمه «مشاهده بیشتر» با pagination سمت سرور
 // -----------------------------
 
-// آدرس پایه‌ی API پست‌ها (در صورت نیاز این را تغییر بده)
-const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/';
+// آدرس API پست‌ها (در صورت نیاز این رو تنظیم کن)
+const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/`';
 
-// تنظیمات بارگذاری
-const PAGE_SIZE = 9; // تعداد کارت‌ها برای هر بار نمایش
-let blogData = [];   // داده‌های دریافت‌شده از سرور، نرمال‌شده برای کارت‌ها
-let currentIndex = 0;
+// تنظیمات pagination
+let currentPage = 1;
+const PAGE_SIZE = 9;
+
 let isLoading = false;
+let hasNextPage = true;
 
-// کمکی: رفتن به صفحه «بیشتر بخوانید»
+// -----------------------------
+// Helpers
+// -----------------------------
+
+// هدایت به صفحه‌ی جزئیات پست
 function goToReadMore(link) {
     if (!link) return;
     window.location.href = link;
 }
 
-// کمکی: فرمت تاریخ از ISO به تاریخ شمسی (fa-IR)
+// فرمت تاریخ (ISO -> fa-IR)
 function formatPostDate(post) {
     const raw =
         post.published_at ||
@@ -34,22 +39,20 @@ function formatPostDate(post) {
     return d.toLocaleDateString('fa-IR');
 }
 
-// کمکی: تبدیل یک Post از API به ساختار مورد نیاز کارت وبلاگ
+// تبدیل داده‌ی Post از API به ساختار کارت
 function normalizePost(post) {
     // لینک «بیشتر بخوانید»
     const readMoreLink =
         post.canonical_url ||
         (post.slug ? `/blog/${post.slug}/` : `#/posts/${post.id}`);
 
-    // برچسب/تگ‌ها (مثلاً "تگ۱ | تگ۲")
+    // تگ‌ها (متن کنار تصویر)
     let tagText = '';
     if (Array.isArray(post.tags) && post.tags.length > 0) {
         tagText = post.tags.map(t => t.name).join(' | ');
     }
 
-    // تصویر کاور:
-    // بسته به پیاده‌سازی بک‌اند، ممکن است یکی از این حالت‌ها وجود داشته باشد؛
-    // اینجا چند حالت متداول در نظر گرفته شده و در نهایت اگر چیزی نبود، یک Placeholder استفاده می‌شود.
+    // تصویر کاور - چند حالت متداول
     let imageUrl = '';
 
     if (post.cover && post.cover.url) {
@@ -58,10 +61,10 @@ function normalizePost(post) {
         imageUrl = post.og_image.url;
     } else if (post.cover_media && typeof post.cover_media === 'object' && post.cover_media.url) {
         imageUrl = post.cover_media.url;
-    } else if (post.image && typeof post.image === 'string') {
+    } else if (typeof post.image === 'string') {
         imageUrl = post.image;
     } else {
-        // TODO: در صورت داشتن آدرس تصویر پیش‌فرض پروژه، اینجا جایگزین کن
+        // اگر پروژه‌ت تصویر پیش‌فرض داره، اینو عوض کن
         imageUrl = '../img/placeholders/blog-cover-placeholder.jpg';
     }
 
@@ -76,7 +79,7 @@ function normalizePost(post) {
     };
 }
 
-// ساخت کارت وبلاگ
+// ساخت HTML کارت وبلاگ
 function createBlogCard(blog) {
     const safeTitle = blog.title ? blog.title.replace(/"/g, '&quot;') : '';
 
@@ -100,86 +103,117 @@ function createBlogCard(blog) {
     `;
 }
 
-// append کردن کارت‌ها به container
-function appendBlogCards(fromIndex, count) {
+// چسباندن لیست پست‌ها به container
+function appendPostsToContainer(posts) {
     const container = document.getElementById('blogContainer');
     if (!container) return;
 
-    const slice = blogData.slice(fromIndex, fromIndex + count);
-    if (slice.length === 0) return;
+    if (!Array.isArray(posts) || posts.length === 0) return;
 
-    const html = slice.map(b => createBlogCard(b)).join('');
+    const normalized = posts.map(normalizePost);
+    const html = normalized.map(p => createBlogCard(p)).join('');
+
     container.insertAdjacentHTML('beforeend', html);
-
-    currentIndex += slice.length;
-
-    updateLoadMoreButtonState();
 }
 
-// بروزرسانی وضعیت دکمه "مشاهده بیشتر"
+// بروزرسانی وضعیت دکمه «مشاهده بیشتر»
 function updateLoadMoreButtonState() {
     const btn = document.getElementById('loadMoreBtn');
     if (!btn) return;
 
-    if (currentIndex >= blogData.length) {
-        btn.setAttribute('disabled', 'disabled');
-        btn.textContent = 'مورد دیگری وجود ندارد';
-    } else {
-        btn.removeAttribute('disabled');
-        btn.textContent = 'مشاهده بیشتر';
-    }
-}
-
-// گرفتن داده‌ها از API
-async function fetchPostsFromApi() {
-    if (isLoading) return;
-    isLoading = true;
-
-    const btn = document.getElementById('loadMoreBtn');
-    if (btn) {
+    if (isLoading) {
         btn.setAttribute('disabled', 'disabled');
         btn.textContent = 'در حال بارگذاری...';
+        return;
     }
 
-    try {
-        const res = await fetch(POSTS_API_URL, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
+    if (!hasNextPage) {
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'مورد دیگری وجود ندارد';
+        return;
+    }
 
-        if (!res.ok) {
-            throw new Error('خطا در دریافت داده‌های وبلاگ');
+    btn.removeAttribute('disabled');
+    btn.textContent = 'مشاهده بیشتر';
+}
+
+// گرفتن یک صفحه از پست‌ها از سرور
+async function fetchPostsPage(page) {
+    const url = `${POSTS_API_URL}?page=${page}&page_size=${PAGE_SIZE}`;
+
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت داده‌های وبلاگ');
+    }
+
+    const data = await res.json();
+
+    // دو حالت را ساپورت می‌کنیم:
+    // 1) حالت DRF pagination: { count, next, previous, results: [...] }
+    // 2) حالت بدون pagination: [ ... ]
+    let postsArray = [];
+    if (Array.isArray(data)) {
+        postsArray = data;
+        // اگر backend pagination نداشت، حدس می‌زنیم صفحه بعدی وجود دارد
+        hasNextPage = data.length === PAGE_SIZE;
+    } else {
+        postsArray = Array.isArray(data.results) ? data.results : [];
+        hasNextPage = Boolean(data.next);
+    }
+
+    return postsArray;
+}
+
+// بارگذاری یک صفحه و رندر آن
+async function loadPage(page) {
+    if (isLoading) return;
+    if (!hasNextPage && page !== 1) return;
+
+    isLoading = true;
+    updateLoadMoreButtonState();
+
+    const container = document.getElementById('blogContainer');
+
+    try {
+        const posts = await fetchPostsPage(page);
+
+        if (posts.length === 0 && page === 1) {
+            if (container) {
+                container.innerHTML = '<p class="blog-error">هیچ مقاله‌ای یافت نشد.</p>';
+            }
+            hasNextPage = false;
+            updateLoadMoreButtonState();
+            return;
         }
 
-        const data = await res.json();
-
-        // طبق OpenAPI، این endpoint یک آرایه از Post برمی‌گرداند
-        const postsArray = Array.isArray(data)
-            ? data
-            : (Array.isArray(data.results) ? data.results : []);
-
-        blogData = postsArray.map(normalizePost);
+        appendPostsToContainer(posts);
     } catch (err) {
         console.error(err);
-
-        const container = document.getElementById('blogContainer');
         if (container && container.children.length === 0) {
-            container.insertAdjacentHTML(
-                'beforeend',
-                '<p class="blog-error">خطایی در بارگذاری مقالات رخ داد. لطفاً دوباره تلاش کنید.</p>'
-            );
+            container.innerHTML = '<p class="blog-error">خطایی در بارگذاری مقالات رخ داد. لطفاً دوباره تلاش کنید.</p>';
         }
 
+        const btn = document.getElementById('loadMoreBtn');
         if (btn) {
             btn.setAttribute('disabled', 'disabled');
             btn.textContent = 'خطا در بارگذاری';
         }
+        hasNextPage = false;
     } finally {
         isLoading = false;
+        updateLoadMoreButtonState();
     }
 }
+
+// -----------------------------
+// Event handlers
+// -----------------------------
 
 // بارگذاری اولیه صفحه
 async function initBlogListing() {
@@ -188,24 +222,23 @@ async function initBlogListing() {
         container.innerHTML = '';
     }
 
-    await fetchPostsFromApi();
+    currentPage = 1;
+    hasNextPage = true;
 
-    // اگر داده‌ای آمد، اولین PAGE_SIZE عدد را نمایش بده
-    if (blogData.length > 0) {
-        appendBlogCards(0, PAGE_SIZE);
-    } else {
-        // اگر هیچ پستی نبود، دکمه را هم غیرفعال کن
-        updateLoadMoreButtonState();
-    }
+    await loadPage(currentPage);
 }
 
 // کلیک روی "مشاهده بیشتر"
-function onLoadMoreClicked() {
-    if (isLoading) return;
-    appendBlogCards(currentIndex, PAGE_SIZE);
+async function onLoadMoreClicked() {
+    if (isLoading || !hasNextPage) return;
+
+    currentPage += 1;
+    await loadPage(currentPage);
 }
 
-// رویداد آماده‌شدن DOM
+// -----------------------------
+// DOM ready
+// -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('loadMoreBtn');
     if (btn) {
