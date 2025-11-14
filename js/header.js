@@ -74,18 +74,12 @@
     return HEADER_SRC_DEFAULT;
   }
 
-  async function loadHeaderMarkup() {
-    if (typeof fetch !== 'function') return null;
-    try {
-      const response = await fetch(getHeaderSource(), { credentials: 'same-origin' });
-      if (!response.ok) throw new Error(`Failed to load header (${response.status})`);
-      const raw = await response.text();
-      return extractHeaderMarkup(raw);
-    } catch (error) {
-      console.warn('[header] Falling back to inline template:', error);
-      return null;
-    }
-  }
+// چون دیگه header.html نداریم، همیشه null برمی‌گردونیم
+// تا از TEMPLATE داخلی استفاده شود.
+async function loadHeaderMarkup() {
+  return null;
+}
+
 
   function extractHeaderMarkup(raw) {
     if (!raw) return null;
