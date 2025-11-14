@@ -1,10 +1,11 @@
 // box.js
 // -----------------------------
-// لیست مقالات + دکمه «مشاهده بیشتر» با pagination سمت سرور
+// لیست مقالات + دکمه «مشاهده بیشتر»
+// با pagination سمت سرور + فیلتر دسته‌بندی و جستجو
 // -----------------------------
 
 // آدرس API پست‌ها (در صورت نیاز این رو تنظیم کن)
-const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/`';
+const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/';
 
 // تنظیمات pagination
 let currentPage = 1;
@@ -12,6 +13,10 @@ const PAGE_SIZE = 9;
 
 let isLoading = false;
 let hasNextPage = true;
+
+// فیلترها
+let currentCategory = null; // مثلا 'action-games' یا id دسته
+let currentSearch = '';     // متن جستجو
 
 // -----------------------------
 // Helpers
@@ -137,9 +142,27 @@ function updateLoadMoreButtonState() {
     btn.textContent = 'مشاهده بیشتر';
 }
 
+// ساخت URL بر اساس صفحه + فیلترها (category, search)
+function buildPostsUrl(page) {
+    const params = new URLSearchParams();
+
+    params.set('page', page);
+    params.set('page_size', PAGE_SIZE);
+
+    if (currentCategory) {
+        params.set('category', currentCategory);
+    }
+
+    if (currentSearch) {
+        params.set('search', currentSearch);
+    }
+
+    return `${POSTS_API_URL}?${params.toString()}`;
+}
+
 // گرفتن یک صفحه از پست‌ها از سرور
 async function fetchPostsPage(page) {
-    const url = `${POSTS_API_URL}?page=${page}&page_size=${PAGE_SIZE}`;
+    const url = buildPostsUrl(page);
 
     const res = await fetch(url, {
         method: 'GET',
@@ -160,7 +183,6 @@ async function fetchPostsPage(page) {
     let postsArray = [];
     if (Array.isArray(data)) {
         postsArray = data;
-        // اگر backend pagination نداشت، حدس می‌زنیم صفحه بعدی وجود دارد
         hasNextPage = data.length === PAGE_SIZE;
     } else {
         postsArray = Array.isArray(data.results) ? data.results : [];
@@ -209,6 +231,55 @@ async function loadPage(page) {
         isLoading = false;
         updateLoadMoreButtonState();
     }
+}
+
+// -----------------------------
+// فیلتر دسته‌بندی و جستجو
+// -----------------------------
+
+// وقتی روی یک دسته کلیک می‌کنی، اینو صدا بزن
+// مثلا: onCategoryClick('action-games') یا onCategoryClick(3)
+function onCategoryClick(slugOrId) {
+    currentCategory = slugOrId;
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
+}
+
+// وقتی فرم جستجو submit می‌شه، اینو صدا بزن
+// مثلا: onSearchSubmit(searchInput.value)
+function onSearchSubmit(term) {
+    currentSearch = (term || '').trim();
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
+}
+
+// اگر خواستی ریست کنی (بدون فیلتر)
+function resetFilters() {
+    currentCategory = null;
+    currentSearch = '';
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
 }
 
 // -----------------------------
