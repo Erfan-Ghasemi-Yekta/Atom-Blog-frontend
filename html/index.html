@@ -60,9 +60,11 @@
                             <div data-widget="latest-posts"></div>
                         </section>
 
-                        <section class="blog-widget">
-                            <h3 class="blog-widget-title">دسته‌بندی‌ها</h3>
-                            <div data-widget="blog-categories"></div>
+                        <section class="blog-widget" data-widget="blog-categories">
+                             <h3 class="blog-widget-title">دسته‌بندی‌ها</h3>
+                                <ul class="blog-widget-list" id="blogCategoriesList">
+                                    <!-- دسته‌بندی‌ها به صورت داینامیک با JS اینجا اضافه می‌شن -->
+                                </ul>
                         </section>
 
                         <section class="blog-widget">
@@ -99,13 +101,14 @@
             <script type="module" src="../js/footer.js"></script>
         </footer>
 
-        <!-- Scripts -->
-        <script src="../js/slider.js"></script>
-        <script>feather.replace();</script>
-        <script src="../js/box.js"></script>
+    <!-- Scripts -->
+<script src="../js/slider.js"></script>
+<script>feather.replace();</script>
 
-        <!-- بعداً برای ویجت‌ها و API این‌ها را هم استفاده می‌کنیم -->
-        <script src="../public/js/blog-widgets.js"></script>
+<script src="../js/box.js"></script>
+
+<script src="../js/blog-widgets.js"></script>
+
     </main>
 </body>
 
