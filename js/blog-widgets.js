@@ -160,9 +160,26 @@ async function initBlogCategoriesWidget() {
 
     container.innerHTML = html;
 
-    // وصل‌کردن کلیک‌ها به box.js
-    container.querySelectorAll(".category-btn").forEach((btn) => {
+    // وصل‌کردن کلیک‌ها به box.js + مدیریت حالت active
+    const buttons = container.querySelectorAll(".category-btn");
+
+    // به‌صورت پیش‌فرض "همه مقالات" active باشد
+    const allButton = container.querySelector(
+      '.category-btn[data-category="__all__"]'
+    );
+    if (allButton) {
+      allButton.classList.add("active");
+    }
+
+    buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
+        // 1) حذف active از همه دکمه‌ها
+        buttons.forEach((b) => b.classList.remove("active"));
+
+        // 2) active روی دکمه کلیک‌شده
+        btn.classList.add("active");
+
+        // 3) منطق قبلی فیلترها (بدون تغییر)
         const value = btn.getAttribute("data-category");
 
         if (value === "__all__") {
