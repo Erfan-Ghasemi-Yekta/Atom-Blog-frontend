@@ -1,254 +1,106 @@
-// داده های نمونه برای وبلاگ (اکنون 24 آیتم: 7 اصلی + 17 برای تست)
-const blogData = [
-    {
-        id: 1,
-        title: "این نمونه ای از یک تابش اصلی هست",
-        excerpt: "این یک نمونه متن خلاصه برای محتوای وبلاگ است که می‌تواند اطلاعات بیشتری در مورد پست ارائه دهد.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "تگ | تگ",
-        date: "۱۴۰۳/۰۷/۰۳",
-        readMoreLink: "../html/test.html"
-    },
-    {
-        id: 2,
-        title: "آموزش طراحی وب ریسپانسیو",
-        excerpt: "در این پست به بررسی روش‌های مختلف برای طراحی وبسایت‌های ریسپانسیو می‌پردازیم.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 3,
-        title: "بهترین ابزارهای توسعه Frontend در سال ۲۰۲۴",
-        excerpt: "مروری بر ابزارها و تکنولوژی‌های جدید در زمینه توسعه فرانت‌اند.",
-        image: "../img/img-for-test/img-8.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 4,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-9.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 5,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-10.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 6,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 7,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    // --- 17 آیتم تست اضافه (می‌چرخونیم بین تصاویر موجود) ---
-    {
-        id: 8,
-        title: "بررسی عملکرد موتور رندر جدید",
-        excerpt: "تجربه‌ای از عملکرد سریع و روان رندر در مرورگرهای معاصر.",
-        image: "../img/img-for-test/img-1.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۵",
-        readMoreLink: "#"
-    },
-    {
-        id: 9,
-        title: "طراحی رابط کاربری برای گیمرها",
-        excerpt: "نکاتی برای ساخت تجربه‌ی کاربری بهتر در سایت‌های بازی.",
-        image: "../img/img-for-test/img-2.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۰۵",
-        readMoreLink: "#"
-    },
-    {
-        id: 10,
-        title: "راهنمای شروع Unity برای مبتدیان",
-        excerpt: "یک راهنمای سریع برای کسانی که می‌خواهند بازی‌سازی را آغاز کنند.",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۶",
-        readMoreLink: "#"
-    },
-    {
-        id: 11,
-        title: "بهینه‌سازی تصاویر وب",
-        excerpt: "چطور تصاویر را بدون افت کیفیت بهینه کنیم تا صفحات سریعتر بارگذاری شوند.",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "عملکرد",
-        date: "۱۴۰۳/۰۷/۰۶",
-        readMoreLink: "#"
-    },
-    {
-        id: 12,
-        title: "افزایش نرخ فریم با تغییر تنظیمات بازی",
-        excerpt: "تغییرات ساده‌ای که FPS را در بازی‌ها بهبود می‌بخشد.",
-        image: "../img/img-for-test/img-5.jpg",
-        tag: "گیمینگ",
-        date: "۱۴۰۳/۰۷/۰۷",
-        readMoreLink: "#"
-    },
-    {
-        id: 13,
-        title: "شخصیت‌پردازی در بازی‌های مدرن",
-        excerpt: "چگونه داستان و شخصیت‌پردازی تجربه بازی را ارتقا می‌دهد.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۷",
-        readMoreLink: "#"
-    },
-    {
-        id: 14,
-        title: "بهترین شیوه‌های تایپوگرافی وب",
-        excerpt: "قواعد و نکات عملی برای خوانایی و هارمونی متون.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۰۸",
-        readMoreLink: "#"
-    },
-    {
-        id: 15,
-        title: "استفاده از CSS Grid در پروژه‌های واقعی",
-        excerpt: "نمونه‌هایی از چیدمان‌های پیچیده که با CSS Grid ساده می‌شوند.",
-        image: "../img/img-for-test/img-8.jpg",
-        tag: "فنی",
-        date: "۱۴۰۳/۰۷/۰۸",
-        readMoreLink: "#"
-    },
-    {
-        id: 16,
-        title: "الگوریتم‌های مسیر‌یابی در بازی‌ها",
-        excerpt: "آشنایی با A* و سایر الگوریتم‌های مسیر‌یابی.",
-        image: "../img/img-for-test/img-9.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۹",
-        readMoreLink: "#"
-    },
-    {
-        id: 17,
-        title: "آموزش سریع WebGL",
-        excerpt: "شروع سریع با WebGL برای رندر سه‌بعدی در مرورگر.",
-        image: "../img/img-for-test/img-10.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۹",
-        readMoreLink: "#"
-    },
-    {
-        id: 18,
-        title: "نکته‌های مفید برای نگهداری سرور بازی",
-        excerpt: "رویه‌های عملی برای کاهش تأخیر و خطا در سرورهای بازی.",
-        image: "../img/img-for-test/img-1.jpg",
-        tag: "سرور",
-        date: "۱۴۰۳/۰۷/۱۰",
-        readMoreLink: "#"
-    },
-    {
-        id: 19,
-        title: "چالش‌های طراحی UI برای راست‌به‌چپ",
-        excerpt: "مشکلات رایج و راه‌حل‌های آن‌ها در وب‌های RTL.",
-        image: "../img/img-for-test/img-2.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۱۰",
-        readMoreLink: "#"
-    },
-    {
-        id: 20,
-        title: "پیش‌نمایش امکانات نسخه جدید موتور بازی",
-        excerpt: "ویژگی‌هایی که در آپدیت جدید موتور اضافه شده‌اند.",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۱۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 21,
-        title: "افزایش امنیت وب‌سایت‌های وردپرسی",
-        excerpt: "راهکارهای ساده برای سخت‌تر کردن سایت نسبت به حملات ساده.",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "امنیت",
-        date: "۱۴۰۳/۰۷/۱۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 22,
-        title: "چطور با تیم کوچک بازی بسازیم",
-        excerpt: "تجربه‌هایی که نشان می‌دهد یک تیم کوچک چگونه محصول موفق بسازد.",
-        image: "../img/img-for-test/img-5.jpg",
-        tag: "تجربه",
-        date: "۱۴۰۳/۰۷/۱۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 23,
-        title: "ابزارهای مورد علاقه توسعه‌دهندگان فرانت",
-        excerpt: "لیستی از افزونه‌ها و ابزارهایی که روند توسعه را تسهیل می‌کنند.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "ابزار",
-        date: "۱۴۰۳/۰۷/۱۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 24,
-        title: "مقایسه فریم‌ورک‌های محبوب UI در ۲۰۲۴",
-        excerpt: "خلاصه‌ای از مزایا و معایب فریم‌ورک‌های مطرح.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "مقایسه",
-        date: "۱۴۰۳/۰۷/۱۳",
-        readMoreLink: "#"
-    }
-];
+// box.js
+// -----------------------------
+// لیست مقالات + دکمه «مشاهده بیشتر» متصل به API
+// -----------------------------
+
+// آدرس پایه‌ی API پست‌ها (در صورت نیاز این را تغییر بده)
+const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/';
 
 // تنظیمات بارگذاری
 const PAGE_SIZE = 9; // تعداد کارت‌ها برای هر بار نمایش
-let currentIndex = 0; // تا این ایندکس لود شده
+let blogData = [];   // داده‌های دریافت‌شده از سرور، نرمال‌شده برای کارت‌ها
+let currentIndex = 0;
+let isLoading = false;
 
-// تابع برای رفتن به صفحه بیشتر بخوانید
+// کمکی: رفتن به صفحه «بیشتر بخوانید»
 function goToReadMore(link) {
+    if (!link) return;
     window.location.href = link;
 }
 
-// تابع برای ایجاد کارت وبلاگ (همان قالب قدیمی)
+// کمکی: فرمت تاریخ از ISO به تاریخ شمسی (fa-IR)
+function formatPostDate(post) {
+    const raw =
+        post.published_at ||
+        post.created_at ||
+        post.updated_at ||
+        null;
+
+    if (!raw) return '';
+
+    const d = new Date(raw);
+    if (Number.isNaN(d.getTime())) return '';
+
+    return d.toLocaleDateString('fa-IR');
+}
+
+// کمکی: تبدیل یک Post از API به ساختار مورد نیاز کارت وبلاگ
+function normalizePost(post) {
+    // لینک «بیشتر بخوانید»
+    const readMoreLink =
+        post.canonical_url ||
+        (post.slug ? `/blog/${post.slug}/` : `#/posts/${post.id}`);
+
+    // برچسب/تگ‌ها (مثلاً "تگ۱ | تگ۲")
+    let tagText = '';
+    if (Array.isArray(post.tags) && post.tags.length > 0) {
+        tagText = post.tags.map(t => t.name).join(' | ');
+    }
+
+    // تصویر کاور:
+    // بسته به پیاده‌سازی بک‌اند، ممکن است یکی از این حالت‌ها وجود داشته باشد؛
+    // اینجا چند حالت متداول در نظر گرفته شده و در نهایت اگر چیزی نبود، یک Placeholder استفاده می‌شود.
+    let imageUrl = '';
+
+    if (post.cover && post.cover.url) {
+        imageUrl = post.cover.url;
+    } else if (post.og_image && post.og_image.url) {
+        imageUrl = post.og_image.url;
+    } else if (post.cover_media && typeof post.cover_media === 'object' && post.cover_media.url) {
+        imageUrl = post.cover_media.url;
+    } else if (post.image && typeof post.image === 'string') {
+        imageUrl = post.image;
+    } else {
+        // TODO: در صورت داشتن آدرس تصویر پیش‌فرض پروژه، اینجا جایگزین کن
+        imageUrl = '../img/placeholders/blog-cover-placeholder.jpg';
+    }
+
+    return {
+        id: post.id,
+        title: post.title || '',
+        excerpt: post.excerpt || '',
+        image: imageUrl,
+        tag: tagText,
+        date: formatPostDate(post),
+        readMoreLink: readMoreLink
+    };
+}
+
+// ساخت کارت وبلاگ
 function createBlogCard(blog) {
+    const safeTitle = blog.title ? blog.title.replace(/"/g, '&quot;') : '';
+
     return `
         <div class="blog-card fade-in">
             <div class="blog-image" onclick="goToReadMore('${blog.readMoreLink}')">
-                <img src="${blog.image}" alt="${blog.title}" onerror="this.onerror=null;this.src='../img/logo.png'">
-                <span class="blog-tag">${blog.tag}</span>
+                <img src="${blog.image}" alt="${safeTitle}">
+                ${blog.tag ? `<span class="blog-tag">${blog.tag}</span>` : ''}
             </div>
             <div class="blog-content">
                 <h3 class="blog-title">${blog.title}</h3>
                 <p class="blog-excerpt">${blog.excerpt}</p>
                 <div class="blog-meta">
-                    <span class="blog-date">تاریخ انتشار: ${blog.date}</span>
-                    <button class="blog-read-more" onclick="goToReadMore('${blog.readMoreLink}')">بیشتر بخوانید</button>
+                    ${blog.date ? `<span class="blog-date">تاریخ انتشار: ${blog.date}</span>` : ''}
+                    <button class="blog-read-more" onclick="goToReadMore('${blog.readMoreLink}')">
+                        بیشتر بخوانید
+                    </button>
                 </div>
             </div>
         </div>
     `;
 }
 
-// رندر کارت‌ها (اضافه میکند به container به جای بازنویسی کامل برای انیمیشن و حفظ وضعیت)
+// append کردن کارت‌ها به container
 function appendBlogCards(fromIndex, count) {
     const container = document.getElementById('blogContainer');
     if (!container) return;
@@ -256,62 +108,111 @@ function appendBlogCards(fromIndex, count) {
     const slice = blogData.slice(fromIndex, fromIndex + count);
     if (slice.length === 0) return;
 
-    // ایجاد HTML و append
     const html = slice.map(b => createBlogCard(b)).join('');
     container.insertAdjacentHTML('beforeend', html);
 
-    // آپدیت ایندکس
     currentIndex += slice.length;
 
-    // اگر دیگر چیزی برای لود نیست، دکمه را غیرفعال کن
+    updateLoadMoreButtonState();
+}
+
+// بروزرسانی وضعیت دکمه "مشاهده بیشتر"
+function updateLoadMoreButtonState() {
+    const btn = document.getElementById('loadMoreBtn');
+    if (!btn) return;
+
+    if (currentIndex >= blogData.length) {
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'مورد دیگری وجود ندارد';
+    } else {
+        btn.removeAttribute('disabled');
+        btn.textContent = 'مشاهده بیشتر';
+    }
+}
+
+// گرفتن داده‌ها از API
+async function fetchPostsFromApi() {
+    if (isLoading) return;
+    isLoading = true;
+
     const btn = document.getElementById('loadMoreBtn');
     if (btn) {
-        if (currentIndex >= blogData.length) {
-            btn.setAttribute('disabled', 'disabled');
-            btn.textContent = 'مورد دیگری وجود ندارد';
-        } else {
-            btn.removeAttribute('disabled');
-            btn.textContent = 'مشاهده بیشتر';
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'در حال بارگذاری...';
+    }
+
+    try {
+        const res = await fetch(POSTS_API_URL, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error('خطا در دریافت داده‌های وبلاگ');
         }
+
+        const data = await res.json();
+
+        // طبق OpenAPI، این endpoint یک آرایه از Post برمی‌گرداند
+        const postsArray = Array.isArray(data)
+            ? data
+            : (Array.isArray(data.results) ? data.results : []);
+
+        blogData = postsArray.map(normalizePost);
+    } catch (err) {
+        console.error(err);
+
+        const container = document.getElementById('blogContainer');
+        if (container && container.children.length === 0) {
+            container.insertAdjacentHTML(
+                'beforeend',
+                '<p class="blog-error">خطایی در بارگذاری مقالات رخ داد. لطفاً دوباره تلاش کنید.</p>'
+            );
+        }
+
+        if (btn) {
+            btn.setAttribute('disabled', 'disabled');
+            btn.textContent = 'خطا در بارگذاری';
+        }
+    } finally {
+        isLoading = false;
     }
 }
 
-// نمایش اولیه اولین صفحه
-function renderInitialCards() {
-    // پاک کن (اگر از قبل چیزی باشه)
+// بارگذاری اولیه صفحه
+async function initBlogListing() {
     const container = document.getElementById('blogContainer');
-    if (!container) return;
-    container.innerHTML = '';
-    currentIndex = 0;
-    appendBlogCards(0, PAGE_SIZE);
-}
+    if (container) {
+        container.innerHTML = '';
+    }
 
-// تابع برای افزودن پست جدید (ماندگار با پیاده‌سازی قبلی)
-function addNewBlog(blog) {
-    blogData.push(blog);
-    // اگر تا الان تمام آیتم‌ها لود شده باشه، کارت جدید را هم اضافه کن
-    const btn = document.getElementById('loadMoreBtn');
-    if (currentIndex >= blogData.length - 1) {
-        // هنوز دکمه غیرفعال نشده یا آخرین بار لود نمایش
-        appendBlogCards(currentIndex, 1);
+    await fetchPostsFromApi();
+
+    // اگر داده‌ای آمد، اولین PAGE_SIZE عدد را نمایش بده
+    if (blogData.length > 0) {
+        appendBlogCards(0, PAGE_SIZE);
+    } else {
+        // اگر هیچ پستی نبود، دکمه را هم غیرفعال کن
+        updateLoadMoreButtonState();
     }
 }
 
-// handler دکمه مشاهده بیشتر
+// کلیک روی "مشاهده بیشتر"
 function onLoadMoreClicked() {
+    if (isLoading) return;
     appendBlogCards(currentIndex, PAGE_SIZE);
 }
 
-// نمایش اولیه کارت‌ها و وصل کردن دکمه
+// رویداد آماده‌شدن DOM
 document.addEventListener('DOMContentLoaded', function () {
-    renderInitialCards();
     const btn = document.getElementById('loadMoreBtn');
     if (btn) {
         btn.addEventListener('click', onLoadMoreClicked);
-        // اگر کمتر یا مساوی PAGE_SIZE اطلاعات باشه، دکمه رو مدیریت کن
-        if (blogData.length <= PAGE_SIZE) {
-            btn.setAttribute('disabled', 'disabled');
-            btn.textContent = 'مورد دیگری وجود ندارد';
-        }
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'در حال بارگذاری...';
     }
+
+    initBlogListing();
 });
