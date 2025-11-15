@@ -12,6 +12,8 @@ header {
   direction: rtl;
   padding: 0;
   gap: 24px;
+  position: relative;
+  z-index: 950;
   transition: backdrop-filter .28s ease, background-color .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
 
@@ -79,6 +81,7 @@ nav a.active::after {
   border-radius: 10px;
   cursor: pointer;
   margin-right: auto;
+  z-index: 1050;
 }
 
 .menu-btn span {
@@ -86,33 +89,20 @@ nav a.active::after {
   height: 2px;
   background: #FEFEFE;
   border-radius: 2px;
+  transition: transform .25s ease, opacity .25s ease;
 }
 
-@media (max-width: 900px) {
-  nav {
-    display: none;
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 64px;
-    background: linear-gradient(90deg, rgba(30, 41, 59, .98) 0%, rgba(15, 23, 42, .98) 100%);
-    border-top: 1px solid #374151;
-    flex-direction: column;
-    gap: 0;
-  }
+/* حالت ضربدر وقتی منو باز است */
+.menu-btn.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
 
-  nav.open {
-    display: flex;
-  }
+.menu-btn.open span:nth-child(2) {
+  opacity: 0;
+}
 
-  nav a {
-    padding: 14px 24px;
-    border-bottom: 1px solid #374151;
-  }
-
-  .menu-btn {
-    display: flex;
-  }
+.menu-btn.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .header-actions {
@@ -206,6 +196,25 @@ nav a.active::after {
   pointer-events: none !important;
 }
 
+/* اوورلی تیره پشت منوی موبایل */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 900;
+}
+
+body.nav-open::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Breakpoints برای دسکتاپ کوچیک‌تر */
 @media (max-width: 1280px) {
   .brand-logo {
     margin-right: 5vw;
@@ -229,7 +238,6 @@ nav a.active::after {
 
 @media (max-width: 768px) {
   .brand-logo {
-    margin-right: 12px;
     width: 128px;
   }
 
@@ -238,12 +246,110 @@ nav a.active::after {
   }
 }
 
+/* احترام به reduce motion */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* **************
+   موبایل (زیر 900px) – منوی اسلایدی از راست
+   ************** */
+@media (max-width: 900px) {
+  /* هدر: لوگو چپ، منو راست مثل طراحی */
+  header {
+    direction: ltr;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+
+  .brand-logo {
+    margin-right: 0;
+  }
+
+  .menu-btn {
+    display: flex;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  /* ناو به صورت دراور ثابت از راست */
+  nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 78vw;
+    max-width: 360px;
+    background: linear-gradient(90deg, rgba(15, 23, 42, .99) 0%, rgba(15, 23, 42, .98) 100%);
+    border-left: 1px solid #111827;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 80px;
+    padding-bottom: 24px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.22, .8, .25, 1);
+    z-index: 1000;
+  }
+
+  nav.open {
+    transform: translateX(0);
+  }
+
+  #mainNav {
+    direction: rtl;
+  }
+
+  nav a {
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.6);
+    text-align: right;
+  }
+
+  /* اکشن‌ها روی خود هدر نمایش داده نشن */
+  header > .header-actions {
+    display: none;
+  }
+
+  /* اکشن‌ها داخل دراور: بالای لینک‌ها به شکل گرید */
+  nav .header-actions.header-actions--in-nav {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 12px;
+    padding: 16px 20px 10px;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.8);
+  }
+
+  nav .header-actions.header-actions--in-nav #accountBtn,
+  nav .header-actions.header-actions--in-nav #searchBtn {
+    grid-row: 1;
+    align-self: center;
+    justify-self: flex-start;
+  }
+
+  nav .header-actions.header-actions--in-nav .search-inline {
+    margin-inline-start: 0;
+  }
+
+  nav .header-actions.header-actions--in-nav .search-inline.open {
+    width: 100%;
+    max-width: none;
+  }
+
+  nav .header-actions.header-actions--in-nav .search-inline form {
+    width: 100%;
+  }
+
+  nav .header-actions.header-actions--in-nav .search-inline input {
+    padding: 10px 36px 10px 10px;
+    font-size: 0.9rem;
   }
 }
