@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+/* ===== هدر دسکتاپ (بدون تغییر جدی) ===== */
+
 header {
   border-bottom: 1px solid #374151;
   display: flex;
@@ -12,9 +14,10 @@ header {
   direction: rtl;
   padding: 0;
   gap: 24px;
-  position: relative;
-  z-index: 950;
-  transition: backdrop-filter .28s ease, background-color .28s ease, box-shadow .28s ease, border-color .28s ease;
+  transition: backdrop-filter .28s ease,
+              background-color .28s ease,
+              box-shadow .28s ease,
+              border-color .28s ease;
 }
 
 .brand-logo {
@@ -38,7 +41,8 @@ nav a {
   position: relative;
   line-height: 1.6;
   opacity: 0.9;
-  transition: color .38s cubic-bezier(.2, .6, .2, 1), opacity .25s ease;
+  transition: color .38s cubic-bezier(.2, .6, .2, 1),
+              opacity .25s ease;
 }
 
 nav a::after {
@@ -71,6 +75,7 @@ nav a.active::after {
   transform: scaleX(1);
 }
 
+/* دکمه منوی همبرگری – دسکتاپ مخفی */
 .menu-btn {
   display: none;
   flex-direction: column;
@@ -81,7 +86,6 @@ nav a.active::after {
   border-radius: 10px;
   cursor: pointer;
   margin-right: auto;
-  z-index: 1050;
 }
 
 .menu-btn span {
@@ -89,22 +93,9 @@ nav a.active::after {
   height: 2px;
   background: #FEFEFE;
   border-radius: 2px;
-  transition: transform .25s ease, opacity .25s ease;
 }
 
-/* حالت ضربدر وقتی منو باز است */
-.menu-btn.open span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-
-.menu-btn.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-btn.open span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
+/* اکشن‌های سمت چپ (اکانت + سرچ روی دسکتاپ) */
 .header-actions {
   margin-left: 300px;
   margin-right: auto;
@@ -125,7 +116,9 @@ nav a.active::after {
   justify-content: center;
   border-radius: 10px;
   cursor: pointer;
-  transition: border-color .2s ease, color .2s ease, transform .1s ease;
+  transition: border-color .2s ease,
+              color .2s ease,
+              transform .1s ease;
 }
 
 .icon-btn:hover {
@@ -138,6 +131,7 @@ nav a.active::after {
   display: block;
 }
 
+/* سرچ اینلاین داخل هدر (برای دسکتاپ) */
 .search-inline {
   display: inline-flex;
   align-items: center;
@@ -146,10 +140,14 @@ nav a.active::after {
   opacity: 0;
   transform: translateX(8px) scaleX(.9);
   transform-origin: right;
-  transition: width .28s ease, opacity .22s ease, transform .28s ease;
+  transition: width .28s ease,
+              opacity .22s ease,
+              transform .28s ease;
   border: 1px solid #374151;
   border-radius: 10px;
-  background: linear-gradient(90deg, rgba(30, 41, 59, .95) 0%, rgba(15, 23, 42, .95) 100%);
+  background: linear-gradient(90deg,
+              rgba(30, 41, 59, .95) 0%,
+              rgba(15, 23, 42, .95) 100%);
   margin-inline-start: 8px;
 }
 
@@ -183,11 +181,13 @@ nav a.active::after {
   font-weight: 600;
 }
 
+/* آیکن پرنده برای انیمیشن بستن سرچ */
 .flying-icon {
   position: fixed;
   z-index: 9999;
   pointer-events: none;
-  transition: transform .32s cubic-bezier(.2, .8, .2, 1), opacity .32s ease;
+  transition: transform .32s cubic-bezier(.2, .8, .2, 1),
+              opacity .32s ease;
   will-change: transform, opacity;
 }
 
@@ -196,25 +196,8 @@ nav a.active::after {
   pointer-events: none !important;
 }
 
-/* اوورلی تیره پشت منوی موبایل */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
-  z-index: 900;
-}
+/* ===== Breakpoints دسکتاپ کوچک‌تر (مثل قبل) ===== */
 
-body.nav-open::before {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Breakpoints برای دسکتاپ کوچیک‌تر */
 @media (max-width: 1280px) {
   .brand-logo {
     margin-right: 5vw;
@@ -248,6 +231,7 @@ body.nav-open::before {
 
 /* احترام به reduce motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -256,100 +240,57 @@ body.nav-open::before {
   }
 }
 
-/* **************
-   موبایل (زیر 900px) – منوی اسلایدی از راست
-   ************** */
+/* =========================================
+   موبایل (زیر 900px) – ناو اینلاین + لوگوی موبایل
+   ========================================= */
 @media (max-width: 900px) {
-  /* هدر: لوگو چپ، منو راست مثل طراحی */
+
+  /* هدر: لوگو سمت چپ، لینک‌ها سمت راست، جمع‌وجور */
   header {
     direction: ltr;
     justify-content: space-between;
     padding: 8px 12px;
+    gap: 12px;
   }
 
+  /* لوگوی مخصوص موبایل */
   .brand-logo {
     margin-right: 0;
+    content: url("../img/logo-phone.png"); /* آدرس لوگوی موبایل */
+    width: 50px;
+    height: auto;
   }
 
+  /* دکمه همبرگری کلاً مخفی */
   .menu-btn {
-    display: flex;
-    margin-right: 0;
-    margin-left: 0;
-  }
-
-  /* ناو به صورت دراور ثابت از راست */
-  nav {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 78vw;
-    max-width: 360px;
-    background: linear-gradient(90deg, rgba(15, 23, 42, .99) 0%, rgba(15, 23, 42, .98) 100%);
-    border-left: 1px solid #111827;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding-top: 80px;
-    padding-bottom: 24px;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform .35s cubic-bezier(.22, .8, .25, 1);
-    z-index: 1000;
-  }
-
-  nav.open {
-    transform: translateX(0);
-  }
-
-  #mainNav {
-    direction: rtl;
-  }
-
-  nav a {
-    padding: 12px 24px;
-    border-bottom: 1px solid rgba(55, 65, 81, 0.6);
-    text-align: right;
-  }
-
-  /* اکشن‌ها روی خود هدر نمایش داده نشن */
-  header > .header-actions {
     display: none;
   }
 
-  /* اکشن‌ها داخل دراور: بالای لینک‌ها به شکل گرید */
-  nav .header-actions.header-actions--in-nav {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-    column-gap: 10px;
-    row-gap: 12px;
-    padding: 16px 20px 10px;
-    border-bottom: 1px solid rgba(55, 65, 81, 0.8);
+  /* اکشن‌ها (اکانت + سرچ) روی موبایل نمایش داده نشن
+     در صورت نیاز بعداً می‌تونیم اکانت رو برگردونیم */
+  .header-actions {
+    display: none;
   }
 
-  nav .header-actions.header-actions--in-nav #accountBtn,
-  nav .header-actions.header-actions--in-nav #searchBtn {
-    grid-row: 1;
-    align-self: center;
-    justify-self: flex-start;
+  /* ناو همیشه دیده می‌شود، اینلاین، از سمت راست شروع می‌شود */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
 
-  nav .header-actions.header-actions--in-nav .search-inline {
-    margin-inline-start: 0;
+  #mainNav {
+    direction: rtl;       /* ترتیب لینک‌ها راست به چپ */
   }
 
-  nav .header-actions.header-actions--in-nav .search-inline.open {
-    width: 100%;
-    max-width: none;
-  }
-
-  nav .header-actions.header-actions--in-nav .search-inline form {
-    width: 100%;
-  }
-
-  nav .header-actions.header-actions--in-nav .search-inline input {
-    padding: 10px 36px 10px 10px;
+  nav a {
+    padding: 8px 0;
     font-size: 0.9rem;
+  }
+
+  /* سرچ در موبایل لازم نیست */
+  #searchBtn,
+  .search-inline {
+    display: none !important;
   }
 }

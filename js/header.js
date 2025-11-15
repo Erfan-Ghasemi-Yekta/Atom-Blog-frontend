@@ -9,6 +9,7 @@
 
   <nav id="mainNav">
     <a href="index.html" class="active">خانه</a>
+    <a href="categories.html">دسته‌بندی‌ها</a>
     <a href="about.html">درباره ما</a>
     <a href="test.html">صفحه اتم تورنومنت</a>
   </nav>
@@ -108,7 +109,7 @@
     return mountHeader(markup);
   }
 
-  // منوی همبرگری + اوورلی + انیمیشن از راست
+  // فعلاً منوی همبرگری استفاده نمی‌شود، ولی توابع پایه برای آینده می‌مانند
   function initMenuToggle(doc) {
     const nav = doc.getElementById("mainNav");
     const btn = doc.getElementById("menuBtn");
@@ -120,35 +121,11 @@
       nav.classList.toggle("open", isOpen);
       btn.classList.toggle("open", isOpen);
       btn.setAttribute("aria-expanded", String(isOpen));
-      if (doc.body) {
-        doc.body.classList.toggle("nav-open", isOpen);
-      }
     };
 
     btn.addEventListener("click", () => {
       const isOpen = !nav.classList.contains("open");
       setOpen(isOpen);
-    });
-
-    // بستن منو با کلیک روی فضای تیره بیرون منو
-    doc.addEventListener(
-      "click",
-      (event) => {
-        if (!nav.classList.contains("open")) return;
-        const clickInsideNav = nav.contains(event.target);
-        const clickOnToggle = btn.contains(event.target);
-        if (!clickInsideNav && !clickOnToggle) {
-          setOpen(false);
-        }
-      },
-      true
-    );
-
-    // بستن منو با دکمه Escape
-    doc.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && nav.classList.contains("open")) {
-        setOpen(false);
-      }
     });
   }
 
@@ -251,47 +228,12 @@
     }
   }
 
-  // جابه‌جا کردن اکشن‌های هدر بین هدر و منوی همبرگری در موبایل
-  function initResponsiveLayout(doc) {
-    const header = doc.getElementById("siteHeader");
-    const nav = doc.getElementById("mainNav");
-    const actions = doc.querySelector(".header-actions");
-    const menuBtn = doc.getElementById("menuBtn");
-
-    if (!header || !nav || !actions || !menuBtn) return;
-
-    const originalParent = header;
-    const referenceNode = menuBtn; // در دسکتاپ قبل از دکمه منو قرار می‌گیرد
-
-    const MOBILE_QUERY = window.matchMedia("(max-width: 900px)");
-
-    const applyLayout = () => {
-      if (MOBILE_QUERY.matches) {
-        // موبایل: اکشن‌ها برن داخل منوی همبرگری
-        if (actions.parentElement !== nav) {
-          nav.appendChild(actions);
-          actions.classList.add("header-actions--in-nav");
-        }
-      } else {
-        // دسکتاپ: اکشن‌ها برگردن روی هدر
-        if (actions.parentElement !== originalParent) {
-          originalParent.insertBefore(actions, referenceNode);
-          actions.classList.remove("header-actions--in-nav");
-        }
-      }
-    };
-
-    applyLayout();
-    MOBILE_QUERY.addEventListener("change", applyLayout);
-  }
-
   async function bootstrap() {
     ensureStyles();
     const header = await ensureHeader();
     if (!header) return;
-    initMenuToggle(document);
+    initMenuToggle(document); // الان فقط روی دسکتاپ تأثیر بصری نداره
     initSearch(document);
-    initResponsiveLayout(document);
   }
 
   function start() {
