@@ -9,9 +9,8 @@
 
   <nav id="mainNav">
     <a href="index.html" class="active">خانه</a>
-    <a href="categories.html">دسته‌بندی‌ها</a>
     <a href="about.html">درباره ما</a>
-    <a href="test.html">صفحه اتم تورنومنت</a>
+    <a href="https://atom-game.ir">صفحه اتم تورنومنت</a>
   </nav>
 
   <div class="header-actions" dir="ltr">

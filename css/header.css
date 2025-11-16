@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/* ===== هدر دسکتاپ (بدون تغییر جدی) ===== */
+/* ===== هدر دسکتاپ ===== */
 
 header {
   border-bottom: 1px solid #374151;
@@ -196,7 +196,7 @@ nav a.active::after {
   pointer-events: none !important;
 }
 
-/* ===== Breakpoints دسکتاپ کوچک‌تر (مثل قبل) ===== */
+/* ===== Breakpoints دسکتاپ کوچک‌تر ===== */
 
 @media (max-width: 1280px) {
   .brand-logo {
@@ -231,7 +231,6 @@ nav a.active::after {
 
 /* احترام به reduce motion */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -241,56 +240,90 @@ nav a.active::after {
 }
 
 /* =========================================
-   موبایل (زیر 900px) – ناو اینلاین + لوگوی موبایل
+   موبایل (زیر 900px) – هدر دو لایه
+   ========================================= */
+/* =========================================
+   موبایل (زیر 900px) – هدر دو لایه ریسپانسیو
+   ========================================= */
+/* =========================================
+   موبایل (زیر 900px) – هدر دو لایه ریسپانسیو
    ========================================= */
 @media (max-width: 900px) {
 
-  /* هدر: لوگو سمت چپ، لینک‌ها سمت راست، جمع‌وجور */
+  /* لایه اول هدر */
   header {
-    direction: ltr;
-    justify-content: space-between;
-    padding: 8px 12px;
-    gap: 12px;
-  }
-
-  /* لوگوی مخصوص موبایل */
-  .brand-logo {
-    margin-right: 0;
-    content: url("../img/logo-phone.png"); /* آدرس لوگوی موبایل */
-    width: 50px;
-    height: auto;
-  }
-
-  /* دکمه همبرگری کلاً مخفی */
-  .menu-btn {
-    display: none;
-  }
-
-  /* اکشن‌ها (اکانت + سرچ) روی موبایل نمایش داده نشن
-     در صورت نیاز بعداً می‌تونیم اکانت رو برگردونیم */
-  .header-actions {
-    display: none;
-  }
-
-  /* ناو همیشه دیده می‌شود، اینلاین، از سمت راست شروع می‌شود */
-  nav {
     display: flex;
+    flex-wrap: wrap;                 /* برای لایه دوم */
     align-items: center;
-    gap: 14px;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background-color: transparent;
+    border-bottom: 1px solid #374151;
+    direction: rtl;
+    gap: 8px;
   }
 
-  #mainNav {
-    direction: rtl;       /* ترتیب لینک‌ها راست به چپ */
+  /* لوگوی موبایل – سمت راست */
+  .brand-logo {
+    order: 1;
+    margin: 0;
+    width: 52px;
+    height: auto;
+    content: url("../img/logo-phone.png");
   }
 
-  nav a {
-    padding: 8px 0;
-    font-size: 0.9rem;
+  /* آیکون حساب و سرچ – سمت چپ */
+  .header-actions {
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    direction: ltr;      /* برای منظم شدن آیکون‌ها */
+    flex-shrink: 1;
   }
 
-  /* سرچ در موبایل لازم نیست */
-  #searchBtn,
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* سرچ اینلاین در موبایل: توی همان لایه، با عرض واکنش‌گرا */
   .search-inline {
+    margin-inline-start: 6px;
+  }
+
+  .search-inline.open {
+    /* عرض سرچ را بر اساس عرض صفحه حساب می‌کنیم
+       تا روی همه‌ی موبایل‌ها جا شود و نشکند */
+    width: calc(100vw - 180px);
+    max-width: 260px;   /* روی گوشی‌های بزرگ‌تر زیادی پهن نشود */
+  }
+
+  /* لایه دوم: نوار لینک‌ها زیر لایه اول */
+  #mainNav {
+    order: 3;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: flex-start;   /* با RTL یعنی راست‌چین */
+    align-items: center;
+    gap: 18px;
+    padding: 8px 4px 4px;
+    background-color: transparent;
+    border-top: 1px solid #374151;
+    direction: rtl;
+    overflow-x: auto;              /* اگر بعداً لینک‌ها 5–6 تا شدند، اسکرول افقی */
+  }
+
+  #mainNav a {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    white-space: nowrap;           /* لینک‌ها نصفه نشوند */
+  }
+
+  /* منوی همبرگری مخفی */
+  .menu-btn {
     display: none !important;
   }
 }
