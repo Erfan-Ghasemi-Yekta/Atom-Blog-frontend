@@ -73,6 +73,11 @@ function normalizePost(post) {
         imageUrl = '../img/placeholders/blog-cover-placeholder.jpg';
     }
 
+    // ✅ تبدیل آدرس نسبی به آدرس کامل روی دامین atom-game.ir
+    if (imageUrl && imageUrl.startsWith('/')) {
+        imageUrl = 'https://atom-game.ir' + imageUrl;
+    }
+
     return {
         id: post.id,
         title: post.title || '',
