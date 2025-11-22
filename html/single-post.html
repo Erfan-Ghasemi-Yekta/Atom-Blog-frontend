@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Post - Atom Game Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../fonts/font.css">
+    <link rel="stylesheet" href="../css/single-post.css">
+</head>
+<body>
+    <main class="sp-main">
+        <div class="sp-container">
+            <!-- ناحیه‌ی اصلی پست -->
+            <article class="sp-layout">
+                <div class="sp-content">
+                    <div id="sp-loading" class="sp-loading">در حال بارگذاری مقاله...</div>
+                    <div id="sp-error" class="sp-error" hidden>مشکلی در بارگذاری مقاله پیش آمد.</div>
+
+                    <header id="sp-header" class="sp-header" hidden>
+                        <div class="sp-badges">
+                            <span id="sp-category" class="sp-badge sp-badge--category"></span>
+                            <span id="sp-series" class="sp-badge sp-badge--series" hidden></span>
+                        </div>
+
+                        <h1 id="sp-title" class="sp-title"></h1>
+
+                        <div class="sp-meta">
+                            <div class="sp-meta-left">
+                                <div class="sp-author">
+                                    <div class="sp-author-avatar-wrapper">
+                                        <img id="sp-author-avatar" class="sp-author-avatar" src="" alt="" loading="lazy">
+                                    </div>
+                                    <div>
+                                        <div id="sp-author-name" class="sp-author-name"></div>
+                                        <div id="sp-author-bio" class="sp-author-bio"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sp-meta-right">
+                                <div class="sp-meta-item" id="sp-date"></div>
+                                <div class="sp-meta-dot"></div>
+                                <div class="sp-meta-item" id="sp-reading-time"></div>
+                                <div class="sp-meta-dot"></div>
+                                <div class="sp-meta-stats">
+                                    <span id="sp-views" class="sp-chip"></span>
+                                    <span id="sp-likes" class="sp-chip"></span>
+                                    <span id="sp-comments" class="sp-chip"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <figure id="sp-cover-wrapper" class="sp-cover" hidden>
+                        <img id="sp-cover" src="" alt="" loading="lazy">
+                    </figure>
+
+                    <section id="sp-content" class="sp-body"></section>
+
+                    <section id="sp-tags-section" class="sp-tags-section" hidden>
+                        <h2 class="sp-section-title">برچسب‌ها</h2>
+                        <div id="sp-tags" class="sp-tags"></div>
+                    </section>
+
+                    <section class="sp-share-section">
+                        <h2 class="sp-section-title">اشتراک‌گذاری</h2>
+                        <div class="sp-share-buttons">
+                            <button id="sp-share-copy" class="sp-btn sp-btn--primary">
+                                کپی لینک
+                            </button>
+                            <a id="sp-share-telegram" class="sp-btn sp-btn--accent" target="_blank" rel="noopener">
+                                تلگرام
+                            </a>
+                            <a id="sp-share-x" class="sp-btn sp-btn--outline" target="_blank" rel="noopener">
+                                X (توییتر)
+                            </a>
+                        </div>
+                        <div id="sp-share-feedback" class="sp-share-feedback" hidden>
+                            لینک کپی شد ✅
+                        </div>
+                    </section>
+                </div>
+
+                <!-- سایدبار -->
+                <aside class="sp-sidebar">
+                    <section class="sp-sidebar-card">
+                        <h2 class="sp-sidebar-title">درباره نویسنده</h2>
+                        <div class="sp-sidebar-author">
+                            <div class="sp-author-avatar-wrapper sp-author-avatar-wrapper--lg">
+                                <img id="sp-sidebar-avatar" class="sp-author-avatar sp-author-avatar--lg" src="" alt="" loading="lazy">
+                            </div>
+                            <div>
+                                <div id="sp-sidebar-name" class="sp-author-name"></div>
+                                <p id="sp-sidebar-bio" class="sp-author-bio"></p>
+                            </div>
+                        </div>
+                        <div id="sp-sidebar-socials" class="sp-sidebar-socials"></div>
+                    </section>
+
+                    <section class="sp-sidebar-card">
+                        <h2 class="sp-sidebar-title">اطلاعات مقاله</h2>
+                        <ul class="sp-sidebar-list">
+                            <li>
+                                <span>دسته‌بندی:</span>
+                                <strong id="sp-sidebar-category"></strong>
+                            </li>
+                            <li id="sp-sidebar-series-row" hidden>
+                                <span>سری:</span>
+                                <strong id="sp-sidebar-series"></strong>
+                            </li>
+                            <li>
+                                <span>تاریخ انتشار:</span>
+                                <strong id="sp-sidebar-date"></strong>
+                            </li>
+                            <li>
+                                <span>مدت مطالعه:</span>
+                                <strong id="sp-sidebar-reading-time"></strong>
+                            </li>
+                        </ul>
+                    </section>
+                </aside>
+            </article>
+
+            <!-- پست‌های مرتبط -->
+            <section id="sp-related-section" class="sp-related" hidden>
+                <div class="sp-related-header">
+                    <h2 class="sp-section-title">پست‌های مرتبط</h2>
+                </div>
+                <div id="sp-related-grid" class="sp-related-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../js/single-post.js"></script>
+</body>
+</html>
