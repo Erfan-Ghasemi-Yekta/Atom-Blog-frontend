@@ -8,7 +8,6 @@ const WIDGET_POSTS_API_URL =
 const CATEGORIES_API_URL = "https://atom-game.ir/api/blog/categories/";
 
 document.addEventListener("DOMContentLoaded", () => {
-  initLatestPostsWidget();
   initBlogCategoriesWidget();
   initBlogSearchWidget();
   initRecommendedPostsWidget();
@@ -95,30 +94,6 @@ function renderPostList(container, posts) {
 // ==========================================
 // 1) Latest Posts (آخرین پست‌ها)
 // ==========================================
-async function initLatestPostsWidget() {
-  const container = document.querySelector('[data-widget="latest-posts"]');
-  if (!container) return;
-
-  container.innerHTML = "<p>در حال بارگذاری...</p>";
-
-  try {
-    const posts = await fetchAllPosts();
-
-    // مرتب‌سازی بر اساس تاریخ انتشار
-    const sorted = posts.slice().sort((a, b) => {
-      const da = a.published_at ? new Date(a.published_at).getTime() : 0;
-      const db = b.published_at ? new Date(b.published_at).getTime() : 0;
-      return db - da;
-    });
-
-    const latest = sorted.slice(0, 5);
-    renderPostList(container, latest);
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = "<p>خطا در دریافت آخرین پست‌ها.</p>";
-  }
-}
-
 // ==========================================
 // 2) Blog Categories (دسته‌بندی‌ها + اتصال به box.js)
 // ==========================================
