@@ -183,3 +183,42 @@
     display: none !important;
   }
 }
+/* --- TAG / CATEGORY BUTTONS (PROFESSIONAL DESIGN) --- */
+
+.blog-widget .category-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #1E293B;                 /* cart-color */
+    color: #FEFEFE;                             /* white */
+    border: 1px solid #374151;                  /* border */
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+    margin-bottom: 6px;
+    margin-left: 6px;                           /* فاصله بین تگ‌ها */
+}
+
+/* Hover حالت */
+.blog-widget .category-btn:hover {
+    background-color: #00F5FF;                  /* primary-color */
+    color: #0F172A;                             /* background-color */
+    border-color: #00F5FF;
+    transform: translateY(-2px);
+}
+
+/* حالت active (وقتی فیلتر انتخاب شده) */
+.blog-widget .category-btn.active {
+    background-color: #00F5FF;
+    color: #0F172A;
+    border-color: #00F5FF;
+    font-weight: 700;
+}
+
+/* ساختن یک فلکس ردیفی و wrap برای تگ‌ها */
+[data-widget="blog-categories"] ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+}

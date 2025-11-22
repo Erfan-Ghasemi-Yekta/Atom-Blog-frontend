@@ -1,317 +1,327 @@
-// داده های نمونه برای وبلاگ (اکنون 24 آیتم: 7 اصلی + 17 برای تست)
-const blogData = [
-    {
-        id: 1,
-        title: "این نمونه ای از یک تابش اصلی هست",
-        excerpt: "این یک نمونه متن خلاصه برای محتوای وبلاگ است که می‌تواند اطلاعات بیشتری در مورد پست ارائه دهد.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "تگ | تگ",
-        date: "۱۴۰۳/۰۷/۰۳",
-        readMoreLink: "../html/test.html"
-    },
-    {
-        id: 2,
-        title: "آموزش طراحی وب ریسپانسیو",
-        excerpt: "در این پست به بررسی روش‌های مختلف برای طراحی وبسایت‌های ریسپانسیو می‌پردازیم.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 3,
-        title: "بهترین ابزارهای توسعه Frontend در سال ۲۰۲۴",
-        excerpt: "مروری بر ابزارها و تکنولوژی‌های جدید در زمینه توسعه فرانت‌اند.",
-        image: "../img/img-for-test/img-8.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 4,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-9.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 5,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-10.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 6,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 7,
-        title: "اخرین اخبار THE LAST OF US",
-        excerpt: "the last of us که یکی از بهترین بازی های جهان است ",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۱",
-        readMoreLink: "#"
-    },
-    // --- 17 آیتم تست اضافه (می‌چرخونیم بین تصاویر موجود) ---
-    {
-        id: 8,
-        title: "بررسی عملکرد موتور رندر جدید",
-        excerpt: "تجربه‌ای از عملکرد سریع و روان رندر در مرورگرهای معاصر.",
-        image: "../img/img-for-test/img-1.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۵",
-        readMoreLink: "#"
-    },
-    {
-        id: 9,
-        title: "طراحی رابط کاربری برای گیمرها",
-        excerpt: "نکاتی برای ساخت تجربه‌ی کاربری بهتر در سایت‌های بازی.",
-        image: "../img/img-for-test/img-2.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۰۵",
-        readMoreLink: "#"
-    },
-    {
-        id: 10,
-        title: "راهنمای شروع Unity برای مبتدیان",
-        excerpt: "یک راهنمای سریع برای کسانی که می‌خواهند بازی‌سازی را آغاز کنند.",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۶",
-        readMoreLink: "#"
-    },
-    {
-        id: 11,
-        title: "بهینه‌سازی تصاویر وب",
-        excerpt: "چطور تصاویر را بدون افت کیفیت بهینه کنیم تا صفحات سریعتر بارگذاری شوند.",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "عملکرد",
-        date: "۱۴۰۳/۰۷/۰۶",
-        readMoreLink: "#"
-    },
-    {
-        id: 12,
-        title: "افزایش نرخ فریم با تغییر تنظیمات بازی",
-        excerpt: "تغییرات ساده‌ای که FPS را در بازی‌ها بهبود می‌بخشد.",
-        image: "../img/img-for-test/img-5.jpg",
-        tag: "گیمینگ",
-        date: "۱۴۰۳/۰۷/۰۷",
-        readMoreLink: "#"
-    },
-    {
-        id: 13,
-        title: "شخصیت‌پردازی در بازی‌های مدرن",
-        excerpt: "چگونه داستان و شخصیت‌پردازی تجربه بازی را ارتقا می‌دهد.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۰۷",
-        readMoreLink: "#"
-    },
-    {
-        id: 14,
-        title: "بهترین شیوه‌های تایپوگرافی وب",
-        excerpt: "قواعد و نکات عملی برای خوانایی و هارمونی متون.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۰۸",
-        readMoreLink: "#"
-    },
-    {
-        id: 15,
-        title: "استفاده از CSS Grid در پروژه‌های واقعی",
-        excerpt: "نمونه‌هایی از چیدمان‌های پیچیده که با CSS Grid ساده می‌شوند.",
-        image: "../img/img-for-test/img-8.jpg",
-        tag: "فنی",
-        date: "۱۴۰۳/۰۷/۰۸",
-        readMoreLink: "#"
-    },
-    {
-        id: 16,
-        title: "الگوریتم‌های مسیر‌یابی در بازی‌ها",
-        excerpt: "آشنایی با A* و سایر الگوریتم‌های مسیر‌یابی.",
-        image: "../img/img-for-test/img-9.jpg",
-        tag: "تکنولوژی",
-        date: "۱۴۰۳/۰۷/۰۹",
-        readMoreLink: "#"
-    },
-    {
-        id: 17,
-        title: "آموزش سریع WebGL",
-        excerpt: "شروع سریع با WebGL برای رندر سه‌بعدی در مرورگر.",
-        image: "../img/img-for-test/img-10.jpg",
-        tag: "آموزش",
-        date: "۱۴۰۳/۰۷/۰۹",
-        readMoreLink: "#"
-    },
-    {
-        id: 18,
-        title: "نکته‌های مفید برای نگهداری سرور بازی",
-        excerpt: "رویه‌های عملی برای کاهش تأخیر و خطا در سرورهای بازی.",
-        image: "../img/img-for-test/img-1.jpg",
-        tag: "سرور",
-        date: "۱۴۰۳/۰۷/۱۰",
-        readMoreLink: "#"
-    },
-    {
-        id: 19,
-        title: "چالش‌های طراحی UI برای راست‌به‌چپ",
-        excerpt: "مشکلات رایج و راه‌حل‌های آن‌ها در وب‌های RTL.",
-        image: "../img/img-for-test/img-2.jpg",
-        tag: "طراحی",
-        date: "۱۴۰۳/۰۷/۱۰",
-        readMoreLink: "#"
-    },
-    {
-        id: 20,
-        title: "پیش‌نمایش امکانات نسخه جدید موتور بازی",
-        excerpt: "ویژگی‌هایی که در آپدیت جدید موتور اضافه شده‌اند.",
-        image: "../img/img-for-test/img-3.jpg",
-        tag: "بازی",
-        date: "۱۴۰۳/۰۷/۱۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 21,
-        title: "افزایش امنیت وب‌سایت‌های وردپرسی",
-        excerpt: "راهکارهای ساده برای سخت‌تر کردن سایت نسبت به حملات ساده.",
-        image: "../img/img-for-test/img-4.jpg",
-        tag: "امنیت",
-        date: "۱۴۰۳/۰۷/۱۱",
-        readMoreLink: "#"
-    },
-    {
-        id: 22,
-        title: "چطور با تیم کوچک بازی بسازیم",
-        excerpt: "تجربه‌هایی که نشان می‌دهد یک تیم کوچک چگونه محصول موفق بسازد.",
-        image: "../img/img-for-test/img-5.jpg",
-        tag: "تجربه",
-        date: "۱۴۰۳/۰۷/۱۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 23,
-        title: "ابزارهای مورد علاقه توسعه‌دهندگان فرانت",
-        excerpt: "لیستی از افزونه‌ها و ابزارهایی که روند توسعه را تسهیل می‌کنند.",
-        image: "../img/img-for-test/img-6.jpg",
-        tag: "ابزار",
-        date: "۱۴۰۳/۰۷/۱۲",
-        readMoreLink: "#"
-    },
-    {
-        id: 24,
-        title: "مقایسه فریم‌ورک‌های محبوب UI در ۲۰۲۴",
-        excerpt: "خلاصه‌ای از مزایا و معایب فریم‌ورک‌های مطرح.",
-        image: "../img/img-for-test/img-7.jpg",
-        tag: "مقایسه",
-        date: "۱۴۰۳/۰۷/۱۳",
-        readMoreLink: "#"
-    }
-];
+// box.js
+// -----------------------------
+// لیست مقالات + دکمه «مشاهده بیشتر»
+// با pagination سمت سرور + فیلتر دسته‌بندی و جستجو
+// -----------------------------
 
-// تنظیمات بارگذاری
-const PAGE_SIZE = 9; // تعداد کارت‌ها برای هر بار نمایش
-let currentIndex = 0; // تا این ایندکس لود شده
+// آدرس API پست‌ها (در صورت نیاز این رو تنظیم کن)
+const POSTS_API_URL = 'https://atom-game.ir/api/blog/posts/';
 
-// تابع برای رفتن به صفحه بیشتر بخوانید
+// تنظیمات pagination
+let currentPage = 1;
+const PAGE_SIZE = 9;
+
+let isLoading = false;
+let hasNextPage = true;
+
+// فیلترها
+let currentCategory = null; // مثلا 'action-games' یا id دسته
+let currentSearch = '';     // متن جستجو
+
+// -----------------------------
+// Helpers
+// -----------------------------
+
+// هدایت به صفحه‌ی جزئیات پست
 function goToReadMore(link) {
+    if (!link) return;
     window.location.href = link;
 }
 
-// تابع برای ایجاد کارت وبلاگ (همان قالب قدیمی)
+// فرمت تاریخ (ISO -> fa-IR)
+function formatPostDate(post) {
+    const raw =
+        post.published_at ||
+        post.created_at ||
+        post.updated_at ||
+        null;
+
+    if (!raw) return '';
+
+    const d = new Date(raw);
+    if (Number.isNaN(d.getTime())) return '';
+
+    return d.toLocaleDateString('fa-IR');
+}
+
+// تبدیل داده‌ی Post از API به ساختار کارت
+function normalizePost(post) {
+    // لینک «بیشتر بخوانید»
+    const readMoreLink =
+        post.canonical_url ||
+        (post.slug ? `/blog/${post.slug}/` : `#/posts/${post.id}`);
+
+    // تگ‌ها (متن کنار تصویر)
+    let tagText = '';
+    if (Array.isArray(post.tags) && post.tags.length > 0) {
+        tagText = post.tags.map(t => t.name).join(' | ');
+    }
+
+    // تصویر کاور - چند حالت متداول
+    let imageUrl = '';
+
+    if (post.cover && post.cover.url) {
+        imageUrl = post.cover.url;
+    } else if (post.og_image && post.og_image.url) {
+        imageUrl = post.og_image.url;
+    } else if (post.cover_media && typeof post.cover_media === 'object' && post.cover_media.url) {
+        imageUrl = post.cover_media.url;
+    } else if (typeof post.image === 'string') {
+        imageUrl = post.image;
+    } else {
+        // اگر پروژه‌ت تصویر پیش‌فرض داره، اینو عوض کن
+        imageUrl = '../img/placeholders/blog-cover-placeholder.jpg';
+    }
+
+    // ✅ تبدیل آدرس نسبی به آدرس کامل روی دامین atom-game.ir
+    if (imageUrl && imageUrl.startsWith('/')) {
+        imageUrl = 'https://atom-game.ir' + imageUrl;
+    }
+
+    return {
+        id: post.id,
+        title: post.title || '',
+        excerpt: post.excerpt || '',
+        image: imageUrl,
+        tag: tagText,
+        date: formatPostDate(post),
+        readMoreLink: readMoreLink
+    };
+}
+
+// ساخت HTML کارت وبلاگ
 function createBlogCard(blog) {
+    const safeTitle = blog.title ? blog.title.replace(/"/g, '&quot;') : '';
+
     return `
         <div class="blog-card fade-in">
             <div class="blog-image" onclick="goToReadMore('${blog.readMoreLink}')">
-                <img src="${blog.image}" alt="${blog.title}" onerror="this.onerror=null;this.src='../img/logo.png'">
-                <span class="blog-tag">${blog.tag}</span>
+                <img src="${blog.image}" alt="${safeTitle}">
+                ${blog.tag ? `<span class="blog-tag">${blog.tag}</span>` : ''}
             </div>
             <div class="blog-content">
                 <h3 class="blog-title">${blog.title}</h3>
                 <p class="blog-excerpt">${blog.excerpt}</p>
                 <div class="blog-meta">
-                    <span class="blog-date">تاریخ انتشار: ${blog.date}</span>
-                    <button class="blog-read-more" onclick="goToReadMore('${blog.readMoreLink}')">بیشتر بخوانید</button>
+                    ${blog.date ? `<span class="blog-date">تاریخ انتشار: ${blog.date}</span>` : ''}
+                    <button class="blog-read-more" onclick="goToReadMore('${blog.readMoreLink}')">
+                        بیشتر بخوانید
+                    </button>
                 </div>
             </div>
         </div>
     `;
 }
 
-// رندر کارت‌ها (اضافه میکند به container به جای بازنویسی کامل برای انیمیشن و حفظ وضعیت)
-function appendBlogCards(fromIndex, count) {
+// چسباندن لیست پست‌ها به container
+function appendPostsToContainer(posts) {
     const container = document.getElementById('blogContainer');
     if (!container) return;
 
-    const slice = blogData.slice(fromIndex, fromIndex + count);
-    if (slice.length === 0) return;
+    if (!Array.isArray(posts) || posts.length === 0) return;
 
-    // ایجاد HTML و append
-    const html = slice.map(b => createBlogCard(b)).join('');
+    const normalized = posts.map(normalizePost);
+    const html = normalized.map(p => createBlogCard(p)).join('');
+
     container.insertAdjacentHTML('beforeend', html);
+}
 
-    // آپدیت ایندکس
-    currentIndex += slice.length;
-
-    // اگر دیگر چیزی برای لود نیست، دکمه را غیرفعال کن
+// بروزرسانی وضعیت دکمه «مشاهده بیشتر»
+function updateLoadMoreButtonState() {
     const btn = document.getElementById('loadMoreBtn');
-    if (btn) {
-        if (currentIndex >= blogData.length) {
-            btn.setAttribute('disabled', 'disabled');
-            btn.textContent = 'مورد دیگری وجود ندارد';
-        } else {
-            btn.removeAttribute('disabled');
-            btn.textContent = 'مشاهده بیشتر';
+    if (!btn) return;
+
+    if (isLoading) {
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'در حال بارگذاری...';
+        return;
+    }
+
+    if (!hasNextPage) {
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'مورد دیگری وجود ندارد';
+        return;
+    }
+
+    btn.removeAttribute('disabled');
+    btn.textContent = 'مشاهده بیشتر';
+}
+
+// ساخت URL بر اساس صفحه + فیلترها (category, search)
+function buildPostsUrl(page) {
+    const params = new URLSearchParams();
+
+    params.set('page', page);
+    params.set('page_size', PAGE_SIZE);
+
+    if (currentCategory) {
+        params.set('category', currentCategory);
+    }
+
+    if (currentSearch) {
+        params.set('search', currentSearch);
+    }
+
+    return `${POSTS_API_URL}?${params.toString()}`;
+}
+
+// گرفتن یک صفحه از پست‌ها از سرور
+async function fetchPostsPage(page) {
+    const url = buildPostsUrl(page);
+
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
         }
+    });
+
+    if (!res.ok) {
+        throw new Error('خطا در دریافت داده‌های وبلاگ');
     }
+
+    const data = await res.json();
+
+    // دو حالت را ساپورت می‌کنیم:
+    // 1) حالت DRF pagination: { count, next, previous, results: [...] }
+    // 2) حالت بدون pagination: [ ... ]
+    let postsArray = [];
+    if (Array.isArray(data)) {
+        postsArray = data;
+        hasNextPage = data.length === PAGE_SIZE;
+    } else {
+        postsArray = Array.isArray(data.results) ? data.results : [];
+        hasNextPage = Boolean(data.next);
+    }
+
+    return postsArray;
 }
 
-// نمایش اولیه اولین صفحه
-function renderInitialCards() {
-    // پاک کن (اگر از قبل چیزی باشه)
+// بارگذاری یک صفحه و رندر آن
+async function loadPage(page) {
+    if (isLoading) return;
+    if (!hasNextPage && page !== 1) return;
+
+    isLoading = true;
+    updateLoadMoreButtonState();
+
     const container = document.getElementById('blogContainer');
-    if (!container) return;
-    container.innerHTML = '';
-    currentIndex = 0;
-    appendBlogCards(0, PAGE_SIZE);
-}
 
-// تابع برای افزودن پست جدید (ماندگار با پیاده‌سازی قبلی)
-function addNewBlog(blog) {
-    blogData.push(blog);
-    // اگر تا الان تمام آیتم‌ها لود شده باشه، کارت جدید را هم اضافه کن
-    const btn = document.getElementById('loadMoreBtn');
-    if (currentIndex >= blogData.length - 1) {
-        // هنوز دکمه غیرفعال نشده یا آخرین بار لود نمایش
-        appendBlogCards(currentIndex, 1);
+    try {
+        const posts = await fetchPostsPage(page);
+
+        if (posts.length === 0 && page === 1) {
+            if (container) {
+                container.innerHTML = '<p class="blog-error">هیچ مقاله‌ای یافت نشد.</p>';
+            }
+            hasNextPage = false;
+            updateLoadMoreButtonState();
+            return;
+        }
+
+        appendPostsToContainer(posts);
+    } catch (err) {
+        console.error(err);
+        if (container && container.children.length === 0) {
+            container.innerHTML = '<p class="blog-error">خطایی در بارگذاری مقالات رخ داد. لطفاً دوباره تلاش کنید.</p>';
+        }
+
+        const btn = document.getElementById('loadMoreBtn');
+        if (btn) {
+            btn.setAttribute('disabled', 'disabled');
+            btn.textContent = 'خطا در بارگذاری';
+        }
+        hasNextPage = false;
+    } finally {
+        isLoading = false;
+        updateLoadMoreButtonState();
     }
 }
 
-// handler دکمه مشاهده بیشتر
-function onLoadMoreClicked() {
-    appendBlogCards(currentIndex, PAGE_SIZE);
+// -----------------------------
+// فیلتر دسته‌بندی و جستجو
+// -----------------------------
+
+// وقتی روی یک دسته کلیک می‌کنی، اینو صدا بزن
+// مثلا: onCategoryClick('action-games') یا onCategoryClick(3)
+function onCategoryClick(slugOrId) {
+    currentCategory = slugOrId;
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
 }
 
-// نمایش اولیه کارت‌ها و وصل کردن دکمه
+// وقتی فرم جستجو submit می‌شه، اینو صدا بزن
+// مثلا: onSearchSubmit(searchInput.value)
+function onSearchSubmit(term) {
+    currentSearch = (term || '').trim();
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
+}
+
+// اگر خواستی ریست کنی (بدون فیلتر)
+function resetFilters() {
+    currentCategory = null;
+    currentSearch = '';
+    currentPage = 1;
+    hasNextPage = true;
+
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    loadPage(currentPage);
+}
+
+// -----------------------------
+// Event handlers
+// -----------------------------
+
+// بارگذاری اولیه صفحه
+async function initBlogListing() {
+    const container = document.getElementById('blogContainer');
+    if (container) {
+        container.innerHTML = '';
+    }
+
+    currentPage = 1;
+    hasNextPage = true;
+
+    await loadPage(currentPage);
+}
+
+// کلیک روی "مشاهده بیشتر"
+async function onLoadMoreClicked() {
+    if (isLoading || !hasNextPage) return;
+
+    currentPage += 1;
+    await loadPage(currentPage);
+}
+
+// -----------------------------
+// DOM ready
+// -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
-    renderInitialCards();
     const btn = document.getElementById('loadMoreBtn');
     if (btn) {
         btn.addEventListener('click', onLoadMoreClicked);
-        // اگر کمتر یا مساوی PAGE_SIZE اطلاعات باشه، دکمه رو مدیریت کن
-        if (blogData.length <= PAGE_SIZE) {
-            btn.setAttribute('disabled', 'disabled');
-            btn.textContent = 'مورد دیگری وجود ندارد';
-        }
+        btn.setAttribute('disabled', 'disabled');
+        btn.textContent = 'در حال بارگذاری...';
     }
+
+    initBlogListing();
 });

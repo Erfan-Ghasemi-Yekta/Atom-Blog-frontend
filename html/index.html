@@ -55,14 +55,12 @@
                             <div data-widget="blog-search"></div>
                         </section>
 
-                        <section class="blog-widget">
-                            <h3 class="blog-widget-title">آخرین پست‌ها</h3>
-                            <div data-widget="latest-posts"></div>
-                        </section>
-
+<!-- ✅ اصلاح‌شده: data-widget روی div داخلی -->
                         <section class="blog-widget">
                             <h3 class="blog-widget-title">دسته‌بندی‌ها</h3>
-                            <div data-widget="blog-categories"></div>
+                            <div data-widget="blog-categories">
+                                <!-- دسته‌بندی‌ها به صورت داینامیک با JS اینجا اضافه می‌شن -->
+                            </div>
                         </section>
 
                         <section class="blog-widget">
@@ -102,11 +100,11 @@
         <!-- Scripts -->
         <script src="../js/slider.js"></script>
         <script>feather.replace();</script>
-        <script src="../js/box.js"></script>
 
-        <!-- بعداً برای ویجت‌ها و API این‌ها را هم استفاده می‌کنیم -->
-        <script src="../public/js/blog-api.js"></script>
-        <script src="../public/js/blog-widgets.js"></script>
+        <script src="../js/box.js"></script>
+        
+        <script src="../js/blog-widgets.js"></script>
+
     </main>
 </body>
 
