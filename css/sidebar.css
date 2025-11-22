@@ -162,6 +162,7 @@
   direction: rtl;
   text-align: right;
 }
+
 /* موبایل: فقط فرم جستجو نمایش داده شود، بدون عنوان و بدون خط */
 @media (max-width: 768px) {
 
@@ -183,6 +184,7 @@
     display: none !important;
   }
 }
+
 /* --- TAG / CATEGORY BUTTONS (PROFESSIONAL DESIGN) --- */
 
 .blog-widget .category-btn {
@@ -221,4 +223,102 @@
     display: flex;
     flex-wrap: wrap;
     gap: 4px 6px;
+}
+
+/* ================================
+   Recommended Posts Widget Design
+   (پست‌های پیشنهادی)
+   ================================ */
+
+[data-widget="recommended-posts"] .recommended-posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-widget="recommended-posts"] .recommended-post-item {
+  /* فقط برای اسپیس، hover روی لینک است */
+}
+
+[data-widget="recommended-posts"] .recommended-post-link {
+  display: flex;
+  flex-direction: row-reverse; /* چون RTL هست، کاور سمت راست قرار می‌گیرد */
+  gap: 10px;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: #020617;            /* نزدیک به background-color ولی کمی تیره‌تر */
+  border: 1px solid var(--borders-color);
+  text-decoration: none;
+  align-items: stretch;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+[data-widget="recommended-posts"] .recommended-post-link:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+[data-widget="recommended-posts"] .recommended-post-thumb-wrap {
+  flex: 0 0 80px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #1E293B;           /* cart-color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--borders-color);
+}
+
+[data-widget="recommended-posts"] .recommended-post-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* اگر عکس نداشتیم و فقط حرف اول یا آیکن داشتیم */
+[data-widget="recommended-posts"] .recommended-post-thumb-placeholder {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+[data-widget="recommended-posts"] .recommended-post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+[data-widget="recommended-posts"] .recommended-post-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white-color);
+  line-height: 1.5;
+  margin: 0;
+}
+
+[data-widget="recommended-posts"] .recommended-post-date {
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+/* موبایل: کمی فاصله‌ها را جمع‌وجورتر کنیم */
+@media (max-width: 768px) {
+  [data-widget="recommended-posts"] .recommended-post-link {
+    padding: 6px;
+    gap: 8px;
+  }
+
+  [data-widget="recommended-posts"] .recommended-post-thumb-wrap {
+    flex-basis: 70px;
+    height: 54px;
+  }
+
+  [data-widget="recommended-posts"] .recommended-post-title {
+    font-size: 0.8rem;
+  }
 }

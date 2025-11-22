@@ -1,4 +1,3 @@
-
 // از POSTS_API_URL جهانی (تعریف‌شده در box.js) استفاده می‌کنیم، اگر نبود fallback داریم
 const WIDGET_POSTS_API_URL =
   typeof POSTS_API_URL !== "undefined"
@@ -70,7 +69,39 @@ function getPostLink(post) {
   return `/blog/post.html?id=${post.id}`;
 }
 
-// رندر لیست ساده پست‌ها (برای latest / recommended)
+// گرفتن آدرس کاور هر پست
+function getPostCoverUrl(post) {
+  // ساختار معمول: post.cover_media.url
+  if (post.cover_media && post.cover_media.url) {
+    return post.cover_media.url;
+  }
+
+  // بعضی بک‌اندها ممکن است cover_image داشته باشند
+  if (post.cover_image) {
+    return post.cover_image;
+  }
+
+  // اگر هیچ‌چیزی نبود، null برمی‌گردانیم تا پلاسبُر رندر شود
+  return null;
+}
+
+// فرمت تاریخ انتشار برای نمایش در ویجت
+function formatPostDate(isoString) {
+  if (!isoString) return "";
+  const d = new Date(isoString);
+  try {
+    return d.toLocaleDateString("fa-IR", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  } catch (e) {
+    // اگر مرورگر ساپورت نکرد، یک فرمت ساده برمی‌گردانیم
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+// رندر لیست ساده پست‌ها (برای latest / استفاده‌های آینده)
 function renderPostList(container, posts) {
   if (!posts || posts.length === 0) {
     container.innerHTML = "<p>هیچ پستی یافت نشد.</p>";
@@ -93,7 +124,9 @@ function renderPostList(container, posts) {
 
 // ==========================================
 // 1) Latest Posts (آخرین پست‌ها)
+// (فعلاً استفاده نمی‌شود ولی renderPostList آماده است)
 // ==========================================
+
 // ==========================================
 // 2) Blog Categories (دسته‌بندی‌ها + اتصال به box.js)
 // ==========================================
@@ -231,10 +264,44 @@ async function initRecommendedPostsWidget() {
       return;
     }
 
+    // چند پست رندوم انتخاب می‌کنیم (۳ تا)
     const shuffled = list.sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 3);
 
-    renderPostList(container, selected);
+    let html = '<div class="recommended-posts-list">';
+
+    selected.forEach((post) => {
+      const link = getPostLink(post);
+      const coverUrl = getPostCoverUrl(post);
+      const dateStr = formatPostDate(post.created_at);
+      const title = post.title || "بدون عنوان";
+      const firstChar = title.trim().charAt(0) || "پ";
+
+      html += `
+        <div class="recommended-post-item">
+          <a href="${link}" class="recommended-post-link">
+            <div class="recommended-post-thumb-wrap">
+              ${
+                coverUrl
+                  ? `<img src="${coverUrl}" alt="${title}" class="recommended-post-thumb" loading="lazy" />`
+                  : `<span class="recommended-post-thumb-placeholder">${firstChar}</span>`
+              }
+            </div>
+            <div class="recommended-post-content">
+              <h4 class="recommended-post-title">${title}</h4>
+              ${
+                dateStr
+                  ? `<span class="recommended-post-date">${dateStr}</span>`
+                  : ""
+              }
+            </div>
+          </a>
+        </div>
+      `;
+    });
+
+    html += "</div>";
+    container.innerHTML = html;
   } catch (err) {
     console.error(err);
     container.innerHTML = "<p>خطای دریافت پست‌های پیشنهادی.</p>";
