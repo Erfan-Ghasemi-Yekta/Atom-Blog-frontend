@@ -78,9 +78,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/BotSettings'
           description: ''
-  /api/blog/author-profiles/:
+  /api/blog/authors/:
     get:
-      operationId: blog_author_profiles_list
+      operationId: blog_authors_list
       tags:
       - blog
       security:
@@ -96,7 +96,7 @@ paths:
                   $ref: '#/components/schemas/AuthorProfile'
           description: ''
     post:
-      operationId: blog_author_profiles_create
+      operationId: blog_authors_create
       tags:
       - blog
       requestBody:
@@ -113,7 +113,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -121,9 +120,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthorProfile'
           description: ''
-  /api/blog/author-profiles/{user}/:
+  /api/blog/authors/{user}/:
     get:
-      operationId: blog_author_profiles_retrieve
+      operationId: blog_authors_retrieve
       parameters:
       - in: path
         name: user
@@ -144,7 +143,7 @@ paths:
                 $ref: '#/components/schemas/AuthorProfile'
           description: ''
     put:
-      operationId: blog_author_profiles_update
+      operationId: blog_authors_update
       parameters:
       - in: path
         name: user
@@ -168,7 +167,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -177,7 +175,7 @@ paths:
                 $ref: '#/components/schemas/AuthorProfile'
           description: ''
     patch:
-      operationId: blog_author_profiles_partial_update
+      operationId: blog_authors_partial_update
       parameters:
       - in: path
         name: user
@@ -200,7 +198,6 @@ paths:
               $ref: '#/components/schemas/PatchedAuthorProfile'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -209,7 +206,7 @@ paths:
                 $ref: '#/components/schemas/AuthorProfile'
           description: ''
     delete:
-      operationId: blog_author_profiles_destroy
+      operationId: blog_authors_destroy
       parameters:
       - in: path
         name: user
@@ -221,7 +218,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -232,7 +228,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -260,7 +255,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -282,7 +276,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -315,7 +308,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -347,7 +339,6 @@ paths:
               $ref: '#/components/schemas/PatchedCategory'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -368,7 +359,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -379,7 +369,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -407,7 +396,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -429,7 +417,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -462,7 +449,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -494,7 +480,6 @@ paths:
               $ref: '#/components/schemas/PatchedComment'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -515,13 +500,25 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
   /api/blog/media/:
     get:
       operationId: blog_media_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
       tags:
       - blog
       security:
@@ -532,9 +529,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Media'
+                $ref: '#/components/schemas/PaginatedMediaDetailList'
           description: ''
     post:
       operationId: blog_media_create
@@ -544,23 +539,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaCreate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaCreate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaCreate'
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
+                $ref: '#/components/schemas/MediaCreate'
           description: ''
   /api/blog/media/{id}/:
     get:
@@ -582,7 +576,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
+                $ref: '#/components/schemas/MediaDetail'
           description: ''
     put:
       operationId: blog_media_update
@@ -599,23 +593,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaDetail'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaDetail'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Media'
+              $ref: '#/components/schemas/MediaDetail'
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
+                $ref: '#/components/schemas/MediaDetail'
           description: ''
     patch:
       operationId: blog_media_partial_update
@@ -632,22 +625,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedMedia'
+              $ref: '#/components/schemas/PatchedMediaDetail'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedMedia'
+              $ref: '#/components/schemas/PatchedMediaDetail'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedMedia'
+              $ref: '#/components/schemas/PatchedMediaDetail'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
+                $ref: '#/components/schemas/MediaDetail'
           description: ''
     delete:
       operationId: blog_media_destroy
@@ -662,7 +654,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -673,7 +664,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -701,7 +691,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -723,7 +712,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -756,7 +744,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -788,7 +775,6 @@ paths:
               $ref: '#/components/schemas/PatchedMenuItem'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -809,7 +795,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -820,7 +805,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -848,7 +832,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -870,7 +853,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -903,7 +885,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -935,7 +916,6 @@ paths:
               $ref: '#/components/schemas/PatchedMenu'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -956,7 +936,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -967,7 +946,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -995,7 +973,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1017,7 +994,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1050,7 +1026,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1082,7 +1057,6 @@ paths:
               $ref: '#/components/schemas/PatchedPage'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1103,13 +1077,75 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
   /api/blog/posts/:
     get:
       operationId: blog_posts_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: published_after
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: published_before
+        schema:
+          type: string
+          format: date-time
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: series
+        schema:
+          type: integer
+      - in: query
+        name: tags
+        schema:
+          type: array
+          items:
+            type: string
+        explode: true
+        style: form
+      - in: query
+        name: visibility
+        schema:
+          type: string
+          enum:
+          - private
+          - public
+          - unlisted
+        description: |-
+          * `public` - Public
+          * `private` - Private
+          * `unlisted` - Unlisted
       tags:
       - blog
       security:
@@ -1120,9 +1156,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/PaginatedPostListList'
           description: ''
     post:
       operationId: blog_posts_create
@@ -1132,13 +1166,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
         required: true
       security:
       - jwtAuth: []
@@ -1148,17 +1182,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/PostCreateUpdate'
           description: ''
-  /api/blog/posts/{id}/:
+  /api/blog/posts/{slug}/:
     get:
       operationId: blog_posts_retrieve
       parameters:
       - in: path
-        name: id
+        name: slug
         schema:
-          type: integer
-        description: A unique integer value identifying this post.
+          type: string
         required: true
       tags:
       - blog
@@ -1170,16 +1203,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/PostDetail'
           description: ''
     put:
       operationId: blog_posts_update
       parameters:
       - in: path
-        name: id
+        name: slug
         schema:
-          type: integer
-        description: A unique integer value identifying this post.
+          type: string
         required: true
       tags:
       - blog
@@ -1187,32 +1219,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/PostCreateUpdate'
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/PostCreateUpdate'
           description: ''
     patch:
       operationId: blog_posts_partial_update
       parameters:
       - in: path
-        name: id
+        name: slug
         schema:
-          type: integer
-        description: A unique integer value identifying this post.
+          type: string
         required: true
       tags:
       - blog
@@ -1220,31 +1250,61 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedPost'
+              $ref: '#/components/schemas/PatchedPostCreateUpdate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedPost'
+              $ref: '#/components/schemas/PatchedPostCreateUpdate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedPost'
+              $ref: '#/components/schemas/PatchedPostCreateUpdate'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/PostCreateUpdate'
           description: ''
     delete:
       operationId: blog_posts_destroy
       parameters:
       - in: path
-        name: id
+        name: slug
         schema:
-          type: integer
-        description: A unique integer value identifying this post.
+          type: string
+        required: true
+      tags:
+      - blog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/blog/posts/{slug}/publish/:
+    post:
+      operationId: blog_posts_publish_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - blog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/blog/posts/{slug}/related/:
+    get:
+      operationId: blog_posts_related_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
         required: true
       tags:
       - blog
@@ -1252,7 +1312,7 @@ paths:
       - jwtAuth: []
       - {}
       responses:
-        '204':
+        '200':
           description: No response body
   /api/blog/reactions/:
     get:
@@ -1261,7 +1321,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1289,7 +1348,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1311,7 +1369,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1344,7 +1401,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1376,7 +1432,6 @@ paths:
               $ref: '#/components/schemas/PatchedReaction'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1397,7 +1452,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -1436,7 +1490,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1491,7 +1544,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1523,7 +1575,6 @@ paths:
               $ref: '#/components/schemas/PatchedRevision'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1544,7 +1595,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -1555,7 +1605,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1583,7 +1632,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1605,7 +1653,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1638,7 +1685,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1670,7 +1716,6 @@ paths:
               $ref: '#/components/schemas/PatchedSeries'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1691,7 +1736,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -1702,7 +1746,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1730,7 +1773,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1752,7 +1794,6 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1785,7 +1826,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1817,7 +1857,6 @@ paths:
               $ref: '#/components/schemas/PatchedTag'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1838,14 +1877,15 @@ paths:
       - blog
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
   /api/chat/conversations/:
     get:
       operationId: chat_conversations_list
-      description: ViewSet for managing conversations.
+      description: |-
+        ViewSet for managing conversations.
+        Made read-only for creation, as conversations are created with the first message.
       tags:
       - chat
       security:
@@ -1859,22 +1899,58 @@ paths:
                 items:
                   $ref: '#/components/schemas/Conversation'
           description: ''
+  /api/chat/conversations/{conversation_pk}/messages/:
+    get:
+      operationId: chat_conversations_messages_list
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - chat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+          description: ''
     post:
-      operationId: chat_conversations_create
-      description: ViewSet for managing conversations.
+      operationId: chat_conversations_messages_create
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
       tags:
       - chat
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/MessageCreate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/MessageCreate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/MessageCreate'
+        required: true
       security:
       - jwtAuth: []
       responses:
@@ -1882,12 +1958,150 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Conversation'
+                $ref: '#/components/schemas/MessageCreate'
           description: ''
+  /api/chat/conversations/{conversation_pk}/messages/{id}/:
+    get:
+      operationId: chat_conversations_messages_retrieve
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      tags:
+      - chat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    put:
+      operationId: chat_conversations_messages_update
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      tags:
+      - chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Message'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    patch:
+      operationId: chat_conversations_messages_partial_update
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      tags:
+      - chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    delete:
+      operationId: chat_conversations_messages_destroy
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
+      parameters:
+      - in: path
+        name: conversation_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      tags:
+      - chat
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/chat/conversations/{id}/:
     get:
       operationId: chat_conversations_retrieve
-      description: ViewSet for managing conversations.
+      description: |-
+        ViewSet for managing conversations.
+        Made read-only for creation, as conversations are created with the first message.
       parameters:
       - in: path
         name: id
@@ -1908,7 +2122,9 @@ paths:
           description: ''
     put:
       operationId: chat_conversations_update
-      description: ViewSet for managing conversations.
+      description: |-
+        ViewSet for managing conversations.
+        Made read-only for creation, as conversations are created with the first message.
       parameters:
       - in: path
         name: id
@@ -1940,7 +2156,9 @@ paths:
           description: ''
     patch:
       operationId: chat_conversations_partial_update
-      description: ViewSet for managing conversations.
+      description: |-
+        ViewSet for managing conversations.
+        Made read-only for creation, as conversations are created with the first message.
       parameters:
       - in: path
         name: id
@@ -1970,27 +2188,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Conversation'
           description: ''
-    delete:
-      operationId: chat_conversations_destroy
-      description: ViewSet for managing conversations.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this conversation.
-        required: true
-      tags:
-      - chat
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/chat/messages/:
     get:
       operationId: chat_messages_list
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       tags:
       - chat
       security:
@@ -2006,7 +2210,10 @@ paths:
           description: ''
     post:
       operationId: chat_messages_create
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       tags:
       - chat
       requestBody:
@@ -2030,189 +2237,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/MessageCreate'
           description: ''
-  /api/chat/messages/{message_pk}/attachments/:
-    get:
-      operationId: chat_messages_attachments_list
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Attachment'
-          description: ''
-    post:
-      operationId: chat_messages_attachments_create
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AttachmentCreate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AttachmentCreate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AttachmentCreate'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AttachmentCreate'
-          description: ''
-  /api/chat/messages/{message_pk}/attachments/{id}/:
-    get:
-      operationId: chat_messages_attachments_retrieve
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this attachment.
-        required: true
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Attachment'
-          description: ''
-    put:
-      operationId: chat_messages_attachments_update
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this attachment.
-        required: true
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Attachment'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Attachment'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Attachment'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Attachment'
-          description: ''
-    patch:
-      operationId: chat_messages_attachments_partial_update
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this attachment.
-        required: true
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedAttachment'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedAttachment'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedAttachment'
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Attachment'
-          description: ''
-    delete:
-      operationId: chat_messages_attachments_destroy
-      description: ViewSet for managing attachments.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this attachment.
-        required: true
-      - in: path
-        name: message_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - chat
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/chat/messages/{id}/:
     get:
       operationId: chat_messages_retrieve
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       parameters:
       - in: path
         name: id
@@ -2233,7 +2264,10 @@ paths:
           description: ''
     put:
       operationId: chat_messages_update
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       parameters:
       - in: path
         name: id
@@ -2266,7 +2300,10 @@ paths:
           description: ''
     patch:
       operationId: chat_messages_partial_update
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       parameters:
       - in: path
         name: id
@@ -2298,7 +2335,10 @@ paths:
           description: ''
     delete:
       operationId: chat_messages_destroy
-      description: ViewSet for managing messages.
+      description: |-
+        ViewSet for managing messages.
+        - Creation is done via the top-level /api/messages/ endpoint.
+        - Listing is done via the nested /api/conversations/<conversation_pk>/messages/ endpoint.
       parameters:
       - in: path
         name: id
@@ -3088,6 +3128,343 @@ paths:
       - jwtAuth: []
       responses:
         '204':
+          description: No response body
+  /api/teams/teams/:
+    get:
+      operationId: teams_teams_list
+      description: ViewSet for managing teams.
+      parameters:
+      - in: query
+        name: captain
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+          description: ''
+    post:
+      operationId: teams_teams_create
+      description: ViewSet for managing teams.
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/teams/{id}/:
+    get:
+      operationId: teams_teams_retrieve
+      description: ViewSet for managing teams.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    put:
+      operationId: teams_teams_update
+      description: ViewSet for managing teams.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    patch:
+      operationId: teams_teams_partial_update
+      description: ViewSet for managing teams.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    delete:
+      operationId: teams_teams_destroy
+      description: ViewSet for managing teams.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/teams/teams/{id}/add-member/:
+    post:
+      operationId: teams_teams_add_member_create
+      description: Invite a member to a team.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/teams/{id}/leave_team/:
+    post:
+      operationId: teams_teams_leave_team_create
+      description: Leave a team.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/teams/{id}/match-history/:
+    get:
+      operationId: teams_teams_match_history_list
+      description: API view to list match history for a specific team.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchReadOnly'
+          description: ''
+  /api/teams/teams/{id}/remove_member/:
+    post:
+      operationId: teams_teams_remove_member_create
+      description: Remove a member from a team.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this team.
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/teams/invitations/:
+    get:
+      operationId: teams_teams_invitations_retrieve
+      description: List all pending invitations for the current user.
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/teams/respond-invitation/:
+    post:
+      operationId: teams_teams_respond_invitation_create
+      description: Respond to a team invitation.
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/top-teams/:
+    get:
+      operationId: teams_top_teams_retrieve
+      description: API view for getting top teams by prize money.
+      tags:
+      - teams
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
           description: No response body
   /api/token/:
     post:
@@ -4834,331 +5211,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/users/teams/:
-    get:
-      operationId: users_teams_list
-      description: ViewSet for managing teams.
-      parameters:
-      - in: query
-        name: captain
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Team'
-          description: ''
-    post:
-      operationId: users_teams_create
-      description: ViewSet for managing teams.
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-  /api/users/teams/{id}/:
-    get:
-      operationId: users_teams_retrieve
-      description: ViewSet for managing teams.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-    put:
-      operationId: users_teams_update
-      description: ViewSet for managing teams.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-    patch:
-      operationId: users_teams_partial_update
-      description: ViewSet for managing teams.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedTeam'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedTeam'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedTeam'
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-    delete:
-      operationId: users_teams_destroy
-      description: ViewSet for managing teams.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/users/teams/{id}/add-member/:
-    post:
-      operationId: users_teams_add_member_create
-      description: Invite a member to a team.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-  /api/users/teams/{id}/leave_team/:
-    post:
-      operationId: users_teams_leave_team_create
-      description: Leave a team.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-  /api/users/teams/{id}/match-history/:
-    get:
-      operationId: users_teams_match_history_list
-      description: API view to list match history for a specific team.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MatchReadOnly'
-          description: ''
-  /api/users/teams/{id}/remove_member/:
-    post:
-      operationId: users_teams_remove_member_create
-      description: Remove a member from a team.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this team.
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-  /api/users/teams/invitations/:
-    get:
-      operationId: users_teams_invitations_retrieve
-      description: List all pending invitations for the current user.
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
-  /api/users/teams/respond-invitation/:
-    post:
-      operationId: users_teams_respond_invitation_create
-      description: Respond to a team invitation.
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Team'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Team'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-          description: ''
   /api/users/top-players/:
     get:
       operationId: users_top_players_retrieve
@@ -5175,18 +5227,6 @@ paths:
     get:
       operationId: users_top_players_by_rank_retrieve
       description: API view for getting top players by rank.
-      tags:
-      - users
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-  /api/users/top-teams/:
-    get:
-      operationId: users_top_teams_retrieve
-      description: API view for getting top teams by prize money.
       tags:
       - users
       security:
@@ -5883,36 +5923,19 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/StatusD53Enum'
-    Attachment:
+    AuthorForPost:
       type: object
-      description: Serializer for the Attachment model.
       properties:
-        id:
-          type: integer
-          readOnly: true
-        message:
-          type: integer
-        file:
+        display_name:
           type: string
-          format: uri
-        uploaded_at:
-          type: string
-          format: date-time
+          maxLength: 255
+        avatar:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
           readOnly: true
       required:
-      - file
-      - id
-      - message
-      - uploaded_at
-    AttachmentCreate:
-      type: object
-      description: Serializer for creating a new attachment.
-      properties:
-        file:
-          type: string
-          format: uri
-      required:
-      - file
+      - avatar
+      - display_name
     AuthorProfile:
       type: object
       properties:
@@ -5923,7 +5946,6 @@ components:
           maxLength: 255
         bio:
           type: string
-        social_links: {}
         avatar:
           type: integer
           nullable: true
@@ -5958,9 +5980,6 @@ components:
     Category:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         slug:
           type: string
           maxLength: 50
@@ -5968,17 +5987,10 @@ components:
         name:
           type: string
           maxLength: 255
-        description:
-          type: string
-        order:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         parent:
           type: integer
           nullable: true
       required:
-      - id
       - name
       - slug
     Comment:
@@ -5987,42 +5999,51 @@ components:
         id:
           type: integer
           readOnly: true
-        author_name:
-          type: string
-          maxLength: 255
-        author_email:
-          type: string
-          format: email
-          maxLength: 254
-        content:
-          type: string
-        status:
-          $ref: '#/components/schemas/CommentStatusEnum'
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        ip:
-          type: string
-          nullable: true
-        user_agent:
-          type: string
-          maxLength: 255
         post:
           type: integer
         user:
           type: integer
-          nullable: true
+          readOnly: true
         parent:
           type: integer
           nullable: true
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/CommentStatusEnum'
       required:
-      - author_email
-      - author_name
       - content
       - created_at
       - id
       - post
+      - user
+    CommentForPost:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        parent:
+          type: integer
+          nullable: true
+      required:
+      - content
+      - created_at
+      - id
+      - user
     CommentStatusEnum:
       enum:
       - pending
@@ -6329,7 +6350,22 @@ components:
           format: uri
       required:
       - result_proof
-    Media:
+    MediaCreate:
+      type: object
+      properties:
+        file:
+          type: string
+          format: uri
+          writeOnly: true
+        alt_text:
+          type: string
+          maxLength: 255
+        title:
+          type: string
+          maxLength: 255
+      required:
+      - file
+    MediaDetail:
       type: object
       properties:
         id:
@@ -6373,18 +6409,17 @@ components:
         title:
           type: string
           maxLength: 255
+        uploaded_by:
+          type: integer
+          nullable: true
         created_at:
           type: string
           format: date-time
           readOnly: true
-        uploaded_by:
-          type: integer
-          nullable: true
       required:
       - created_at
       - id
       - mime
-      - size_bytes
       - storage_key
       - type
       - url
@@ -6563,6 +6598,52 @@ components:
       - id
       - slug
       - title
+    PaginatedMediaDetailList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaDetail'
+    PaginatedPostListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostList'
     PaginatedTournamentListList:
       type: object
       required:
@@ -6591,22 +6672,6 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/StatusD53Enum'
-    PatchedAttachment:
-      type: object
-      description: Serializer for the Attachment model.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        message:
-          type: integer
-        file:
-          type: string
-          format: uri
-        uploaded_at:
-          type: string
-          format: date-time
-          readOnly: true
     PatchedAuthorProfile:
       type: object
       properties:
@@ -6617,7 +6682,6 @@ components:
           maxLength: 255
         bio:
           type: string
-        social_links: {}
         avatar:
           type: integer
           nullable: true
@@ -6645,9 +6709,6 @@ components:
     PatchedCategory:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         slug:
           type: string
           maxLength: 50
@@ -6655,12 +6716,6 @@ components:
         name:
           type: string
           maxLength: 255
-        description:
-          type: string
-        order:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
         parent:
           type: integer
           nullable: true
@@ -6670,35 +6725,22 @@ components:
         id:
           type: integer
           readOnly: true
-        author_name:
-          type: string
-          maxLength: 255
-        author_email:
-          type: string
-          format: email
-          maxLength: 254
-        content:
-          type: string
-        status:
-          $ref: '#/components/schemas/CommentStatusEnum'
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        ip:
-          type: string
-          nullable: true
-        user_agent:
-          type: string
-          maxLength: 255
         post:
           type: integer
         user:
           type: integer
-          nullable: true
+          readOnly: true
         parent:
           type: integer
           nullable: true
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/CommentStatusEnum'
     PatchedConversation:
       type: object
       description: Serializer for the Conversation model.
@@ -6739,7 +6781,7 @@ components:
         result_proof:
           type: string
           format: uri
-    PatchedMedia:
+    PatchedMediaDetail:
       type: object
       properties:
         id:
@@ -6783,13 +6825,13 @@ components:
         title:
           type: string
           maxLength: 255
+        uploaded_by:
+          type: integer
+          nullable: true
         created_at:
           type: string
           format: date-time
           readOnly: true
-        uploaded_by:
-          type: integer
-          nullable: true
     PatchedMenu:
       type: object
       properties:
@@ -6880,11 +6922,47 @@ components:
           maxLength: 255
         seo_description:
           type: string
-    PatchedPost:
+    PatchedPostCreateUpdate:
       type: object
       properties:
-        id:
+        title:
+          type: string
+          maxLength: 255
+        excerpt:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status224Enum'
+        visibility:
+          $ref: '#/components/schemas/VisibilityEnum'
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        scheduled_at:
+          type: string
+          format: date-time
+          nullable: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+        series:
           type: integer
+          nullable: true
+        cover_media:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
+          readOnly: true
+        seo_title:
+          type: string
+          maxLength: 255
+        seo_description:
+          type: string
+        og_image:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
           readOnly: true
         tags:
           type: array
@@ -6900,59 +6978,31 @@ components:
           format: uri
           nullable: true
           maxLength: 200
-        title:
-          type: string
-          maxLength: 255
-        excerpt:
-          type: string
-        content:
-          type: string
-        reading_time_sec:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        status:
-          $ref: '#/components/schemas/Status224Enum'
-        visibility:
-          $ref: '#/components/schemas/VisibilityEnum'
-        published_at:
-          type: string
-          format: date-time
-          nullable: true
-        scheduled_at:
-          type: string
-          format: date-time
-          nullable: true
-        seo_title:
-          type: string
-          maxLength: 255
-        seo_description:
-          type: string
-        views_count:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
         likes_count:
           type: integer
-          maximum: 2147483647
-          minimum: 0
-        comments_count:
+          readOnly: true
+        views_count:
           type: integer
-          maximum: 2147483647
-          minimum: 0
-        author:
+          readOnly: true
+        reading_time_sec:
           type: integer
-        category:
+          readOnly: true
+        tag_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
+        category_id:
           type: integer
+          writeOnly: true
+        cover_media_id:
+          type: integer
+          writeOnly: true
           nullable: true
-        series:
+        og_image_id:
           type: integer
-          nullable: true
-        cover_media:
-          type: integer
-          nullable: true
-        og_image:
-          type: integer
+          writeOnly: true
           nullable: true
     PatchedReaction:
       type: object
@@ -6960,25 +7010,22 @@ components:
         id:
           type: integer
           readOnly: true
-        target_type:
-          $ref: '#/components/schemas/TargetTypeEnum'
-        target_id:
+        user:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          readOnly: true
         reaction:
           type: string
           maxLength: 50
+        content_type:
+          type: integer
+        object_id:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
         created_at:
           type: string
           format: date-time
           readOnly: true
-        ip:
-          type: string
-          nullable: true
-        user:
-          type: integer
-          nullable: true
     PatchedReport:
       type: object
       description: Serializer for the Report model.
@@ -7077,9 +7124,6 @@ components:
     PatchedTag:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         slug:
           type: string
           maxLength: 50
@@ -7087,8 +7131,6 @@ components:
         name:
           type: string
           maxLength: 255
-        description:
-          type: string
     PatchedTeam:
       type: object
       description: Serializer for the Team model.
@@ -7159,7 +7201,7 @@ components:
           items:
             $ref: '#/components/schemas/TicketAttachment'
           readOnly: true
-        files:
+        uploaded_files:
           type: array
           items:
             type: string
@@ -7340,11 +7382,47 @@ components:
           pattern: ^-?\d{0,18}(?:\.\d{0,2})?$
       required:
       - amount
-    Post:
+    PostCreateUpdate:
       type: object
       properties:
-        id:
+        title:
+          type: string
+          maxLength: 255
+        excerpt:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status224Enum'
+        visibility:
+          $ref: '#/components/schemas/VisibilityEnum'
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        scheduled_at:
+          type: string
+          format: date-time
+          nullable: true
+        category:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+        series:
           type: integer
+          nullable: true
+        cover_media:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
+          readOnly: true
+        seo_title:
+          type: string
+          maxLength: 255
+        seo_description:
+          type: string
+        og_image:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
           readOnly: true
         tags:
           type: array
@@ -7360,12 +7438,54 @@ components:
           format: uri
           nullable: true
           maxLength: 200
+        likes_count:
+          type: integer
+          readOnly: true
+        views_count:
+          type: integer
+          readOnly: true
+        reading_time_sec:
+          type: integer
+          readOnly: true
+        tag_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
+        category_id:
+          type: integer
+          writeOnly: true
+        cover_media_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+        og_image_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+      required:
+      - category
+      - content
+      - cover_media
+      - excerpt
+      - likes_count
+      - og_image
+      - reading_time_sec
+      - tags
+      - title
+      - views_count
+    PostDetail:
+      type: object
+      properties:
+        slug:
+          type: string
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
         title:
           type: string
           maxLength: 255
         excerpt:
-          type: string
-        content:
           type: string
         reading_time_sec:
           type: integer
@@ -7373,54 +7493,129 @@ components:
           minimum: 0
         status:
           $ref: '#/components/schemas/Status224Enum'
-        visibility:
-          $ref: '#/components/schemas/VisibilityEnum'
         published_at:
           type: string
           format: date-time
           nullable: true
-        scheduled_at:
+        author:
+          allOf:
+          - $ref: '#/components/schemas/AuthorForPost'
+          readOnly: true
+        category:
           type: string
-          format: date-time
-          nullable: true
-        seo_title:
-          type: string
-          maxLength: 255
-        seo_description:
-          type: string
+          readOnly: true
+        cover_media:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
+          readOnly: true
         views_count:
           type: integer
           maximum: 2147483647
           minimum: 0
         likes_count:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
+          type: string
+          readOnly: true
         comments_count:
           type: integer
-          maximum: 2147483647
-          minimum: 0
-        author:
-          type: integer
-        category:
-          type: integer
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+        content:
+          type: string
+        canonical_url:
+          type: string
+          format: uri
           nullable: true
+          maxLength: 200
         series:
-          type: integer
-          nullable: true
-        cover_media:
-          type: integer
-          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Series'
+          readOnly: true
+        seo_title:
+          type: string
+          maxLength: 255
+        seo_description:
+          type: string
         og_image:
-          type: integer
-          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
+          readOnly: true
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentForPost'
+          readOnly: true
       required:
       - author
+      - category
+      - comments
+      - comments_count
       - content
+      - cover_media
       - excerpt
-      - id
-      - reading_time_sec
-      - slug
+      - likes_count
+      - og_image
+      - series
+      - tags
+      - title
+    PostList:
+      type: object
+      properties:
+        slug:
+          type: string
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          maxLength: 255
+        excerpt:
+          type: string
+        reading_time_sec:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        status:
+          $ref: '#/components/schemas/Status224Enum'
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        author:
+          allOf:
+          - $ref: '#/components/schemas/AuthorForPost'
+          readOnly: true
+        category:
+          type: string
+          readOnly: true
+        cover_media:
+          allOf:
+          - $ref: '#/components/schemas/MediaDetail'
+          readOnly: true
+        views_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        likes_count:
+          type: string
+          readOnly: true
+        comments_count:
+          type: integer
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+      required:
+      - author
+      - category
+      - comments_count
+      - cover_media
+      - excerpt
+      - likes_count
       - tags
       - title
     Prize:
@@ -7455,31 +7650,29 @@ components:
         id:
           type: integer
           readOnly: true
-        target_type:
-          $ref: '#/components/schemas/TargetTypeEnum'
-        target_id:
+        user:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          readOnly: true
         reaction:
           type: string
           maxLength: 50
+        content_type:
+          type: integer
+        object_id:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
         created_at:
           type: string
           format: date-time
           readOnly: true
-        ip:
-          type: string
-          nullable: true
-        user:
-          type: integer
-          nullable: true
       required:
+      - content_type
       - created_at
       - id
+      - object_id
       - reaction
-      - target_id
-      - target_type
+      - user
     Report:
       type: object
       description: Serializer for the Report model.
@@ -7673,9 +7866,6 @@ components:
     Tag:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         slug:
           type: string
           maxLength: 50
@@ -7683,20 +7873,9 @@ components:
         name:
           type: string
           maxLength: 255
-        description:
-          type: string
       required:
-      - id
       - name
       - slug
-    TargetTypeEnum:
-      enum:
-      - post
-      - comment
-      type: string
-      description: |-
-        * `post` - Post
-        * `comment` - Comment
     Team:
       type: object
       description: Serializer for the Team model.
@@ -7796,7 +7975,7 @@ components:
           items:
             $ref: '#/components/schemas/TicketAttachment'
           readOnly: true
-        files:
+        uploaded_files:
           type: array
           items:
             type: string

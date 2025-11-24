@@ -1,5 +1,6 @@
-
-const API_BASE_URL = "https://atom-game.ir/api/blog/posts/"; 
+// تنظیم آدرس API اینجا
+// الان درخواست مستقیم به دامنه atom-game.ir می‌ره
+const API_BASE_URL = "https://atom-game.ir/api/blog/posts/iran/";
 
 // کمک‌تابع: گرفتن اسلاگ از URL
 function getSlugFromLocation() {
@@ -262,7 +263,7 @@ async function fetchPost() {
 
     try {
         // اینجا بسته به بکندت می‌تونی ساختار URL را تغییر بدهی
-        // سناریو ۱: /api/blog/single-post?slug=...
+        // سناریو فعلی: https://atom-game.ir/api/blog/posts/iran/?slug=...
         const url = `${API_BASE_URL}?slug=${encodeURIComponent(slug)}`;
 
         const resp = await fetch(url, {
@@ -280,7 +281,7 @@ async function fetchPost() {
         let mainPost = null;
         let relatedPosts = [];
 
-        // حالت نمونه‌ای که دادی: آرایه‌ای از پست‌ها
+        // حالت آرایه‌ای
         if (Array.isArray(data)) {
             mainPost = data[0] || null;
             relatedPosts = data.slice(1);

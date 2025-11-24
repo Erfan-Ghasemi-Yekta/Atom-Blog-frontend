@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">پست وبلاگ</title>
+    <link rel="stylesheet" href="../css/single-post-page.css" />
+</head>
+<body>
+    <div class="post-container">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" id="breadcrumb">
+            <!-- با JS پر میشه -->
+        </nav>
+
+        <div class="main-grid">
+            <!-- Main Content -->
+            <main class="main-content">
+
+                <!-- Category Badge -->
+                <div class="category-badge" id="category-badge">...</div>
+
+                <!-- Article Header -->
+                <h1 class="article-title" id="post-title">در حال بارگذاری…</h1>
+
+                <!-- Metadata -->
+                <div class="metadata">
+                    <div class="author-info">
+                        <img id="author-avatar" src="/placeholder.svg?height=40&width=40" alt="نویسنده" class="author-avatar">
+                        <div class="author-details">
+                            <p class="author-name" id="author-name">...</p>
+                            <p class="publish-date" id="publish-date">...</p>
+                        </div>
+                    </div>
+
+                    <div class="reading-stats">
+                        <span class="stat-item">
+                            <span class="stat-label">زمان مطالعه:</span>
+                            <span class="stat-value" id="reading-time">...</span>
+                        </span>
+                        <span class="stat-item">
+                            <span class="stat-label">بازدید:</span>
+                            <span class="stat-value" id="views-count">...</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Featured Image -->
+                <figure class="featured-image" id="cover-figure" style="display:none;">
+                    <img id="cover-image" src="" alt="">
+                    <figcaption id="cover-caption"></figcaption>
+                </figure>
+
+                <!-- Social Share Box -->
+                <div class="social-share">
+                    <span class="share-label">اشتراک‌گذاری:</span>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn share-telegram" title="تلگرام">
+                            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+                        </a>
+                        <a href="#" class="share-btn share-whatsapp" title="واتس‌اپ">
+                            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13 8l-5 1 1-5a9 9 0 1 1 17-4Z"></path></svg>
+                        </a>
+                        <a href="#" class="share-btn share-twitter" title="توییتر">
+                            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.84 1.09A4.48 4.48 0 0 0 16.11 0c-2.5 0-4.5 2.24-3.92 4.65A12.94 12.94 0 0 1 1.64.88a4.48 4.48 0 0 0 1.39 6A4.41 4.41 0 0 1 .8 6.15v.06A4.48 4.48 0 0 0 4.47 10.6a4.52 4.52 0 0 1-2 .08 4.48 4.48 0 0 0 4.19 3.12A9 9 0 0 1 0 19.54 12.94 12.94 0 0 0 7 21c8.38 0 12.94-7.22 12.94-13.48 0-.21 0-.42-.02-.63A9.22 9.22 0 0 0 23 3Z"></path></svg>
+                        </a>
+                        <a href="#" class="share-btn share-copy" title="کپی لینک">
+                            <svg width="20" height="20" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article Content (Markdown output will be rendered here) -->
+                <article class="article-content" id="post-content"></article>
+
+                <!-- Tags -->
+                <div class="tags-section" id="tags-section" style="display:none;">
+                    <h3 class="tags-title">برچسب‌ها:</h3>
+                    <div class="tags-list" id="tags-list"></div>
+                </div>
+
+                <!-- Related Posts Section -->
+                <section class="related-posts" id="related-posts" style="display:none;">
+                    <h2 class="section-title">مطالب مرتبط</h2>
+                    <div class="related-grid" id="related-grid"></div>
+                </section>
+
+                <!-- Comments Section -->
+                <section class="comments-section">
+                    <h2 class="section-title" id="comments-title">نظرات</h2>
+
+                    <div class="comments-list" id="comments-list"></div>
+
+                    <!-- Comment Form -->
+                    <form class="comment-form" id="comment-form">
+                        <h3 class="form-title">دیدگاه خود را بنویسید</h3>
+                        <div class="form-group">
+                            <input id="comment-name" type="text" placeholder="نام شما" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="comment-email" type="email" placeholder="ایمیل شما" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="comment-content" placeholder="نظر شما..." class="form-textarea" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">ارسال نظر</button>
+                        <p id="comment-form-msg" style="margin-top:1rem;font-size:.9rem;"></p>
+                    </form>
+                </section>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <!-- Hot Posts Widget -->
+                <div class="widget hot-posts-widget">
+                    <h3 class="widget-title">
+                        <span class="widget-icon">🔥</span>
+                        داغ‌ترین مطالب
+                    </h3>
+                    <div class="widget-content" id="hot-posts"></div>
+                </div>
+
+                <!-- Newsletter Widget -->
+                <div class="widget newsletter-widget">
+                    <h3 class="widget-title">
+                        <span class="widget-icon">📬</span>
+                        خبرنامه
+                    </h3>
+                    <p class="widget-description">آپدیت‌های جدید را دریافت کنید</p>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="ایمیل شما" class="form-input" required>
+                        <button type="submit" class="submit-btn">اشتراک</button>
+                    </form>
+                </div>
+
+                <!-- Categories Widget -->
+                <div class="widget categories-widget">
+                    <h3 class="widget-title">
+                        <span class="widget-icon">📁</span>
+                        دسته‌بندی‌ها
+                    </h3>
+                    <ul class="categories-list" id="categories-list"></ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Sanitizer -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+
+    <script src="../js/single-post-page.js"></script>
+</body>
+</html>
