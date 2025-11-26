@@ -1,22 +1,101 @@
 // =====================
-// Config
+// Local Data
 // =====================
-const API_BASE = "https://atom-game.ir"; 
-// حالا GET /api/blog/posts/{slug}/ => https://atom-game.ir/api/blog/posts/{slug}/
+const localData = {
+  post: {
+    id: 1,
+    slug: "local-post-slug",
+    title: "این یک پست محلی است",
+    seo_title: "پست محلی برای تست",
+    category: "تکنولوژی",
+    author: {
+      full_name: "نویسنده تستی",
+      username: "test-author",
+      avatar: "../img/logo.png"
+    },
+    published_at: new Date().toISOString(),
+    reading_time_sec: 180,
+    views_count: 1234,
+    cover_media: {
+      url: "../img/blog/post-1.jpg",
+      alt_text: "تصویر اصلی پست",
+      caption: "این یک تصویر تستی است"
+    },
+    content: `
+این یک متن **تستی** برای نمایش محتوای پست است.
+
+## عنوان تستی
+
+- لیست ۱
+- لیست ۲
+- لیست ۳
+
+لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+`,
+    tags: [
+      { name: "تگ ۱", slug: "tag-1" },
+      { name: "تگ ۲", slug: "tag-2" }
+    ],
+    comments: [
+      {
+        id: 1,
+        user: { full_name: "کاربر ۱", avatar: "../img/logo.png" },
+        created_at: new Date().toISOString(),
+        content: "این یک کامنت تستی است."
+      },
+      {
+        id: 2,
+        user: { full_name: "کاربر ۲", avatar: "../img/logo.png" },
+        created_at: new Date().toISOString(),
+        content: "این هم یک کامنت دیگر."
+      }
+    ]
+  },
+  relatedPosts: [
+    {
+      slug: "related-1",
+      title: "پست مرتبط ۱",
+      excerpt: "خلاصه پست مرتبط ۱...",
+      cover_media: { url: "../img/blog/post-2.jpg" }
+    },
+    {
+      slug: "related-2",
+      title: "پست مرتبط ۲",
+      excerpt: "خلاصه پست مرتبط ۲...",
+      cover_media: { url: "../img/blog/post-3.jpg" }
+    }
+  ],
+  hotPosts: [
+    {
+      slug: "hot-1",
+      title: "پست داغ ۱",
+      views_count: 9876,
+      cover_media: { url: "../img/blog/post-4.jpg" }
+    },
+    {
+      slug: "hot-2",
+      title: "پست داغ ۲",
+      views_count: 5432,
+      cover_media: { url: "../img/blog/post-5.jpg" }
+    },
+    {
+      slug: "hot-3",
+      title: "پست داغ ۳",
+      views_count: 1234,
+      cover_media: { url: "../img/blog/post-6.jpg" }
+    }
+  ],
+  categories: [
+    { name: "دسته ۱", slug: "cat-1", posts_count: 10 },
+    { name: "دسته ۲", slug: "cat-2", posts_count: 5 },
+    { name: "دسته ۳", slug: "cat-3", posts_count: 2 }
+  ]
+};
 
 // =====================
 // Helpers
 // =====================
 const $ = (sel) => document.querySelector(sel);
-
-function getSlugFromUrl() {
-  const url = new URL(window.location.href);
-  const qSlug = url.searchParams.get("slug");
-  if (qSlug) return qSlug;
-
-  const parts = url.pathname.split("/").filter(Boolean);
-  return parts[parts.length - 1];
-}
 
 function formatDate(iso) {
   if (!iso) return "—";
@@ -43,32 +122,6 @@ function renderMarkdown(mdText) {
   if (!mdText) return "";
   const rawHtml = marked.parse(mdText, { breaks: true, gfm: true });
   return DOMPurify.sanitize(rawHtml);
-}
-
-async function apiGet(path) {
-  const res = await fetch(API_BASE + path, { headers: { "Accept": "application/json" } });
-  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
-  const txt = await res.text();
-  return txt ? JSON.parse(txt) : null;
-}
-
-async function apiPost(path, body) {
-  const res = await fetch(API_BASE + path, {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-      // اگر auth دارید:
-      // "Authorization": `Bearer ${token}`
-    },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const t = await res.text();
-    throw new Error(`POST ${path} failed: ${res.status} ${t}`);
-  }
-  const txt = await res.text();
-  return txt ? JSON.parse(txt) : null;
 }
 
 // =====================
@@ -216,46 +269,6 @@ function renderCategories(cats) {
 }
 
 // =====================
-// Fetchers
-// =====================
-async function loadPostAndPage(slug) {
-  const post = await apiGet(`/api/blog/posts/${slug}/`);
-  renderBreadcrumb(post);
-  renderPost(post);
-  bindShareButtons();
-  bindCommentForm(post);
-  return post;
-}
-
-async function loadRelated(slug) {
-  try {
-    const related = await apiGet(`/api/blog/posts/${slug}/related/`);
-    renderRelated(Array.isArray(related) ? related : related?.results || []);
-  } catch (e) {
-    console.warn("related fetch failed:", e.message);
-    renderRelated([]);
-  }
-}
-
-async function loadHotPosts() {
-  try {
-    const data = await apiGet(`/api/blog/posts/?ordering=-views_count&page_size=3`);
-    renderHotPosts(data?.results || []);
-  } catch (e) {
-    console.warn("hot posts fetch failed:", e.message);
-  }
-}
-
-async function loadCategories() {
-  try {
-    const data = await apiGet(`/api/blog/categories/?page_size=50`);
-    renderCategories(data?.results || []);
-  } catch (e) {
-    console.warn("categories fetch failed:", e.message);
-  }
-}
-
-// =====================
 // Bindings
 // =====================
 function bindShareButtons() {
@@ -331,20 +344,11 @@ function bindCommentForm(post) {
       form.querySelector("button[type=submit]").disabled = true;
       msg.textContent = "در حال ارسال…";
 
-      await apiPost(`/api/blog/comments/`, {
-        post: postId,
-        content,
-        parent: null
-      });
-
-      msg.textContent = "✅ نظر شما با موفقیت ارسال شد.";
+      // Mocking comment submission
+      console.log("Mock comment submission:", { name, email, content });
+      msg.textContent = "✅ نظر شما با موفقیت ارسال شد (شبیه‌سازی شده).";
       form.reset();
 
-      const freshPost = await apiGet(`/api/blog/posts/${post.slug}/`);
-      renderComments(freshPost.comments || []);
-      $("#comments-title").textContent = `نظرات (${(freshPost.comments || []).length})`;
-
-      console.log("[comment] sent by", { name, email });
     } catch (err) {
       console.error(err);
       msg.textContent = "❌ ارسال نظر خطا داشت. دوباره تلاش کنید.";
@@ -357,18 +361,19 @@ function bindCommentForm(post) {
 // =====================
 // Init
 // =====================
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
   try {
-    const slug = getSlugFromUrl();
-    if (!slug) throw new Error("slug not found");
+    renderBreadcrumb(localData.post);
+    renderPost(localData.post);
+    bindShareButtons();
+    bindCommentForm(localData.post);
 
-    await loadPostAndPage(slug);
-    loadRelated(slug);
-    loadHotPosts();
-    loadCategories();
+    renderRelated(localData.relatedPosts);
+    renderHotPosts(localData.hotPosts);
+    renderCategories(localData.categories);
   } catch (e) {
     console.error(e);
-    $("#post-title").textContent = "پست پیدا نشد یا خطا در دریافت اطلاعات.";
+    $("#post-title").textContent = "پست پیدا نشد یا خطا در بارگذاری اطلاعات.";
     $("#post-content").innerHTML = `<p style="opacity:.7">${e.message}</p>`;
   }
 });
