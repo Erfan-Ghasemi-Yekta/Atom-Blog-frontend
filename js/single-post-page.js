@@ -1,88 +1,164 @@
+// Updated single-post-page.js — نسخهٔ به‌روز شده با محتوای غنی‌تر و تصاویر از طریق CDN
+// دربارهٔ تغییرات:
+// - تمامی تصاویر از طریق یک CDN proxy (images.weserv.nl) سرو می‌شوند تا همواره از یک CDN بارگزاری شوند.
+// - تابع کمکی `cdn()` اضافه شد تا به‌سادگی آدرس‌های تصویر را به URL‌های CDN تبدیل کند.
+// - محتوا، کاور، آواتارها، تصاویر مرتبط و داغ همگی به‌صورت پویا از طریق CDN لود می‌شوند.
+// - imgها دارای loading="lazy" و attributeهای مناسب هستند.
+
 // =====================
-// Local Data
+// Helpers for CDN
+// =====================
+function cdn(src, opts = {}) {
+  // Uses images.weserv.nl as a free image CDN/proxy. This wraps the original URL.
+  // opts: {w, h, fit, output, q}
+  if (!src) return src;
+  try {
+    const params = new URLSearchParams();
+    if (opts.w) params.set('w', String(opts.w));
+    if (opts.h) params.set('h', String(opts.h));
+    if (opts.fit) params.set('fit', opts.fit);
+    if (opts.output) params.set('output', opts.output);
+    if (opts.q) params.set('q', String(opts.q));
+    const encoded = encodeURIComponent(src);
+    const base = `https://images.weserv.nl/?url=${encoded}`;
+    const suffix = params.toString();
+    return suffix ? `${base}&${suffix}` : base;
+  } catch (e) {
+    return src;
+  }
+}
+
+// =====================
+// Local Data (updated to use cdn())
 // =====================
 const localData = {
   post: {
     id: 1,
     slug: "local-post-slug",
-    title: "این یک پست محلی است",
-    seo_title: "پست محلی برای تست",
+    title: "چگونه یک وبلاگ حرفه‌ای بسازیم — تجربه و نکات عملی",
+    seo_title: "راهنمای جامع ساخت وبلاگ حرفه‌ای",
     category: "تکنولوژی",
     author: {
       full_name: "نویسنده تستی",
       username: "test-author",
-      avatar: "../img/logo.png"
+      avatar: cdn('https://picsum.photos/id/1005/80/80', {w:80, h:80, fit:'cover', output:'webp', q:80})
     },
     published_at: new Date().toISOString(),
-    reading_time_sec: 180,
+    reading_time_sec: 720,
     views_count: 1234,
     cover_media: {
-      url: "../img/blog/post-1.jpg",
-      alt_text: "تصویر اصلی پست",
-      caption: "این یک تصویر تستی است"
+      url: cdn('https://picsum.photos/id/1015/1200/600', {w:1200, h:600, fit:'cover', output:'webp', q:80}),
+      alt_text: "تصویر اصلی پست - نمایی از کد و کار در لپ‌تاپ",
     },
     content: `
-این یک متن **تستی** برای نمایش محتوای پست است.
+این مقاله راهنمای عملی و واقعی برای ساخت و مدیریت یک **وبلاگ حرفه‌ای** است. هدف ما این است که از صفر تا صد، نکات قابل اجرا، ابزارها و اشتباهات رایج را پوشش دهیم.
 
-## عنوان تستی
+## چرا وبلاگ؟
+وبلاگ‌نویسی هنوز هم یکی از بهترین روش‌ها برای ساخت برند شخصی، نشان دادن نمونه‌کارها و جذب مخاطب هدف است. در این راهنما موارد زیر را یاد می‌گیرید:
 
-- لیست ۱
-- لیست ۲
-- لیست ۳
+- انتخاب پلتفرم مناسب
+- نوشتن محتوای خواندنی و قابل اشتراک‌گذاری
+- بهینه‌سازی برای موتورهای جستجو (SEO)
+- انتشار منظم و برنامه‌ریزی محتوا
 
-لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+
+![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', {w:1000, h:500, fit:'cover', output:'webp', q:80})})
+
+### انتخاب پلتفرم
+برای شروع، بین دو گزینهٔ رایج یکی را انتخاب کنید: سایت‌سازهای آماده (مثل Ghost، WordPress.com) یا سایت خود میزبانی‌شده که کنترل کامل دارد (مثل WordPress.org، Static sites با Netlify). اگر بهینه‌سازی و سرعت برایتان مهم است، سایت استاتیک + CDN گزینهٔ بسیار خوبی است.
+
+#### نکات تجربه کاربری (UX)
+- منوی ساده و قابل‌خواندن داشته باشید.
+- فونت مناسب و اندازهٔ متن را رعایت کنید.
+- برای تصاویر از فرمت‌های بهینه مثل WebP استفاده کنید.
+
+![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', {w:800, h:450, fit:'cover', output:'webp', q:80})})
+
+### تولید محتوا — ساختار یک پست
+یک پست خوب معمولاً شامل بخش‌های زیر است:
+
+1. لید قدرتمند — چند جملهٔ اول که مخاطب را جذب کند.
+2. تیترها و زیرتیترهای واضح — برای اسکن شدن سریع متن.
+3. تصاویر و کد نمونه — برای بهبود درک مطلب.
+4. بخش نتیجه‌گیری و فراخوان به عمل (CTA).
+
+> نکته: همیشه متن را قبل از انتشار یک بار بلندخوانی کنید.
+
+### بهینه‌سازی تصاویر
+برای اینکه صفحات سریع لود شوند:
+
+- تصاویر را قبل از آپلود فشرده کنید.
+- از lazy-loading استفاده کنید.
+- از CDN برای تحویل تصاویر استفاده کنید.
+
+![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', {w:900, h:500, fit:'cover', output:'webp', q:80})})
+
+### مثال عملی — افزودن تصویر و تگ‌ها
+در بخش کد یا CMS خود کافی است در Markdown بنویسید:
+
+\`\`\`
+![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', {w:1200, h:600, fit:'cover', output:'webp', q:80})})
+\`\`\`
+
+## نتیجه‌گیری
+وبلاگ‌نویسی ترکیبی از خلاقیت، نظم و اصلاح مستمر است. با تمرکز روی کیفیت و تجربهٔ خواننده، در بلندمدت نتیجهٔ بهتری خواهید گرفت.
+
+---
+
+اگر خواستی من می‌توانم همین محتوا را به نسخهٔ انگلیسی ترجمه یا خلاصهٔ ۳۰۰ کلمه‌ای از آن بسازم.
 `,
     tags: [
       { name: "تگ ۱", slug: "tag-1" },
-      { name: "تگ ۲", slug: "tag-2" }
+      { name: "وبلاگ‌نویسی", slug: "blogging" },
+      { name: "بهینه‌سازی", slug: "optimization" }
     ],
     comments: [
       {
         id: 1,
-        user: { full_name: "کاربر ۱", avatar: "../img/logo.png" },
+        user: { full_name: "کاربر ۱", avatar: cdn('https://picsum.photos/id/1011/64/64', {w:64, h:64, fit:'cover', output:'webp', q:80}) },
         created_at: new Date().toISOString(),
-        content: "این یک کامنت تستی است."
+        content: "این یک کامنت تستی است. مقاله عالی و کاربردی بود!"
       },
       {
         id: 2,
-        user: { full_name: "کاربر ۲", avatar: "../img/logo.png" },
+        user: { full_name: "کاربر ۲", avatar: cdn('https://picsum.photos/id/1001/64/64', {w:64, h:64, fit:'cover', output:'webp', q:80}) },
         created_at: new Date().toISOString(),
-        content: "این هم یک کامنت دیگر."
+        content: "ممنون! لینک منابع خارجی هم دارید؟"
       }
     ]
   },
   relatedPosts: [
     {
       slug: "related-1",
-      title: "پست مرتبط ۱",
-      excerpt: "خلاصه پست مرتبط ۱...",
-      cover_media: { url: "../img/blog/post-2.jpg" }
+      title: "پست مرتبط: طراحی تجربه کاربری",
+      excerpt: "اصول طراحی تجربه کاربری که باید بدانید...",
+      cover_media: { url: cdn('https://picsum.photos/id/1003/600/350', {w:600, h:350, fit:'cover', output:'webp', q:80}) }
     },
     {
       slug: "related-2",
-      title: "پست مرتبط ۲",
-      excerpt: "خلاصه پست مرتبط ۲...",
-      cover_media: { url: "../img/blog/post-3.jpg" }
+      title: "پست مرتبط: بهینه‌سازی تصاویر برای وب",
+      excerpt: "چگونه تصاویر را برای وب بهینه کنیم...",
+      cover_media: { url: cdn('https://picsum.photos/id/1019/600/350', {w:600, h:350, fit:'cover', output:'webp', q:80}) }
     }
   ],
   hotPosts: [
     {
       slug: "hot-1",
-      title: "پست داغ ۱",
+      title: "پست داغ: افزایش سرعت سایت",
       views_count: 9876,
-      cover_media: { url: "../img/blog/post-4.jpg" }
+      cover_media: { url: cdn('https://picsum.photos/id/1020/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
     },
     {
       slug: "hot-2",
-      title: "پست داغ ۲",
+      title: "پست داغ: انتخاب هاست مناسب",
       views_count: 5432,
-      cover_media: { url: "../img/blog/post-5.jpg" }
+      cover_media: { url: cdn('https://picsum.photos/id/1027/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
     },
     {
       slug: "hot-3",
-      title: "پست داغ ۳",
-      views_count: 1234,
-      cover_media: { url: "../img/blog/post-6.jpg" }
+      title: "پست داغ: سئو در 2025",
+      views_count: 4321,
+      cover_media: { url: cdn('https://picsum.photos/id/1032/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
     }
   ],
   categories: [
@@ -93,7 +169,7 @@ const localData = {
 };
 
 // =====================
-// Helpers
+// Rest of script (renderers, bindings, init)
 // =====================
 const $ = (sel) => document.querySelector(sel);
 
@@ -117,16 +193,13 @@ function safeText(x, fallback="") {
   return (x === null || x === undefined) ? fallback : x;
 }
 
-// فقط برای content (که Markdown است) استفاده می‌کنیم
 function renderMarkdown(mdText) {
   if (!mdText) return "";
   const rawHtml = marked.parse(mdText, { breaks: true, gfm: true });
-  return DOMPurify.sanitize(rawHtml);
+  const withLazy = rawHtml.replace(/<img /g, '<img loading="lazy" ');
+  return DOMPurify.sanitize(withLazy);
 }
 
-// =====================
-// Renderers
-// =====================
 function renderBreadcrumb(post) {
   const bc = $("#breadcrumb");
   const category = safeText(post.category, "وبلاگ");
@@ -155,15 +228,16 @@ function renderPost(post) {
 
   const cover = post.cover_media || post.og_image;
   if (cover && cover.url) {
-    $("#cover-image").src = cover.url;
-    $("#cover-image").alt = safeText(cover.alt_text || post.title, "");
+    const imgEl = $("#cover-image");
+    imgEl.src = cover.url;
+    imgEl.alt = safeText(cover.alt_text || post.title, "");
+    imgEl.setAttribute('loading', 'lazy');
     $("#cover-caption").textContent = safeText(cover.caption, "");
     $("#cover-figure").style.display = "block";
   } else {
     $("#cover-figure").style.display = "none";
   }
 
-  // Content is Markdown
   $("#post-content").innerHTML = renderMarkdown(post.content);
 
   const tags = post.tags || [];
@@ -193,7 +267,7 @@ function renderComments(comments) {
     return `
       <article class="comment" data-comment-id="${c.id}">
         <div class="comment-header">
-          <img src="${safeText(user.avatar || "/placeholder.svg?height=40&width=40")}" alt="کاربر" class="comment-avatar">
+          <img src="${safeText(user.avatar || "/placeholder.svg?height=40&width=40")}" alt="کاربر" class="comment-avatar" loading="lazy">
           <div class="comment-author">
             <h4 class="comment-name">${safeText(user.full_name || user.username || "کاربر")}</h4>
             <time class="comment-date">${formatDate(c.created_at)}</time>
@@ -220,10 +294,10 @@ function renderRelated(related) {
   sec.style.display = "block";
   grid.innerHTML = related.map(p => {
     const img = p.cover_media?.url || "/placeholder.svg?height=200&width=300";
-    const excerpt = safeText(p.excerpt, "").slice(0, 120); // excerpt متن ساده است
+    const excerpt = safeText(p.excerpt, "").slice(0, 120);
     return `
       <article class="related-post">
-        <img src="${img}" alt="${safeText(p.title)}" class="related-image">
+        <img src="${img}" alt="${safeText(p.title)}" class="related-image" loading="lazy">
         <div class="related-content">
           <h3 class="related-title">${safeText(p.title)}</h3>
           <p class="related-excerpt">${excerpt}${excerpt.length ? "..." : ""}</p>
@@ -245,7 +319,7 @@ function renderHotPosts(posts) {
     const img = p.cover_media?.url || "/placeholder.svg?height=100&width=100";
     return `
       <article class="hot-post">
-        <img src="${img}" alt="${safeText(p.title)}" class="hot-post-image">
+        <img src="${img}" alt="${safeText(p.title)}" class="hot-post-image" loading="lazy">
         <div>
           <h4 class="hot-post-title">${safeText(p.title)}</h4>
           <p class="hot-post-meta">${safeText(p.views_count, 0)} بازدید</p>
@@ -268,16 +342,13 @@ function renderCategories(cats) {
   `).join("");
 }
 
-// =====================
-// Bindings
-// =====================
 function bindShareButtons() {
   document.querySelectorAll('.share-btn').forEach(btn => {
     btn.onclick = null;
     btn.addEventListener('click', function(e) {
       e.preventDefault();
 
-      const shareType = this.className.match(/share-(\w+)/)[1];
+      const shareType = this.className.match(/share-(\\w+)/)[1];
       const title = document.querySelector('.article-title').textContent;
       const url = window.location.href;
       const text = `${title} - ${window.location.hostname}`;
@@ -344,7 +415,6 @@ function bindCommentForm(post) {
       form.querySelector("button[type=submit]").disabled = true;
       msg.textContent = "در حال ارسال…";
 
-      // Mocking comment submission
       console.log("Mock comment submission:", { name, email, content });
       msg.textContent = "✅ نظر شما با موفقیت ارسال شد (شبیه‌سازی شده).";
       form.reset();
@@ -358,9 +428,6 @@ function bindCommentForm(post) {
   });
 }
 
-// =====================
-// Init
-// =====================
 document.addEventListener('DOMContentLoaded', function() {
   try {
     renderBreadcrumb(localData.post);
@@ -384,7 +451,7 @@ if ('IntersectionObserver' in window) {
   const imageObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        console.log('[img] loaded:', entry.target.alt);
+        console.log('[img] loaded:', entry.target.alt || entry.target.src);
         imageObserver.unobserve(entry.target);
       }
     });
