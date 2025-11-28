@@ -113,6 +113,21 @@ p {
 /* Main Content */
 .main-content {
     min-width: 0;
+    position: relative;
+}
+
+/* خط مماس بر تصویر اصلی */
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+    z-index: 10;
+    pointer-events: none;
 }
 
 /* Category Badge */
@@ -205,6 +220,7 @@ p {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--borders-color);
+    position: relative;
 }
 
 .featured-image img {
@@ -272,6 +288,21 @@ p {
 .article-content {
     margin: 2rem 0;
     line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+}
+
+/* محدود کردن محتوا به خط مماس بر تصویر اصلی */
+.article-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+    z-index: 5;
 }
 
 .article-content p {
@@ -739,6 +770,4 @@ textarea:focus-visible {
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
 }
