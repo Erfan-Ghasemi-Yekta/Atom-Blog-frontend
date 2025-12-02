@@ -305,6 +305,8 @@ function renderRelated(related) {
   }).join("");
 }
 
+// ✅ نسخه جدید رندر سایدبار بدون دکمه «باز کردن»
+// و با امکان کلیک روی عکس و عنوان برای رفتن به صفحه‌ی پست
 function renderHotPosts(posts) {
   const cont = $("#hot-posts");
   if (!posts || !posts.length) {
@@ -314,17 +316,40 @@ function renderHotPosts(posts) {
 
   cont.innerHTML = posts.map(p => {
     const img = p.cover_media?.url || "/placeholder.svg?height=100&width=100";
+    const slug = encodeURIComponent(p.slug);
+    const url = `/single-post-page.html?slug=${slug}`;
     return `
-      <article class="hot-post">
+      <article class="hot-post" data-url="${url}">
         <img src="${img}" alt="${safeText(p.title)}" class="hot-post-image" loading="lazy">
         <div>
           <h4 class="hot-post-title">${safeText(p.title)}</h4>
           <p class="hot-post-meta">${safeText(p.views_count, 0)} بازدید</p>
-          <a class="read-more" href="/single-post-page.html?slug=${encodeURIComponent(p.slug)}">باز کردن</a>
         </div>
       </article>
     `;
   }).join("");
+
+  bindHotPostClicks();
+}
+
+// این تابع روی عکس و متن هر آیتم سایدبار کلیک‌هندلر می‌گذارد
+function bindHotPostClicks() {
+  const items = document.querySelectorAll('.hot-post');
+  items.forEach(item => {
+    const url = item.getAttribute('data-url');
+    if (!url) return;
+
+    const img = item.querySelector('.hot-post-image');
+    const title = item.querySelector('.hot-post-title');
+
+    [img, title].forEach(el => {
+      if (!el) return;
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => {
+        window.location.href = url;
+      });
+    });
+  });
 }
 
 function bindShareButtons() {

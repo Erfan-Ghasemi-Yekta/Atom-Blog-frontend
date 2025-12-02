@@ -116,20 +116,6 @@ p {
     position: relative;
 }
 
-/* خط مماس بر تصویر اصلی */
-.main-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-    opacity: 0.5;
-    z-index: 10;
-    pointer-events: none;
-}
-
 /* Category Badge */
 .category-badge {
     display: inline-block;
@@ -157,7 +143,7 @@ p {
     justify-content: space-between;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--borders-color);
+    /* border-bottom حذف شد */
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -246,7 +232,7 @@ p {
     padding: 1.5rem;
     background-color: var(--card-color);
     border-radius: 8px;
-    border: 1px solid var(--borders-color);
+    /* border حذف شد */
     margin: 2rem 0;
     flex-wrap: wrap;
 }
@@ -290,19 +276,6 @@ p {
     line-height: 1.8;
     position: relative;
     overflow: hidden;
-}
-
-/* محدود کردن محتوا به خط مماس بر تصویر اصلی */
-.article-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-    opacity: 0.5;
-    z-index: 5;
 }
 
 .article-content p {
@@ -658,8 +631,23 @@ p {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    padding: 0.75rem 0.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--borders-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.hot-post:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .hot-post:last-child {
@@ -675,6 +663,11 @@ p {
     object-fit: cover;
     flex-shrink: 0;
     background-color: rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.hot-post:hover .hot-post-image {
+    transform: scale(1.03);
 }
 
 .hot-post-title {
