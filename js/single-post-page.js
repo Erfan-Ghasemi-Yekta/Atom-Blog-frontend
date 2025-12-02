@@ -1,16 +1,6 @@
 // Updated single-post-page.js — نسخهٔ به‌روز شده با محتوای غنی‌تر و تصاویر از طریق CDN
-// دربارهٔ تغییرات:
-// - تمامی تصاویر از طریق یک CDN proxy (images.weserv.nl) سرو می‌شوند تا همواره از یک CDN بارگزاری شوند.
-// - تابع کمکی `cdn()` اضافه شد تا به‌سادگی آدرس‌های تصویر را به URL‌های CDN تبدیل کند.
-// - محتوا، کاور، آواتارها، تصاویر مرتبط و داغ همگی به‌صورت پویا از طریق CDN لود می‌شوند.
-// - imgها دارای loading="lazy" و attributeهای مناسب هستند.
-
-// =====================
 // Helpers for CDN
-// =====================
 function cdn(src, opts = {}) {
-  // Uses images.weserv.nl as a free image CDN/proxy. This wraps the original URL.
-  // opts: {w, h, fit, output, q}
   if (!src) return src;
   try {
     const params = new URLSearchParams();
@@ -29,7 +19,7 @@ function cdn(src, opts = {}) {
 }
 
 // =====================
-// Local Data (updated to use cdn())
+// Local Data
 // =====================
 const localData = {
   post: {
@@ -41,13 +31,13 @@ const localData = {
     author: {
       full_name: "نویسنده تستی",
       username: "test-author",
-      avatar: cdn('https://picsum.photos/id/1005/80/80', {w:80, h:80, fit:'cover', output:'webp', q:80})
+      avatar: cdn('https://picsum.photos/id/1005/80/80', { w: 80, h: 80, fit: 'cover', output: 'webp', q: 80 })
     },
     published_at: new Date().toISOString(),
     reading_time_sec: 720,
     views_count: 1234,
     cover_media: {
-      url: cdn('https://picsum.photos/id/1015/1200/600', {w:1200, h:600, fit:'cover', output:'webp', q:80}),
+      url: cdn('https://picsum.photos/id/1015/1200/600', { w: 1200, h: 600, fit: 'cover', output: 'webp', q: 80 }),
       alt_text: "تصویر اصلی پست - نمایی از کد و کار در لپ‌تاپ",
     },
     content: `
@@ -62,7 +52,7 @@ const localData = {
 - انتشار منظم و برنامه‌ریزی محتوا
 
 
-![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', {w:1000, h:500, fit:'cover', output:'webp', q:80})})
+![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', { w: 1000, h: 500, fit: 'cover', output: 'webp', q: 80 })})
 
 ### انتخاب پلتفرم
 برای شروع، بین دو گزینهٔ رایج یکی را انتخاب کنید: سایت‌سازهای آماده (مثل Ghost، WordPress.com) یا سایت خود میزبانی‌شده که کنترل کامل دارد (مثل WordPress.org، Static sites با Netlify). اگر بهینه‌سازی و سرعت برایتان مهم است، سایت استاتیک + CDN گزینهٔ بسیار خوبی است.
@@ -72,7 +62,7 @@ const localData = {
 - فونت مناسب و اندازهٔ متن را رعایت کنید.
 - برای تصاویر از فرمت‌های بهینه مثل WebP استفاده کنید.
 
-![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', {w:800, h:450, fit:'cover', output:'webp', q:80})})
+![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', { w: 800, h: 450, fit: 'cover', output: 'webp', q: 80 })})
 
 ### تولید محتوا — ساختار یک پست
 یک پست خوب معمولاً شامل بخش‌های زیر است:
@@ -91,21 +81,19 @@ const localData = {
 - از lazy-loading استفاده کنید.
 - از CDN برای تحویل تصاویر استفاده کنید.
 
-![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', {w:900, h:500, fit:'cover', output:'webp', q:80})})
+![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', { w: 900, h: 500, fit: 'cover', output: 'webp', q: 80 })})
 
 ### مثال عملی — افزودن تصویر و تگ‌ها
 در بخش کد یا CMS خود کافی است در Markdown بنویسید:
 
 \`\`\`
-![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', {w:1200, h:600, fit:'cover', output:'webp', q:80})})
+![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', { w: 1200, h: 600, fit: 'cover', output: 'webp', q: 80 })})
 \`\`\`
 
 ## نتیجه‌گیری
 وبلاگ‌نویسی ترکیبی از خلاقیت، نظم و اصلاح مستمر است. با تمرکز روی کیفیت و تجربهٔ خواننده، در بلندمدت نتیجهٔ بهتری خواهید گرفت.
 
 ---
-
-اگر خواستی من می‌توانم همین محتوا را به نسخهٔ انگلیسی ترجمه یا خلاصهٔ ۳۰۰ کلمه‌ای از آن بسازم.
 `,
     tags: [
       { name: "تگ ۱", slug: "tag-1" },
@@ -115,13 +103,13 @@ const localData = {
     comments: [
       {
         id: 1,
-        user: { full_name: "کاربر ۱", avatar: cdn('https://picsum.photos/id/1011/64/64', {w:64, h:64, fit:'cover', output:'webp', q:80}) },
+        user: { full_name: "کاربر ۱", avatar: cdn('https://picsum.photos/id/1011/64/64', { w: 64, h: 64, fit: 'cover', output: 'webp', q: 80 }) },
         created_at: new Date().toISOString(),
         content: "این یک کامنت تستی است. مقاله عالی و کاربردی بود!"
       },
       {
         id: 2,
-        user: { full_name: "کاربر ۲", avatar: cdn('https://picsum.photos/id/1001/64/64', {w:64, h:64, fit:'cover', output:'webp', q:80}) },
+        user: { full_name: "کاربر ۲", avatar: cdn('https://picsum.photos/id/1001/64/64', { w: 64, h: 64, fit: 'cover', output: 'webp', q: 80 }) },
         created_at: new Date().toISOString(),
         content: "ممنون! لینک منابع خارجی هم دارید؟"
       }
@@ -132,44 +120,53 @@ const localData = {
       slug: "related-1",
       title: "پست مرتبط: طراحی تجربه کاربری",
       excerpt: "اصول طراحی تجربه کاربری که باید بدانید...",
-      cover_media: { url: cdn('https://picsum.photos/id/1003/600/350', {w:600, h:350, fit:'cover', output:'webp', q:80}) }
+      cover_media: { url: cdn('https://picsum.photos/id/1003/600/350', { w: 600, h: 350, fit: 'cover', output: 'webp', q: 80 }) }
     },
     {
       slug: "related-2",
       title: "پست مرتبط: بهینه‌سازی تصاویر برای وب",
       excerpt: "چگونه تصاویر را برای وب بهینه کنیم...",
-      cover_media: { url: cdn('https://picsum.photos/id/1019/600/350', {w:600, h:350, fit:'cover', output:'webp', q:80}) }
+      cover_media: { url: cdn('https://picsum.photos/id/1019/600/350', { w: 600, h: 350, fit: 'cover', output: 'webp', q: 80 }) }
     }
   ],
+
+  // این آرایه الان ۵ تا آیتم داره تا توی سایدبار ۵ پست نشون داده بشه
   hotPosts: [
     {
-      slug: "hot-1",
-      title: "پست داغ: افزایش سرعت سایت",
+      slug: "sidebar-related-1",
+      title: "پست مرتبط ۱: افزایش سرعت سایت",
       views_count: 9876,
-      cover_media: { url: cdn('https://picsum.photos/id/1020/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
+      cover_media: { url: cdn('https://picsum.photos/id/1020/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
     },
     {
-      slug: "hot-2",
-      title: "پست داغ: انتخاب هاست مناسب",
+      slug: "sidebar-related-2",
+      title: "پست مرتبط ۲: انتخاب هاست مناسب",
       views_count: 5432,
-      cover_media: { url: cdn('https://picsum.photos/id/1027/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
+      cover_media: { url: cdn('https://picsum.photos/id/1027/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
     },
     {
-      slug: "hot-3",
-      title: "پست داغ: سئو در 2025",
+      slug: "sidebar-related-3",
+      title: "پست مرتبط ۳: سئو در 2025",
       views_count: 4321,
-      cover_media: { url: cdn('https://picsum.photos/id/1032/200/120', {w:200, h:120, fit:'cover', output:'webp', q:80}) }
+      cover_media: { url: cdn('https://picsum.photos/id/1032/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "sidebar-related-4",
+      title: "پست مرتبط ۴: تولید محتوای ماندگار",
+      views_count: 3980,
+      cover_media: { url: cdn('https://picsum.photos/id/1040/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "sidebar-related-5",
+      title: "پست مرتبط ۵: لینک‌سازی هوشمند",
+      views_count: 3655,
+      cover_media: { url: cdn('https://picsum.photos/id/1045/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
     }
-  ],
-  categories: [
-    { name: "دسته ۱", slug: "cat-1", posts_count: 10 },
-    { name: "دسته ۲", slug: "cat-2", posts_count: 5 },
-    { name: "دسته ۳", slug: "cat-3", posts_count: 2 }
   ]
-};
+}; // ✅ این براکت و سمی‌کالن مهم بود
 
 // =====================
-// Rest of script (renderers, bindings, init)
+// Helpers & Rendering
 // =====================
 const $ = (sel) => document.querySelector(sel);
 
@@ -189,7 +186,7 @@ function readingTimeFromSeconds(sec) {
   return `${min} دقیقه`;
 }
 
-function safeText(x, fallback="") {
+function safeText(x, fallback = "") {
   return (x === null || x === undefined) ? fallback : x;
 }
 
@@ -205,7 +202,7 @@ function renderBreadcrumb(post) {
   const category = safeText(post.category, "وبلاگ");
 
   bc.innerHTML = `
-    <a href="/" class="breadcrumb-link">خانه</a>
+    <a href="/" class="breadcrumb-link">اتم گیم</a>
     <span class="breadcrumb-separator">/</span>
     <a href="/blog" class="breadcrumb-link">وبلاگ</a>
     <span class="breadcrumb-separator">/</span>
@@ -311,7 +308,7 @@ function renderRelated(related) {
 function renderHotPosts(posts) {
   const cont = $("#hot-posts");
   if (!posts || !posts.length) {
-    cont.innerHTML = `<p style="opacity:.7">مطلب داغی پیدا نشد.</p>`;
+    cont.innerHTML = `<p style="opacity:.7">مطلبی پیدا نشد.</p>`;
     return;
   }
 
@@ -330,26 +327,17 @@ function renderHotPosts(posts) {
   }).join("");
 }
 
-function renderCategories(cats) {
-  const ul = $("#categories-list");
-  if (!cats || !cats.length) {
-    ul.innerHTML = `<li style="opacity:.7">دسته‌بندی ندارد</li>`;
-    return;
-  }
-
-  ul.innerHTML = cats.map(c => `
-    <li><a href="/blog?category=${encodeURIComponent(c.slug || c.title || c.name)}">${safeText(c.title || c.name)}</a> (${safeText(c.posts_count, 0)})</li>
-  `).join("");
-}
-
 function bindShareButtons() {
   document.querySelectorAll('.share-btn').forEach(btn => {
     btn.onclick = null;
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
 
-      const shareType = this.className.match(/share-(\\w+)/)[1];
-      const title = document.querySelector('.article-title').textContent;
+      const shareTypeMatch = this.className.match(/share-(\w+)/);
+      if (!shareTypeMatch) return;
+      const shareType = shareTypeMatch[1];
+
+      const title = document.querySelector('.article-title')?.textContent || document.title;
       const url = window.location.href;
       const text = `${title} - ${window.location.hostname}`;
 
@@ -369,22 +357,16 @@ function bindShareButtons() {
   });
 }
 
-function subscribeNewsletter(e) {
-  e.preventDefault();
-  const email = e.target.querySelector('input[type="email"]').value;
-  console.log('[newsletter] subscription:', email);
-  alert('با تشکر! شما برای خبرنامه ثبت‌نام کردید.');
-  e.target.reset();
-}
-
 function bindReplyButtons() {
   document.querySelectorAll('.comment-reply').forEach(btn => {
     btn.onclick = null;
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
       const commentForm = $('.comment-form');
+      if (!commentForm) return;
       commentForm.scrollIntoView({ behavior: 'smooth' });
-      commentForm.querySelector('textarea').focus();
+      const textarea = commentForm.querySelector('textarea');
+      if (textarea) textarea.focus();
     });
   });
 }
@@ -392,6 +374,8 @@ function bindReplyButtons() {
 function bindCommentForm(post) {
   const form = $("#comment-form");
   const msg = $("#comment-form-msg");
+
+  if (!form || !msg) return;
 
   const postId = post.id;
   if (!postId) {
@@ -407,12 +391,13 @@ function bindCommentForm(post) {
       return;
     }
 
-    const name = $("#comment-name").value.trim();
-    const email = $("#comment-email").value.trim();
-    const content = $("#comment-content").value.trim();
+    const name = $("#comment-name")?.value.trim();
+    const email = $("#comment-email")?.value.trim();
+    const content = $("#comment-content")?.value.trim();
 
     try {
-      form.querySelector("button[type=submit]").disabled = true;
+      const submitBtn = form.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
       msg.textContent = "در حال ارسال…";
 
       console.log("Mock comment submission:", { name, email, content });
@@ -423,12 +408,13 @@ function bindCommentForm(post) {
       console.error(err);
       msg.textContent = "❌ ارسال نظر خطا داشت. دوباره تلاش کنید.";
     } finally {
-      form.querySelector("button[type=submit]").disabled = false;
+      const submitBtn = form.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = false;
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   try {
     renderBreadcrumb(localData.post);
     renderPost(localData.post);
@@ -436,8 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
     bindCommentForm(localData.post);
 
     renderRelated(localData.relatedPosts);
-    renderHotPosts(localData.hotPosts);
-    renderCategories(localData.categories);
+    renderHotPosts(localData.hotPosts); // اینجا الان ۵ تا آیتم رندر می‌شود
   } catch (e) {
     console.error(e);
     $("#post-title").textContent = "پست پیدا نشد یا خطا در بارگذاری اطلاعات.";
@@ -445,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Image lazy logging (kept)
+// Optional: log when images come into view
 const images = document.querySelectorAll('img');
 if ('IntersectionObserver' in window) {
   const imageObserver = new IntersectionObserver((entries) => {
