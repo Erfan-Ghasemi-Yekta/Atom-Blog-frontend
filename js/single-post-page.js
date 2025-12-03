@@ -130,8 +130,8 @@ const localData = {
     }
   ],
 
-  // این آرایه الان ۵ تا آیتم داره تا توی سایدبار ۵ پست نشون داده بشه
-  hotPosts: [
+  // این آرایه الان ۵ تا آیتم داره تا توی سایدبار ۵ پست مرتبط نشان دهد
+  relatedSidebarPosts: [
     {
       slug: "sidebar-related-1",
       title: "پست مرتبط ۱: افزایش سرعت سایت",
@@ -307,8 +307,8 @@ function renderRelated(related) {
 
 // ✅ نسخه جدید رندر سایدبار بدون دکمه «باز کردن»
 // و با امکان کلیک روی عکس و عنوان برای رفتن به صفحه‌ی پست
-function renderHotPosts(posts) {
-  const cont = $("#hot-posts");
+function renderRelatedSidebarPosts(posts) {
+  const cont = $("#related-posts-widget");
   if (!posts || !posts.length) {
     cont.innerHTML = `<p style="opacity:.7">مطلبی پیدا نشد.</p>`;
     return;
@@ -319,28 +319,28 @@ function renderHotPosts(posts) {
     const slug = encodeURIComponent(p.slug);
     const url = `/single-post-page.html?slug=${slug}`;
     return `
-      <article class="hot-post" data-url="${url}">
-        <img src="${img}" alt="${safeText(p.title)}" class="hot-post-image" loading="lazy">
+      <article class="related-post-item" data-url="${url}">
+        <img src="${img}" alt="${safeText(p.title)}" class="related-post-image" loading="lazy">
         <div>
-          <h4 class="hot-post-title">${safeText(p.title)}</h4>
-          <p class="hot-post-meta">${safeText(p.views_count, 0)} بازدید</p>
+          <h4 class="related-post-title">${safeText(p.title)}</h4>
+          <p class="related-post-meta">${safeText(p.views_count, 0)} بازدید</p>
         </div>
       </article>
     `;
   }).join("");
 
-  bindHotPostClicks();
+  bindRelatedSidebarPostClicks();
 }
 
 // این تابع روی عکس و متن هر آیتم سایدبار کلیک‌هندلر می‌گذارد
-function bindHotPostClicks() {
-  const items = document.querySelectorAll('.hot-post');
+function bindRelatedSidebarPostClicks() {
+  const items = document.querySelectorAll('.related-post-item');
   items.forEach(item => {
     const url = item.getAttribute('data-url');
     if (!url) return;
 
-    const img = item.querySelector('.hot-post-image');
-    const title = item.querySelector('.hot-post-title');
+    const img = item.querySelector('.related-post-image');
+    const title = item.querySelector('.related-post-title');
 
     [img, title].forEach(el => {
       if (!el) return;
@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function () {
     bindCommentForm(localData.post);
 
     renderRelated(localData.relatedPosts);
-    renderHotPosts(localData.hotPosts); // اینجا الان ۵ تا آیتم رندر می‌شود
+    renderRelatedSidebarPosts(localData.relatedSidebarPosts); // اینجا الان ۵ تا آیتم رندر می‌شود
   } catch (e) {
     console.error(e);
     $("#post-title").textContent = "پست پیدا نشد یا خطا در بارگذاری اطلاعات.";
