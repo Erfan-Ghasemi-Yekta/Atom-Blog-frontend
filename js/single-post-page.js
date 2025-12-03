@@ -162,6 +162,40 @@ const localData = {
       views_count: 3655,
       cover_media: { url: cdn('https://picsum.photos/id/1045/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
     }
+  ],
+
+  // آرایه‌ی مخصوص «پر بازدید ترین‌ها» در سایدبار (۵ آیتم)
+  mostViewedSidebarPosts: [
+    {
+      slug: "most-viewed-1",
+      title: "پر بازدید ۱: ۱۰ ترفند سئو",
+      views_count: 15000,
+      cover_media: { url: cdn('https://picsum.photos/id/1050/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "most-viewed-2",
+      title: "پر بازدید ۲: ساخت استراتژی محتوا",
+      views_count: 13250,
+      cover_media: { url: cdn('https://picsum.photos/id/1060/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "most-viewed-3",
+      title: "پر بازدید ۳: اشتباهات مرگبار در وبلاگ",
+      views_count: 12010,
+      cover_media: { url: cdn('https://picsum.photos/id/1070/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "most-viewed-4",
+      title: "پر بازدید ۴: افزایش نرخ کلیک",
+      views_count: 11005,
+      cover_media: { url: cdn('https://picsum.photos/id/1080/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    },
+    {
+      slug: "most-viewed-5",
+      title: "پر بازدید ۵: انتخاب کلمات کلیدی",
+      views_count: 10550,
+      cover_media: { url: cdn('https://picsum.photos/id/1090/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+    }
   ]
 }; // ✅ این براکت و سمی‌کالن مهم بود
 
@@ -332,6 +366,35 @@ function renderRelatedSidebarPosts(posts) {
   bindRelatedSidebarPostClicks();
 }
 
+// ✅ رندر باکس «پر بازدید ترین‌ها» زیر سایدبار، با همان استایل
+function renderMostViewedSidebarPosts(posts) {
+  const cont = $("#most-viewed-widget");
+  if (!cont) return;
+
+  if (!posts || !posts.length) {
+    cont.innerHTML = `<p style="opacity:.7">مطلبی پیدا نشد.</p>`;
+    return;
+  }
+
+  cont.innerHTML = posts.map(p => {
+    const img = p.cover_media?.url || "/placeholder.svg?height=100&width=100";
+    const slug = encodeURIComponent(p.slug);
+    const url = `/single-post-page.html?slug=${slug}`;
+    return `
+      <article class="related-post-item" data-url="${url}">
+        <img src="${img}" alt="${safeText(p.title)}" class="related-post-image" loading="lazy">
+        <div>
+          <h4 class="related-post-title">${safeText(p.title)}</h4>
+          <p class="related-post-meta">${safeText(p.views_count, 0)} بازدید</p>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  // همان هندل کلیک را استفاده می‌کنیم
+  bindRelatedSidebarPostClicks();
+}
+
 // این تابع روی عکس و متن هر آیتم سایدبار کلیک‌هندلر می‌گذارد
 function bindRelatedSidebarPostClicks() {
   const items = document.querySelectorAll('.related-post-item');
@@ -447,7 +510,8 @@ document.addEventListener('DOMContentLoaded', function () {
     bindCommentForm(localData.post);
 
     renderRelated(localData.relatedPosts);
-    renderRelatedSidebarPosts(localData.relatedSidebarPosts); // اینجا الان ۵ تا آیتم رندر می‌شود
+    renderRelatedSidebarPosts(localData.relatedSidebarPosts); // سایدبار: پست‌های مرتبط
+    renderMostViewedSidebarPosts(localData.mostViewedSidebarPosts); // سایدبار: پر بازدید ترین‌ها
   } catch (e) {
     console.error(e);
     $("#post-title").textContent = "پست پیدا نشد یا خطا در بارگذاری اطلاعات.";
