@@ -8,7 +8,7 @@
   </a>
 
   <nav id="mainNav">
-    <a href="index.html" class="active">خانه</a>
+    <a href="index.html">وبلاگ</a>
     <a href="about.html">درباره ما</a>
     <a href="https://atom-game.ir">صفحه اتم تورنومنت</a>
   </nav>

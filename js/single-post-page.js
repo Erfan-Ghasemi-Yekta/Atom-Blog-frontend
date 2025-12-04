@@ -95,11 +95,6 @@ const localData = {
 
 ---
 `,
-    tags: [
-      { name: "تگ ۱", slug: "tag-1" },
-      { name: "وبلاگ‌نویسی", slug: "blogging" },
-      { name: "بهینه‌سازی", slug: "optimization" }
-    ],
     comments: [
       {
         id: 1,
@@ -270,16 +265,6 @@ function renderPost(post) {
   }
 
   $("#post-content").innerHTML = renderMarkdown(post.content);
-
-  const tags = post.tags || [];
-  if (tags.length) {
-    $("#tags-section").style.display = "block";
-    $("#tags-list").innerHTML = tags.map(t =>
-      `<a href="/blog?tag=${encodeURIComponent(t.slug || t.title || t.name)}" class="tag">${safeText(t.title || t.name)}</a>`
-    ).join("");
-  } else {
-    $("#tags-section").style.display = "none";
-  }
 
   const comments = post.comments || [];
   $("#comments-title").textContent = `نظرات (${comments.length})`;
