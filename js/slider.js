@@ -12,50 +12,109 @@
   // === NEW: detect RTL once ===
   const isRTL = (document.documentElement.getAttribute('dir') || '').toLowerCase() === 'rtl';
 
-  // Data (use only first 5)
-  const dataAll = [
-    {
-      id: 'gta6-record',
-      title_fa: 'رکورد جدید Grand Theft Auto 6',
-      date_fa: '۲۷ مهر ۱۴۰۴',
-      image_url: '../img/img-for-test/img-1.jpg',
-      thumb_url: '../img/img-for-test/img-1.jpg',
-      post_url: 'https://atom-game.ir/'
-    },
-    {
-      id: 'elden-ring-ip',
-      title_fa: 'مالکیت کامل معنوی الدن رینگ FromSoftware',
-      date_fa: '۲۲ مهر ۱۴۰۴',
-      image_url: '../img/img-for-test/img-2.jpg',
-      thumb_url: '../img/img-for-test/img-2.jpg',
-      post_url: 'https://atom-game.ir/'
-    },
-    {
-      id: 'sonic-x-shadow',
-      title_fa: 'بازی جدید سونیک Sonic X Shadow Generations',
-      date_fa: '۱۸ مهر ۱۴۰۴',
-      image_url: '../img/img-for-test/img-3.jpg',
-      thumb_url: '../img/img-for-test/img-3.jpg',
-      post_url: 'https://atom-game.ir/'
-    },
-    {
-      id: 'ffvii-rebirth',
-      title_fa: 'جزئیات تازه از Final Fantasy VII Rebirth',
-      date_fa: '۱۵ مهر ۱۴۰۴',
-      image_url: '../img/img-for-test/img-4.jpg',
-      thumb_url: '../img/img-for-test/img-4.jpg',
-      post_url: 'https://atom-game.ir/'
-    },
-    {
-      id: 'starfield-mods',
-      title_fa: 'به‌روزرسانی مادهای Starfield و بهبود FPS',
-      date_fa: '۱۰ مهر ۱۴۰۴',
-      image_url: '../img/img-for-test/img-5.jpg',
-      thumb_url: '../img/img-for-test/img-5.jpg',
-      post_url: 'https://atom-game.ir/'
-    },
-  ];
-  const newsData = dataAll.slice(0, 5); // exactly 5
+  // Data now comes from API (no hardcoded array anymore)
+  let dataAll = [];
+  let newsData = [];
+
+  /**
+   * Format ISO datetime to a Persian-friendly date string.
+   * Uses browser Intl; falls back to ISO date if needed.
+   */
+  function formatFaDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    if (Number.isNaN(d.getTime())) return '';
+    try {
+      return d.toLocaleDateString('fa-IR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (e) {
+      return d.toISOString().slice(0, 10);
+    }
+  }
+
+  /**
+   * Fetch posts from the blog API and map them into
+   * the structure that the slider expects.
+   *
+   * Uses: GET /api/blog/posts/
+   */
+async function fetchSliderData() {
+  try {
+    const res = await fetch('https://atom-game.ir/api/blog/posts/');
+    if (!res.ok) throw new Error('Failed to load posts for slider');
+
+    const payload = await res.json();
+    console.log('[slider] raw blog payload:', payload);
+
+    // ۱) اگر مستقیم آرایه بود
+    let posts = Array.isArray(payload) ? payload : null;
+
+    // ۲) اگر شبیه DRF بود: { results: [...] }
+    if (!posts && Array.isArray(payload.results)) {
+      posts = payload.results;
+    }
+
+    // ۳) اگر هنوز پیدا نشد، بی‌خیال
+    if (!posts) {
+      console.warn('Unexpected posts payload for slider:', payload);
+      return [];
+    }
+
+    // فقط ۵ تای اول برای اسلایدر
+    const topPosts = posts.slice(0, 5);
+
+    const mapped = topPosts.map((post) => {
+      // عنوان: اول سعی کن فارسی، بعد عمومی
+      const titleFa =
+        post.title_fa ||
+        post.title_fa_ir ||
+        post.title ||
+        '';
+
+      // تاریخ: هر فیلدی که داری اینجا بذار
+      const publishedAt =
+        post.published_at ||
+        post.publish_date ||
+        post.created_at ||
+        null;
+
+      // عکس کاور: چند نام متداول
+      const imageUrl =
+        (post.cover_media && post.cover_media.url) ||
+        post.cover_image ||
+        post.featured_image ||
+        post.image ||
+        post.thumbnail ||
+        null;
+
+      // لینک پست
+      const postUrl =
+        post.canonical_url ||
+        post.absolute_url ||
+        (post.slug ? `/blog/${post.slug}/` : '#');
+
+      return {
+        id: post.id ?? String(post.slug ?? Math.random()),
+        title_fa: titleFa,
+        date_fa: formatFaDate(publishedAt),
+        image_url: imageUrl,
+        thumb_url: imageUrl,
+        category_fa: null
+      };
+    });
+
+    // اینجا دیگر فقط آن‌هایی که *واقعاً* هیچ عنوانی ندارند حذف می‌شوند
+    return mapped.filter(item => item.title_fa && item.title_fa.trim().length > 0);
+  } catch (e) {
+    console.error('Error fetching slider posts:', e);
+    return [];
+  }
+}
+
+
 
   function buildDots() {
     const pagRoot = document.getElementById('pagination');
@@ -320,10 +379,33 @@
     }
   }
 
-  // expose data for preload helper
-  root.__newsData = newsData;
-  build();
+  // expose data for preload helper AFTER we load from API
+  async function initSlider() {
+    try {
+      const apiData = await fetchSliderData();
+      if (!apiData || !apiData.length) {
+        console.warn('No data returned for slider');
+        return;
+      }
+
+      // پر کردن داده‌ی داخلی اسلایدر
+      dataAll = apiData;
+      newsData = dataAll.slice(0, 5);
+
+      // برای preload داخلی خود اسلایدر
+      root.__newsData = newsData;
+
+      // حالا کل UI اسلایدر را بساز
+      build();
+    } catch (e) {
+      console.error('Failed to initialize slider:', e);
+    }
+  }
+
+  // شروع کار اسلایدر
+  initSlider();
 })();
+
 
 
 // === Disable slider controls on small screens ===
