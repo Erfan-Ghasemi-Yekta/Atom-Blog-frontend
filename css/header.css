@@ -95,7 +95,7 @@ nav a.active::after {
   border-radius: 2px;
 }
 
-/* اکشن‌های سمت چپ (اکانت + سرچ روی دسکتاپ) */
+/* اکشن‌های سمت چپ (اکانت روی دسکتاپ) */
 .header-actions {
   margin-left: 300px;
   margin-right: auto;
@@ -129,71 +129,6 @@ nav a.active::after {
 
 .icon-btn svg {
   display: block;
-}
-
-/* سرچ اینلاین داخل هدر (برای دسکتاپ) */
-.search-inline {
-  display: inline-flex;
-  align-items: center;
-  overflow: hidden;
-  width: 0;
-  opacity: 0;
-  transform: translateX(8px) scaleX(.9);
-  transform-origin: right;
-  transition: width .28s ease,
-              opacity .22s ease,
-              transform .28s ease;
-  border: 1px solid #374151;
-  border-radius: 10px;
-  background: linear-gradient(90deg,
-              rgba(30, 41, 59, .95) 0%,
-              rgba(15, 23, 42, .95) 100%);
-  margin-inline-start: 8px;
-}
-
-.search-inline.open {
-  width: 260px;
-  opacity: 1;
-  transform: translateX(0) scaleX(1);
-}
-
-.search-inline form {
-  position: relative;
-  width: 100%;
-}
-
-.search-inline .search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-  pointer-events: none;
-}
-
-.search-inline input {
-  width: 100%;
-  padding: 10px 36px 10px 10px;
-  background: transparent;
-  border: 0;
-  outline: none;
-  color: #FEFEFE;
-  font-weight: 600;
-}
-
-/* آیکن پرنده برای انیمیشن بستن سرچ */
-.flying-icon {
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  transition: transform .32s cubic-bezier(.2, .8, .2, 1),
-              opacity .32s ease;
-  will-change: transform, opacity;
-}
-
-#searchBtn.hidden {
-  visibility: hidden !important;
-  pointer-events: none !important;
 }
 
 /* ===== Breakpoints دسکتاپ کوچک‌تر ===== */
@@ -240,12 +175,6 @@ nav a.active::after {
 }
 
 /* =========================================
-   موبایل (زیر 900px) – هدر دو لایه
-   ========================================= */
-/* =========================================
-   موبایل (زیر 900px) – هدر دو لایه ریسپانسیو
-   ========================================= */
-/* =========================================
    موبایل (زیر 900px) – هدر دو لایه ریسپانسیو
    ========================================= */
 @media (max-width: 900px) {
@@ -272,7 +201,7 @@ nav a.active::after {
     content: url("../img/logo-phone.png");
   }
 
-  /* آیکون حساب و سرچ – سمت چپ */
+  /* آیکون حساب – سمت چپ */
   .header-actions {
     order: 2;
     display: flex;
@@ -280,25 +209,13 @@ nav a.active::after {
     align-items: center;
     gap: 8px;
     margin: 0;
-    direction: ltr;      /* برای منظم شدن آیکون‌ها */
+    direction: ltr;
     flex-shrink: 1;
   }
 
   .icon-btn {
     width: 34px;
     height: 34px;
-  }
-
-  /* سرچ اینلاین در موبایل: توی همان لایه، با عرض واکنش‌گرا */
-  .search-inline {
-    margin-inline-start: 6px;
-  }
-
-  .search-inline.open {
-    /* عرض سرچ را بر اساس عرض صفحه حساب می‌کنیم
-       تا روی همه‌ی موبایل‌ها جا شود و نشکند */
-    width: calc(100vw - 180px);
-    max-width: 260px;   /* روی گوشی‌های بزرگ‌تر زیادی پهن نشود */
   }
 
   /* لایه دوم: نوار لینک‌ها زیر لایه اول */
