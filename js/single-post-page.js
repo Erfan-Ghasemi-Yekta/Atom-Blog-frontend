@@ -41,7 +41,6 @@ const localData = {
       })
     },
     published_at: new Date().toISOString(),
-    reading_time_sec: 720,
     views_count: 1234,
     cover_media: {
       url: cdn('https://picsum.photos/id/1015/1200/600', {
@@ -366,12 +365,6 @@ function formatDate(iso) {
   }
 }
 
-function readingTimeFromSeconds(sec) {
-  if (!sec && sec !== 0) return "—";
-  const min = Math.max(1, Math.ceil(sec / 60));
-  return `${min} دقیقه`;
-}
-
 function safeText(x, fallback = "") {
   return (x === null || x === undefined) ? fallback : x;
 }
@@ -406,7 +399,6 @@ function renderPost(post) {
   const author = post.author || {};
   $("#author-name").textContent = safeText(author.full_name || author.username || author.name, "—");
   $("#publish-date").textContent = formatDate(post.published_at);
-  $("#reading-time").textContent = readingTimeFromSeconds(post.reading_time_sec);
   $("#views-count").textContent = safeText(post.views_count, 0);
 
   const cover = post.cover_media || post.og_image;
@@ -455,11 +447,7 @@ function renderComments(comments) {
   bindReplyButtons();
 }
 
-// ✅ نسخه جدید رندر «مطالب مرتبط» با:
-// - نمایش تایتل، خلاصه، تصویر، تاریخ انتشار
-// - حذف دکمه «مطالعه بیشتر»
-// - لینک شدن عکس و تایتل به صفحه پست
-// - تاریخ انتشار زیر excerpt قرار گرفته
+// ✅ نسخه جدید رندر «مطالب مرتبط»
 function renderRelated(related) {
   const sec = $("#related-posts");
   const grid = $("#related-grid");
@@ -503,7 +491,6 @@ function renderRelated(related) {
 }
 
 // ✅ نسخه جدید رندر سایدبار بدون دکمه «باز کردن»
-// و با امکان کلیک روی عکس و عنوان برای رفتن به صفحه‌ی پست
 function renderRelatedSidebarPosts(posts) {
   const cont = $("#related-posts-widget");
   if (!posts || !posts.length) {
@@ -558,7 +545,6 @@ function renderMostViewedSidebarPosts(posts) {
   bindRelatedSidebarPostClicks();
 }
 
-// این تابع روی عکس و متن هر آیتم سایدبار کلیک‌هندلر می‌گذارد
 function bindRelatedSidebarPostClicks() {
   const items = document.querySelectorAll('.related-post-item');
   items.forEach(item => {
