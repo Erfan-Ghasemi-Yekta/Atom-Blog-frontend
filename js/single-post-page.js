@@ -1,4 +1,5 @@
 // Updated single-post-page.js — نسخهٔ به‌روز شده با محتوای غنی‌تر و تصاویر از طریق CDN
+
 // Helpers for CDN
 function cdn(src, opts = {}) {
   if (!src) return src;
@@ -31,13 +32,25 @@ const localData = {
     author: {
       full_name: "نویسنده تستی",
       username: "test-author",
-      avatar: cdn('https://picsum.photos/id/1005/80/80', { w: 80, h: 80, fit: 'cover', output: 'webp', q: 80 })
+      avatar: cdn('https://picsum.photos/id/1005/80/80', {
+        w: 80,
+        h: 80,
+        fit: 'cover',
+        output: 'webp',
+        q: 80
+      })
     },
     published_at: new Date().toISOString(),
     reading_time_sec: 720,
     views_count: 1234,
     cover_media: {
-      url: cdn('https://picsum.photos/id/1015/1200/600', { w: 1200, h: 600, fit: 'cover', output: 'webp', q: 80 }),
+      url: cdn('https://picsum.photos/id/1015/1200/600', {
+        w: 1200,
+        h: 600,
+        fit: 'cover',
+        output: 'webp',
+        q: 80
+      }),
       alt_text: "تصویر اصلی پست - نمایی از کد و کار در لپ‌تاپ",
     },
     content: `
@@ -52,7 +65,13 @@ const localData = {
 - انتشار منظم و برنامه‌ریزی محتوا
 
 
-![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', { w: 1000, h: 500, fit: 'cover', output: 'webp', q: 80 })})
+![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', {
+      w: 1000,
+      h: 500,
+      fit: 'cover',
+      output: 'webp',
+      q: 80
+    })})
 
 ### انتخاب پلتفرم
 برای شروع، بین دو گزینهٔ رایج یکی را انتخاب کنید: سایت‌سازهای آماده (مثل Ghost، WordPress.com) یا سایت خود میزبانی‌شده که کنترل کامل دارد (مثل WordPress.org، Static sites با Netlify). اگر بهینه‌سازی و سرعت برایتان مهم است، سایت استاتیک + CDN گزینهٔ بسیار خوبی است.
@@ -62,7 +81,13 @@ const localData = {
 - فونت مناسب و اندازهٔ متن را رعایت کنید.
 - برای تصاویر از فرمت‌های بهینه مثل WebP استفاده کنید.
 
-![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', { w: 800, h: 450, fit: 'cover', output: 'webp', q: 80 })})
+![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', {
+      w: 800,
+      h: 450,
+      fit: 'cover',
+      output: 'webp',
+      q: 80
+    })})
 
 ### تولید محتوا — ساختار یک پست
 یک پست خوب معمولاً شامل بخش‌های زیر است:
@@ -81,13 +106,25 @@ const localData = {
 - از lazy-loading استفاده کنید.
 - از CDN برای تحویل تصاویر استفاده کنید.
 
-![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', { w: 900, h: 500, fit: 'cover', output: 'webp', q: 80 })})
+![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', {
+      w: 900,
+      h: 500,
+      fit: 'cover',
+      output: 'webp',
+      q: 80
+    })})
 
 ### مثال عملی — افزودن تصویر و تگ‌ها
 در بخش کد یا CMS خود کافی است در Markdown بنویسید:
 
 \`\`\`
-![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', { w: 1200, h: 600, fit: 'cover', output: 'webp', q: 80 })})
+![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', {
+      w: 1200,
+      h: 600,
+      fit: 'cover',
+      output: 'webp',
+      q: 80
+    })})
 \`\`\`
 
 ## نتیجه‌گیری
@@ -98,13 +135,31 @@ const localData = {
     comments: [
       {
         id: 1,
-        user: { full_name: "کاربر ۱", avatar: cdn('https://picsum.photos/id/1011/64/64', { w: 64, h: 64, fit: 'cover', output: 'webp', q: 80 }) },
+        user: {
+          full_name: "کاربر ۱",
+          avatar: cdn('https://picsum.photos/id/1011/64/64', {
+            w: 64,
+            h: 64,
+            fit: 'cover',
+            output: 'webp',
+            q: 80
+          })
+        },
         created_at: new Date().toISOString(),
         content: "این یک کامنت تستی است. مقاله عالی و کاربردی بود!"
       },
       {
         id: 2,
-        user: { full_name: "کاربر ۲", avatar: cdn('https://picsum.photos/id/1001/64/64', { w: 64, h: 64, fit: 'cover', output: 'webp', q: 80 }) },
+        user: {
+          full_name: "کاربر ۲",
+          avatar: cdn('https://picsum.photos/id/1001/64/64', {
+            w: 64,
+            h: 64,
+            fit: 'cover',
+            output: 'webp',
+            q: 80
+          })
+        },
         created_at: new Date().toISOString(),
         content: "ممنون! لینک منابع خارجی هم دارید؟"
       }
@@ -115,13 +170,31 @@ const localData = {
       slug: "related-1",
       title: "پست مرتبط: طراحی تجربه کاربری",
       excerpt: "اصول طراحی تجربه کاربری که باید بدانید...",
-      cover_media: { url: cdn('https://picsum.photos/id/1003/600/350', { w: 600, h: 350, fit: 'cover', output: 'webp', q: 80 }) }
+      published_at: new Date().toISOString(),
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1003/600/350', {
+          w: 600,
+          h: 350,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "related-2",
       title: "پست مرتبط: بهینه‌سازی تصاویر برای وب",
       excerpt: "چگونه تصاویر را برای وب بهینه کنیم...",
-      cover_media: { url: cdn('https://picsum.photos/id/1019/600/350', { w: 600, h: 350, fit: 'cover', output: 'webp', q: 80 }) }
+      published_at: new Date().toISOString(),
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1019/600/350', {
+          w: 600,
+          h: 350,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     }
   ],
 
@@ -131,31 +204,71 @@ const localData = {
       slug: "sidebar-related-1",
       title: "پست مرتبط ۱: افزایش سرعت سایت",
       views_count: 9876,
-      cover_media: { url: cdn('https://picsum.photos/id/1020/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1020/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "sidebar-related-2",
       title: "پست مرتبط ۲: انتخاب هاست مناسب",
       views_count: 5432,
-      cover_media: { url: cdn('https://picsum.photos/id/1027/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1027/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "sidebar-related-3",
       title: "پست مرتبط ۳: سئو در 2025",
       views_count: 4321,
-      cover_media: { url: cdn('https://picsum.photos/id/1032/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1032/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "sidebar-related-4",
       title: "پست مرتبط ۴: تولید محتوای ماندگار",
       views_count: 3980,
-      cover_media: { url: cdn('https://picsum.photos/id/1040/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1040/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "sidebar-related-5",
       title: "پست مرتبط ۵: لینک‌سازی هوشمند",
       views_count: 3655,
-      cover_media: { url: cdn('https://picsum.photos/id/1045/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1045/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     }
   ],
 
@@ -165,31 +278,71 @@ const localData = {
       slug: "most-viewed-1",
       title: "پر بازدید ۱: ۱۰ ترفند سئو",
       views_count: 15000,
-      cover_media: { url: cdn('https://picsum.photos/id/1050/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1050/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "most-viewed-2",
       title: "پر بازدید ۲: ساخت استراتژی محتوا",
       views_count: 13250,
-      cover_media: { url: cdn('https://picsum.photos/id/1060/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1060/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "most-viewed-3",
       title: "پر بازدید ۳: اشتباهات مرگبار در وبلاگ",
       views_count: 12010,
-      cover_media: { url: cdn('https://picsum.photos/id/1070/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1070/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "most-viewed-4",
       title: "پر بازدید ۴: افزایش نرخ کلیک",
       views_count: 11005,
-      cover_media: { url: cdn('https://picsum.photos/id/1080/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1080/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     },
     {
       slug: "most-viewed-5",
       title: "پر بازدید ۵: انتخاب کلمات کلیدی",
       views_count: 10550,
-      cover_media: { url: cdn('https://picsum.photos/id/1090/200/120', { w: 200, h: 120, fit: 'cover', output: 'webp', q: 80 }) }
+      cover_media: {
+        url: cdn('https://picsum.photos/id/1090/200/120', {
+          w: 200,
+          h: 120,
+          fit: 'cover',
+          output: 'webp',
+          q: 80
+        })
+      }
     }
   ]
 }; // ✅ این براکت و سمی‌کالن مهم بود
@@ -203,7 +356,11 @@ function formatDate(iso) {
   if (!iso) return "—";
   try {
     const d = new Date(iso);
-    return d.toLocaleDateString("fa-IR", { year: "numeric", month: "long", day: "numeric" });
+    return d.toLocaleDateString("fa-IR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
   } catch {
     return iso;
   }
@@ -298,6 +455,11 @@ function renderComments(comments) {
   bindReplyButtons();
 }
 
+// ✅ نسخه جدید رندر «مطالب مرتبط» با:
+// - نمایش تایتل، خلاصه، تصویر، تاریخ انتشار
+// - حذف دکمه «مطالعه بیشتر»
+// - لینک شدن عکس و تایتل به صفحه پست
+// - تاریخ انتشار زیر excerpt قرار گرفته
 function renderRelated(related) {
   const sec = $("#related-posts");
   const grid = $("#related-grid");
@@ -311,13 +473,29 @@ function renderRelated(related) {
   grid.innerHTML = related.map(p => {
     const img = p.cover_media?.url || "/placeholder.svg?height=200&width=300";
     const excerpt = safeText(p.excerpt, "").slice(0, 120);
+    const dateRaw = p.published_at || p.created_at;
+    const dateText = dateRaw ? formatDate(dateRaw) : "";
+    const slug = encodeURIComponent(p.slug || "");
+    const url = `/single-post-page.html?slug=${slug}`;
+
     return `
       <article class="related-post">
-        <img src="${img}" alt="${safeText(p.title)}" class="related-image" loading="lazy">
+        <a href="${url}" class="related-image-link">
+          <img src="${img}" alt="${safeText(p.title)}" class="related-image" loading="lazy">
+        </a>
         <div class="related-content">
-          <h3 class="related-title">${safeText(p.title)}</h3>
+          <a href="${url}" class="related-title-link">
+            <h3 class="related-title">${safeText(p.title)}</h3>
+          </a>
+
           <p class="related-excerpt">${excerpt}${excerpt.length ? "..." : ""}</p>
-          <a href="/single-post-page.html?slug=${encodeURIComponent(p.slug)}" class="read-more">مطالعه بیشتر →</a>
+
+          ${dateText
+            ? `<p class="related-meta">
+                 <span class="related-date">تاریخ انتشار: ${dateText}</span>
+               </p>`
+            : ""
+          }
         </div>
       </article>
     `;

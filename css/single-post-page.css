@@ -283,6 +283,16 @@ p {
     color: rgba(254, 254, 254, 0.85);
 }
 
+/* ✅ همه‌ی عکس‌های داخل محتوای پست ریسپانسیو می‌شن */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 8px;
+    background-color: var(--card-color);
+}
+
 .article-content ul,
 .article-content ol {
     margin: 1.5rem 0 1.5rem 2rem;
@@ -372,6 +382,10 @@ p {
     transform: translateY(-4px);
 }
 
+.related-image-link {
+    display: block;
+}
+
 .related-image {
     width: 100%;
     height: 200px;
@@ -384,29 +398,37 @@ p {
     padding: 1.5rem;
 }
 
+.related-title-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
 .related-title {
     font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--white-color);
+}
+
+.related-title-link:hover .related-title {
+    color: var(--primary-color);
+}
+
+.related-meta {
+    font-size: 0.8rem;
+    color: rgba(254, 254, 254, 0.6);
+    margin-bottom: 0.75rem;
+}
+
+.related-date {
+    white-space: nowrap;
 }
 
 .related-excerpt {
     font-size: 0.875rem;
     color: rgba(254, 254, 254, 0.6);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     line-height: 1.5;
-}
-
-.read-more {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-}
-
-.read-more:hover {
-    color: rgba(0, 245, 255, 0.8);
 }
 
 /* Comments Section */
@@ -549,14 +571,10 @@ p {
     gap: 1.5rem;
 }
 
+/* ✅ در موبایل سایدبار به‌طور کامل حذف می‌شود */
 @media (max-width: 768px) {
     .sidebar {
-        flex-direction: row;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        gap: 1rem;
-        margin-top: 1rem;
+        display: none;
     }
 }
 
