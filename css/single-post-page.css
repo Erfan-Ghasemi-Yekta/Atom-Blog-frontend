@@ -96,10 +96,6 @@ p {
     transition: color 0.3s ease;
 }
 
-.breadcrumb-link:hover {
-    color: rgba(0, 245, 255, 0.8);
-    text-decoration: underline;
-}
 
 .breadcrumb-separator {
     color: rgba(254, 254, 254, 0.3);

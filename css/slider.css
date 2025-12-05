@@ -471,3 +471,12 @@
   .slider-sidebar{ display:none !important; }
   .slider-layout{ grid-template-columns: 1fr !important; }
 }
+.recommended-post-meta {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.recommended-post-views {
+  display: inline-block;
+}

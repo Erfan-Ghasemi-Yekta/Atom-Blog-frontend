@@ -9,14 +9,14 @@ const CATEGORIES_API_URL = "https://atom-game.ir/api/blog/categories/";
 document.addEventListener("DOMContentLoaded", () => {
   initBlogCategoriesWidget();
   initBlogSearchWidget();
-  initRecommendedPostsWidget();
+  initRecommendedPostsWidget(); // الان: پر بازدیدترین‌ها
 });
 
 // ------------------------------------------
 // Helpers عمومی
 // ------------------------------------------
 
-// گرفتن همه پست‌ها از API
+// گرفتن همه پست‌ها از API (استفاده عمومی – الان برای این ویجت لازم نیست ولی می‌ذاریم بمونه)
 async function fetchAllPosts() {
   const res = await fetch(WIDGET_POSTS_API_URL, {
     method: "GET",
@@ -37,6 +37,39 @@ async function fetchAllPosts() {
   }
   if (Array.isArray(data.results)) {
     return data.results;
+  }
+  return [];
+}
+
+// گرفتن «پر بازدیدترین پست‌ها» مستقیماً از API با ordering=-views_count
+async function fetchTopViewedPosts(limit = 5) {
+  const baseUrl = WIDGET_POSTS_API_URL || "/api/blog/posts/";
+  const url = new URL(baseUrl, window.location.origin);
+
+  // اگر POSTS_API_URL خودش query داشته باشد، این‌ها را override می‌کنیم
+  url.searchParams.set("ordering", "-views_count");
+  if (limit) {
+    url.searchParams.set("page_size", String(limit));
+  }
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("خطا در دریافت پر بازدیدترین پست‌ها");
+  }
+
+  const data = await res.json();
+
+  if (Array.isArray(data)) {
+    return limit ? data.slice(0, limit) : data;
+  }
+  if (Array.isArray(data.results)) {
+    return limit ? data.results.slice(0, limit) : data.results;
   }
   return [];
 }
@@ -80,7 +113,6 @@ function getPostLink(post) {
   return "#";
 }
 
-
 // گرفتن آدرس کاور هر پست
 function getPostCoverUrl(post) {
   // ساختار معمول: post.cover_media.url
@@ -97,7 +129,7 @@ function getPostCoverUrl(post) {
   return null;
 }
 
-// فرمت تاریخ انتشار برای نمایش در ویجت
+// فرمت تاریخ انتشار برای نمایش در ویجت (اگر جای دیگری لازم شد)
 function formatPostDate(isoString) {
   if (!isoString) return "";
   const d = new Date(isoString);
@@ -134,6 +166,29 @@ function renderPostList(container, posts) {
   container.innerHTML = html;
 }
 
+// گرفتن تعداد بازدید از آبجکت پست (طبق API: views_count)
+function getPostViews(post) {
+  if (!post || typeof post !== "object") return 0;
+
+  if (typeof post.views_count === "number") return post.views_count;
+
+  // حالت‌های احتمالی دیگر برای احتیاط
+  if (typeof post.views === "number") return post.views;
+  if (typeof post.view_count === "number") return post.view_count;
+
+  return 0;
+}
+
+// فرمت کردن تعداد بازدید با اعداد فارسی و کاما
+function formatViewsCount(views) {
+  const safe = typeof views === "number" && !isNaN(views) ? views : 0;
+  try {
+    return safe.toLocaleString("fa-IR");
+  } catch (e) {
+    return String(safe);
+  }
+}
+
 // ==========================================
 // 1) Latest Posts (آخرین پست‌ها)
 // (فعلاً استفاده نمی‌شود ولی renderPostList آماده است)
@@ -146,7 +201,7 @@ async function initBlogCategoriesWidget() {
   const container = document.querySelector('[data-widget="blog-categories"]');
   if (!container) return;
 
-  container.innerHTML = "<p>در حال بارگذاری...</p>";
+  container.innerHTML = "<p>در حال بارگذاری.</p>";
 
   try {
     const categories = await fetchCategories();
@@ -233,7 +288,7 @@ function initBlogSearchWidget() {
 
   container.innerHTML = `
     <form id="blog-search-form">
-      <input type="search" id="blog-search-input" placeholder="جستجو در وبلاگ..." />
+      <input type="search" id="blog-search-input" placeholder="جستجو در وبلاگ." />
       <button type="submit">جستجو</button>
     </form>
     <div id="blog-search-results"></div>
@@ -259,35 +314,33 @@ function initBlogSearchWidget() {
 }
 
 // ==========================================
-// 4) Recommended / Random Posts (پست‌های پیشنهادی)
+// 4) Recommended Posts → Top Viewed (پر بازدیدترین‌ها)
 // ==========================================
 async function initRecommendedPostsWidget() {
   const container = document.querySelector('[data-widget="recommended-posts"]');
   if (!container) return;
 
-  container.innerHTML = "<p>در حال بارگذاری...</p>";
+  container.innerHTML = "<p>در حال بارگذاری پر بازدیدترین پست‌ها...</p>";
 
   try {
-    const posts = await fetchAllPosts();
-    const list = posts.slice();
+    // ۵ تا پست با بیشترین views_count
+    const posts = await fetchTopViewedPosts(5);
 
-    if (!list || list.length === 0) {
-      container.innerHTML = "<p>پستی برای پیشنهاد یافت نشد.</p>";
+    if (!posts || posts.length === 0) {
+      container.innerHTML = "<p>پستی برای نمایش یافت نشد.</p>";
       return;
     }
 
-    // چند پست رندوم انتخاب می‌کنیم (۳ تا)
-    const shuffled = list.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
-
     let html = '<div class="recommended-posts-list">';
 
-    selected.forEach((post) => {
+    posts.forEach((post) => {
       const link = getPostLink(post);
       const coverUrl = getPostCoverUrl(post);
-      const dateStr = formatPostDate(post.created_at);
       const title = post.title || "بدون عنوان";
       const firstChar = title.trim().charAt(0) || "پ";
+
+      const views = getPostViews(post);
+      const viewsText = formatViewsCount(views);
 
       html += `
         <div class="recommended-post-item">
@@ -301,11 +354,9 @@ async function initRecommendedPostsWidget() {
             </div>
             <div class="recommended-post-content">
               <h4 class="recommended-post-title">${title}</h4>
-              ${
-                dateStr
-                  ? `<span class="recommended-post-date">${dateStr}</span>`
-                  : ""
-              }
+              <div class="recommended-post-meta">
+                <span class="recommended-post-views">${viewsText} بازدید</span>
+              </div>
             </div>
           </a>
         </div>
@@ -316,6 +367,7 @@ async function initRecommendedPostsWidget() {
     container.innerHTML = html;
   } catch (err) {
     console.error(err);
-    container.innerHTML = "<p>خطای دریافت پست‌های پیشنهادی.</p>";
+    container.innerHTML =
+      "<p>خطا در دریافت پر بازدیدترین پست‌ها.</p>";
   }
 }
