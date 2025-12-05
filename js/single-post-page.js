@@ -1,4 +1,4 @@
-// single-post-page.js — بدون placeholder و وصل به atom-game.ir
+// single-post-page.js — وصل به https://atom-game.ir/api/blog و بدون placeholder
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -45,6 +45,7 @@ function renderMarkdown(mdText) {
     html = escapeHtml(mdText).replace(/\n/g, "<br>");
   }
 
+  // همه عکس‌ها lazy
   html = html.replace(/<img /g, '<img loading="lazy" ');
 
   if (typeof DOMPurify !== "undefined") {
@@ -591,6 +592,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     bindShareButtons();
     bindCommentForm(post);
 
+    // -------- مطالب مرتبط: ساده، همه‌چیز با بک‌اند --------
     let related = [];
     try {
       const rel = await apiGet(`/posts/${encodeURIComponent(slug)}/related/`);
@@ -604,8 +606,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     renderRelated(related);
-    renderRelatedSidebarPosts(related.slice(0, 5));
+    renderRelatedSidebarPosts(related);
 
+    // -------- پر بازدیدترین‌ها --------
     try {
       const mv = await apiGet(`/posts/?ordering=-views_count&page_size=5`);
       let mostViewed = [];
@@ -618,7 +621,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     } catch (e) {
       console.warn("خطا در دریافت پر بازدیدترین‌ها:", e);
       if (related.length) {
-        renderMostViewedSidebarPosts(related.slice(0, 5));
+        renderMostViewedSidebarPosts(related);
       }
     }
   } catch (e) {
