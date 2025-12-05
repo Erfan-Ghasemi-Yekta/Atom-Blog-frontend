@@ -66,45 +66,47 @@ async function fetchSliderData() {
     // فقط ۵ تای اول برای اسلایدر
     const topPosts = posts.slice(0, 5);
 
-    const mapped = topPosts.map((post) => {
-      // عنوان: اول سعی کن فارسی، بعد عمومی
-      const titleFa =
-        post.title_fa ||
-        post.title_fa_ir ||
-        post.title ||
-        '';
+const mapped = topPosts.map((post) => {
+  const titleFa =
+    post.title_fa ||
+    post.title_fa_ir ||
+    post.title ||
+    '';
 
-      // تاریخ: هر فیلدی که داری اینجا بذار
-      const publishedAt =
-        post.published_at ||
-        post.publish_date ||
-        post.created_at ||
-        null;
+  const publishedAt =
+    post.published_at ||
+    post.publish_date ||
+    post.created_at ||
+    null;
 
-      // عکس کاور: چند نام متداول
-      const imageUrl =
-        (post.cover_media && post.cover_media.url) ||
-        post.cover_image ||
-        post.featured_image ||
-        post.image ||
-        post.thumbnail ||
-        null;
+  const imageUrl =
+    (post.cover_media && post.cover_media.url) ||
+    post.cover_image ||
+    post.featured_image ||
+    post.image ||
+    post.thumbnail ||
+    null;
 
-      // لینک پست
-      const postUrl =
-        post.canonical_url ||
-        post.absolute_url ||
-        (post.slug ? `/blog/${post.slug}/` : '#');
+  // 👇 اسلاگ را از API می‌گیریم
+  const slug = post.slug || null;
 
-      return {
-        id: post.id ?? String(post.slug ?? Math.random()),
-        title_fa: titleFa,
-        date_fa: formatFaDate(publishedAt),
-        image_url: imageUrl,
-        thumb_url: imageUrl,
-        category_fa: null
-      };
-    });
+  // 👇 لینک فرانت برای صفحه‌ی جزئیات
+  const postUrl = slug
+    ? `/html/single-post-page.html?slug=${encodeURIComponent(slug)}`
+    : '#';
+
+  return {
+    id: post.id ?? String(slug ?? Math.random()),
+    title_fa: titleFa,
+    date_fa: formatFaDate(publishedAt),
+    image_url: imageUrl,
+    thumb_url: imageUrl,
+    category_fa: null,
+    slug: slug,
+    post_url: postUrl,   // ⚠️ مهم
+  };
+});
+
 
     // اینجا دیگر فقط آن‌هایی که *واقعاً* هیچ عنوانی ندارند حذف می‌شوند
     return mapped.filter(item => item.title_fa && item.title_fa.trim().length > 0);

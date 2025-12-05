@@ -46,10 +46,11 @@ function formatPostDate(post) {
 
 // تبدیل داده‌ی Post از API به ساختار کارت
 function normalizePost(post) {
-    // لینک «بیشتر بخوانید»
-    const readMoreLink =
-        post.canonical_url ||
-        (post.slug ? `/blog/${post.slug}/` : `#/posts/${post.id}`);
+    // 👇 لینک «بیشتر بخوانید» -> همیشه به صفحه سینگل
+    const slug = post.slug || null;
+    const readMoreLink = slug
+        ? `/html/single-post-page.html?slug=${encodeURIComponent(slug)}`
+        : '#';
 
     // تگ‌ها (متن کنار تصویر)
     let tagText = '';

@@ -64,10 +64,22 @@ async function fetchCategories() {
 
 // ساخت لینک هر پست برای ویجت‌ها
 function getPostLink(post) {
-  if (post.canonical_url) return post.canonical_url;
-  if (post.slug) return `/blog/${post.slug}/`;
-  return `/blog/post.html?id=${post.id}`;
+  const slug = post.slug || null;
+
+  // ✅ همه کلیک‌ها برن به صفحه single-post-page با اسلاگ
+  if (slug) {
+    return `/html/single-post-page.html?slug=${encodeURIComponent(slug)}`;
+  }
+
+  // 🔁 اگر اسلاگ نداشت، از canonical_url استفاده کن (فقط برای سازگاری)
+  if (post.canonical_url) {
+    return post.canonical_url;
+  }
+
+  // آخرین fallback
+  return "#";
 }
+
 
 // گرفتن آدرس کاور هر پست
 function getPostCoverUrl(post) {
