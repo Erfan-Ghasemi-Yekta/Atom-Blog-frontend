@@ -32,7 +32,8 @@
                 <!-- Metadata -->
                 <div class="metadata">
                     <div class="author-info">
-                        <img id="author-avatar" src="/placeholder.svg?height=40&width=40" alt="نویسنده" class="author-avatar">
+                        <!-- ⬇️ بدون src -->
+                        <img id="author-avatar" alt="نویسنده" class="author-avatar">
                         <div class="author-details">
                             <p class="author-name" id="author-name">...</p>
                             <p class="publish-date" id="publish-date">...</p>
@@ -49,7 +50,8 @@
 
                 <!-- Featured Image -->
                 <figure class="featured-image" id="cover-figure" style="display:none;">
-                    <img id="cover-image" src="" alt="">
+                    <!-- ⬇️ بدون src -->
+                    <img id="cover-image" alt="">
                     <figcaption id="cover-caption"></figcaption>
                 </figure>
 
@@ -72,7 +74,7 @@
                     </div>
                 </div>
 
-                <!-- Article Content (Markdown output will be rendered here) -->
+                <!-- Article Content -->
                 <article class="article-content" id="post-content"></article>
 
                 <!-- Related Posts Section -->
@@ -129,11 +131,7 @@
         </div>
     </div>
 
-    <!-- Markdown parser -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Sanitizer -->
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-
     <script src="../js/single-post-page.js"></script>
+    
 </body>
 </html>

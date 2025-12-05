@@ -1,354 +1,5 @@
-// Updated single-post-page.js — نسخهٔ به‌روز شده با محتوای غنی‌تر و تصاویر از طریق CDN
+// single-post-page.js — بدون placeholder و وصل به atom-game.ir
 
-// Helpers for CDN
-function cdn(src, opts = {}) {
-  if (!src) return src;
-  try {
-    const params = new URLSearchParams();
-    if (opts.w) params.set('w', String(opts.w));
-    if (opts.h) params.set('h', String(opts.h));
-    if (opts.fit) params.set('fit', opts.fit);
-    if (opts.output) params.set('output', opts.output);
-    if (opts.q) params.set('q', String(opts.q));
-    const encoded = encodeURIComponent(src);
-    const base = `https://images.weserv.nl/?url=${encoded}`;
-    const suffix = params.toString();
-    return suffix ? `${base}&${suffix}` : base;
-  } catch (e) {
-    return src;
-  }
-}
-
-// =====================
-// Local Data
-// =====================
-const localData = {
-  post: {
-    id: 1,
-    slug: "local-post-slug",
-    title: "چگونه یک وبلاگ حرفه‌ای بسازیم — تجربه و نکات عملی",
-    seo_title: "راهنمای جامع ساخت وبلاگ حرفه‌ای",
-    category: "تکنولوژی",
-    author: {
-      full_name: "نویسنده تستی",
-      username: "test-author",
-      avatar: cdn('https://picsum.photos/id/1005/80/80', {
-        w: 80,
-        h: 80,
-        fit: 'cover',
-        output: 'webp',
-        q: 80
-      })
-    },
-    published_at: new Date().toISOString(),
-    views_count: 1234,
-    cover_media: {
-      url: cdn('https://picsum.photos/id/1015/1200/600', {
-        w: 1200,
-        h: 600,
-        fit: 'cover',
-        output: 'webp',
-        q: 80
-      }),
-      alt_text: "تصویر اصلی پست - نمایی از کد و کار در لپ‌تاپ",
-    },
-    content: `
-این مقاله راهنمای عملی و واقعی برای ساخت و مدیریت یک **وبلاگ حرفه‌ای** است. هدف ما این است که از صفر تا صد، نکات قابل اجرا، ابزارها و اشتباهات رایج را پوشش دهیم.
-
-## چرا وبلاگ؟
-وبلاگ‌نویسی هنوز هم یکی از بهترین روش‌ها برای ساخت برند شخصی، نشان دادن نمونه‌کارها و جذب مخاطب هدف است. در این راهنما موارد زیر را یاد می‌گیرید:
-
-- انتخاب پلتفرم مناسب
-- نوشتن محتوای خواندنی و قابل اشتراک‌گذاری
-- بهینه‌سازی برای موتورهای جستجو (SEO)
-- انتشار منظم و برنامه‌ریزی محتوا
-
-
-![کار با لپ‌تاپ و کد](${cdn('https://picsum.photos/id/1025/1000/500', {
-      w: 1000,
-      h: 500,
-      fit: 'cover',
-      output: 'webp',
-      q: 80
-    })})
-
-### انتخاب پلتفرم
-برای شروع، بین دو گزینهٔ رایج یکی را انتخاب کنید: سایت‌سازهای آماده (مثل Ghost، WordPress.com) یا سایت خود میزبانی‌شده که کنترل کامل دارد (مثل WordPress.org، Static sites با Netlify). اگر بهینه‌سازی و سرعت برایتان مهم است، سایت استاتیک + CDN گزینهٔ بسیار خوبی است.
-
-#### نکات تجربه کاربری (UX)
-- منوی ساده و قابل‌خواندن داشته باشید.
-- فونت مناسب و اندازهٔ متن را رعایت کنید.
-- برای تصاویر از فرمت‌های بهینه مثل WebP استفاده کنید.
-
-![نمونهٔ تصویر کوچک داخل مطلب](${cdn('https://picsum.photos/id/1035/800/450', {
-      w: 800,
-      h: 450,
-      fit: 'cover',
-      output: 'webp',
-      q: 80
-    })})
-
-### تولید محتوا — ساختار یک پست
-یک پست خوب معمولاً شامل بخش‌های زیر است:
-
-1. لید قدرتمند — چند جملهٔ اول که مخاطب را جذب کند.
-2. تیترها و زیرتیترهای واضح — برای اسکن شدن سریع متن.
-3. تصاویر و کد نمونه — برای بهبود درک مطلب.
-4. بخش نتیجه‌گیری و فراخوان به عمل (CTA).
-
-> نکته: همیشه متن را قبل از انتشار یک بار بلندخوانی کنید.
-
-### بهینه‌سازی تصاویر
-برای اینکه صفحات سریع لود شوند:
-
-- تصاویر را قبل از آپلود فشرده کنید.
-- از lazy-loading استفاده کنید.
-- از CDN برای تحویل تصاویر استفاده کنید.
-
-![نحوهٔ بهینه‌سازی تصویر](${cdn('https://picsum.photos/id/1043/900/500', {
-      w: 900,
-      h: 500,
-      fit: 'cover',
-      output: 'webp',
-      q: 80
-    })})
-
-### مثال عملی — افزودن تصویر و تگ‌ها
-در بخش کد یا CMS خود کافی است در Markdown بنویسید:
-
-\`\`\`
-![توضیح تصویر](${cdn('https://picsum.photos/id/1050/1200/600', {
-      w: 1200,
-      h: 600,
-      fit: 'cover',
-      output: 'webp',
-      q: 80
-    })})
-\`\`\`
-
-## نتیجه‌گیری
-وبلاگ‌نویسی ترکیبی از خلاقیت، نظم و اصلاح مستمر است. با تمرکز روی کیفیت و تجربهٔ خواننده، در بلندمدت نتیجهٔ بهتری خواهید گرفت.
-
----
-`,
-    comments: [
-      {
-        id: 1,
-        user: {
-          full_name: "کاربر ۱",
-          avatar: cdn('https://picsum.photos/id/1011/64/64', {
-            w: 64,
-            h: 64,
-            fit: 'cover',
-            output: 'webp',
-            q: 80
-          })
-        },
-        created_at: new Date().toISOString(),
-        content: "این یک کامنت تستی است. مقاله عالی و کاربردی بود!"
-      },
-      {
-        id: 2,
-        user: {
-          full_name: "کاربر ۲",
-          avatar: cdn('https://picsum.photos/id/1001/64/64', {
-            w: 64,
-            h: 64,
-            fit: 'cover',
-            output: 'webp',
-            q: 80
-          })
-        },
-        created_at: new Date().toISOString(),
-        content: "ممنون! لینک منابع خارجی هم دارید؟"
-      }
-    ]
-  },
-  relatedPosts: [
-    {
-      slug: "related-1",
-      title: "پست مرتبط: طراحی تجربه کاربری",
-      excerpt: "اصول طراحی تجربه کاربری که باید بدانید...",
-      published_at: new Date().toISOString(),
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1003/600/350', {
-          w: 600,
-          h: 350,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "related-2",
-      title: "پست مرتبط: بهینه‌سازی تصاویر برای وب",
-      excerpt: "چگونه تصاویر را برای وب بهینه کنیم...",
-      published_at: new Date().toISOString(),
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1019/600/350', {
-          w: 600,
-          h: 350,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    }
-  ],
-
-  // این آرایه الان ۵ تا آیتم داره تا توی سایدبار ۵ پست مرتبط نشان دهد
-  relatedSidebarPosts: [
-    {
-      slug: "sidebar-related-1",
-      title: "پست مرتبط ۱: افزایش سرعت سایت",
-      views_count: 9876,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1020/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "sidebar-related-2",
-      title: "پست مرتبط ۲: انتخاب هاست مناسب",
-      views_count: 5432,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1027/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "sidebar-related-3",
-      title: "پست مرتبط ۳: سئو در 2025",
-      views_count: 4321,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1032/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "sidebar-related-4",
-      title: "پست مرتبط ۴: تولید محتوای ماندگار",
-      views_count: 3980,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1040/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "sidebar-related-5",
-      title: "پست مرتبط ۵: لینک‌سازی هوشمند",
-      views_count: 3655,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1045/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    }
-  ],
-
-  // آرایه‌ی مخصوص «پر بازدید ترین‌ها» در سایدبار (۵ آیتم)
-  mostViewedSidebarPosts: [
-    {
-      slug: "most-viewed-1",
-      title: "پر بازدید ۱: ۱۰ ترفند سئو",
-      views_count: 15000,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1050/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "most-viewed-2",
-      title: "پر بازدید ۲: ساخت استراتژی محتوا",
-      views_count: 13250,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1060/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "most-viewed-3",
-      title: "پر بازدید ۳: اشتباهات مرگبار در وبلاگ",
-      views_count: 12010,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1070/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "most-viewed-4",
-      title: "پر بازدید ۴: افزایش نرخ کلیک",
-      views_count: 11005,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1080/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    },
-    {
-      slug: "most-viewed-5",
-      title: "پر بازدید ۵: انتخاب کلمات کلیدی",
-      views_count: 10550,
-      cover_media: {
-        url: cdn('https://picsum.photos/id/1090/200/120', {
-          w: 200,
-          h: 120,
-          fit: 'cover',
-          output: 'webp',
-          q: 80
-        })
-      }
-    }
-  ]
-}; // ✅ این براکت و سمی‌کالن مهم بود
-
-// =====================
-// Helpers & Rendering
-// =====================
 const $ = (sel) => document.querySelector(sel);
 
 function formatDate(iso) {
@@ -358,7 +9,7 @@ function formatDate(iso) {
     return d.toLocaleDateString("fa-IR", {
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     });
   } catch {
     return iso;
@@ -366,18 +17,48 @@ function formatDate(iso) {
 }
 
 function safeText(x, fallback = "") {
-  return (x === null || x === undefined) ? fallback : x;
+  return x === null || x === undefined ? fallback : x;
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.replace(/[&<>"']/g, (ch) => {
+    switch (ch) {
+      case "&": return "&amp;";
+      case "<": return "&lt;";
+      case ">": return "&gt;";
+      case '"': return "&quot;";
+      case "'": return "&#39;";
+      default: return ch;
+    }
+  });
 }
 
 function renderMarkdown(mdText) {
   if (!mdText) return "";
-  const rawHtml = marked.parse(mdText, { breaks: true, gfm: true });
-  const withLazy = rawHtml.replace(/<img /g, '<img loading="lazy" ');
-  return DOMPurify.sanitize(withLazy);
+  let html = "";
+
+  if (typeof marked !== "undefined") {
+    const rawHtml = marked.parse(mdText, { breaks: true, gfm: true });
+    html = rawHtml;
+  } else {
+    html = escapeHtml(mdText).replace(/\n/g, "<br>");
+  }
+
+  html = html.replace(/<img /g, '<img loading="lazy" ');
+
+  if (typeof DOMPurify !== "undefined") {
+    return DOMPurify.sanitize(html);
+  }
+  return html;
 }
+
+// ------------------ Breadcrumb & main rendering ------------------
 
 function renderBreadcrumb(post) {
   const bc = $("#breadcrumb");
+  if (!bc) return;
+
   const category = safeText(post.category, "وبلاگ");
 
   bc.innerHTML = `
@@ -392,65 +73,135 @@ function renderBreadcrumb(post) {
 }
 
 function renderPost(post) {
-  $("#page-title").textContent = safeText(post.seo_title || post.title || "پست وبلاگ");
+  const pageTitleEl = document.getElementById("page-title");
+  if (pageTitleEl) {
+    pageTitleEl.textContent = safeText(
+      post.seo_title || post.title || "پست وبلاگ"
+    );
+  }
+
   $("#post-title").textContent = safeText(post.title, "—");
   $("#category-badge").textContent = safeText(post.category, "—");
 
   const author = post.author || {};
-  $("#author-name").textContent = safeText(author.full_name || author.username || author.name, "—");
+  $("#author-name").textContent = safeText(
+    author.full_name || author.display_name || author.username || author.name,
+    "—"
+  );
   $("#publish-date").textContent = formatDate(post.published_at);
   $("#views-count").textContent = safeText(post.views_count, 0);
 
+  // آواتار نویسنده (بدون placeholder)
+  const avatarEl = $("#author-avatar");
+  if (avatarEl) {
+    let avatarSrc = null;
+    if (author.avatar && typeof author.avatar === "object" && author.avatar.url) {
+      avatarSrc = author.avatar.url;
+    } else if (typeof author.avatar === "string") {
+      avatarSrc = author.avatar;
+    } else if (author.avatar_url) {
+      avatarSrc = author.avatar_url;
+    }
+
+    if (avatarSrc) {
+      avatarEl.src = avatarSrc;
+      avatarEl.style.display = "block";
+    } else {
+      avatarEl.style.display = "none";
+    }
+  }
+
+  // تصویر کاور
   const cover = post.cover_media || post.og_image;
+  const coverFigure = $("#cover-figure");
+
   if (cover && cover.url) {
     const imgEl = $("#cover-image");
-    imgEl.src = cover.url;
-    imgEl.alt = safeText(cover.alt_text || post.title, "");
-    imgEl.setAttribute('loading', 'lazy');
-    $("#cover-caption").textContent = safeText(cover.caption, "");
-    $("#cover-figure").style.display = "block";
-  } else {
-    $("#cover-figure").style.display = "none";
+    if (imgEl) {
+      imgEl.src = cover.url;
+      imgEl.alt = safeText(cover.alt_text || post.title, "");
+      imgEl.loading = "lazy";
+    }
+    const captionEl = $("#cover-caption");
+    if (captionEl) {
+      captionEl.textContent = safeText(cover.caption || cover.title, "");
+    }
+    if (coverFigure) {
+      coverFigure.style.display = "block";
+    }
+  } else if (coverFigure) {
+    coverFigure.style.display = "none";
   }
 
   $("#post-content").innerHTML = renderMarkdown(post.content);
 
-  const comments = post.comments || [];
-  $("#comments-title").textContent = `نظرات (${comments.length})`;
+  const comments = Array.isArray(post.comments) ? post.comments : [];
+  $("#comments-title").textContent = `نظرات (${
+    post.comments_count ?? comments.length
+  })`;
   renderComments(comments);
 }
 
 function renderComments(comments) {
   const list = $("#comments-list");
+  if (!list) return;
+
   if (!comments.length) {
     list.innerHTML = `<p style="opacity:.7">هنوز نظری ثبت نشده.</p>`;
     return;
   }
 
-  list.innerHTML = comments.map(c => {
-    const user = c.user || c.author || {};
-    return `
+  list.innerHTML = comments
+    .map((c) => {
+      const user = c.user || c.author || {};
+      const name =
+        user.full_name ||
+        user.display_name ||
+        user.username ||
+        c.user_display ||
+        "کاربر";
+
+      let avatarSrc = null;
+      if (user.avatar && typeof user.avatar === "object" && user.avatar.url) {
+        avatarSrc = user.avatar.url;
+      } else if (typeof user.avatar === "string") {
+        avatarSrc = user.avatar;
+      } else if (user.avatar_url) {
+        avatarSrc = user.avatar_url;
+      }
+
+      const avatarHtml = avatarSrc
+        ? `<img src="${avatarSrc}" alt="${escapeHtml(
+            name
+          )}" class="comment-avatar" loading="lazy">`
+        : "";
+
+      return `
       <article class="comment" data-comment-id="${c.id}">
         <div class="comment-header">
-          <img src="${safeText(user.avatar || "/placeholder.svg?height=40&width=40")}" alt="کاربر" class="comment-avatar" loading="lazy">
+          ${avatarHtml}
           <div class="comment-author">
-            <h4 class="comment-name">${safeText(user.full_name || user.username || "کاربر")}</h4>
+            <h4 class="comment-name">${escapeHtml(name)}</h4>
             <time class="comment-date">${formatDate(c.created_at)}</time>
           </div>
         </div>
-        <p class="comment-text">${safeText(c.content, "")}</p>
+        <p class="comment-text">${escapeHtml(c.content || "")}</p>
         <button class="comment-reply">پاسخ</button>
       </article>
     `;
-  }).join("");
+    })
+    .join("");
 
   bindReplyButtons();
 }
 
-// ✅ نسخه جدید رندر «مطالب مرتبط»
+// ------------------ Related posts (main) ------------------
+
 function renderRelated(related) {
   const sec = $("#related-posts");
   const grid = $("#related-grid");
+
+  if (!sec || !grid) return;
 
   if (!related || !related.length) {
     sec.style.display = "none";
@@ -458,65 +209,93 @@ function renderRelated(related) {
   }
 
   sec.style.display = "block";
-  grid.innerHTML = related.map(p => {
-    const img = p.cover_media?.url || "/placeholder.svg?height=200&width=300";
-    const excerpt = safeText(p.excerpt, "").slice(0, 120);
-    const dateRaw = p.published_at || p.created_at;
-    const dateText = dateRaw ? formatDate(dateRaw) : "";
-    const slug = encodeURIComponent(p.slug || "");
-    const url = `/single-post-page.html?slug=${slug}`;
 
-    return `
+  grid.innerHTML = related
+    .map((p) => {
+      const img = p.cover_media?.url || null;
+      const excerpt = safeText(p.excerpt, "").slice(0, 120);
+      const dateRaw = p.published_at || p.created_at;
+      const dateText = dateRaw ? formatDate(dateRaw) : "";
+      const slug = encodeURIComponent(p.slug || "");
+      const url = `/html/single-post-page.html?slug=${slug}`;
+
+      const imgHtml = img
+        ? `<a href="${url}" class="related-image-link">
+             <img src="${img}" alt="${escapeHtml(
+            safeText(p.title)
+          )}" class="related-image" loading="lazy">
+           </a>`
+        : "";
+
+      return `
       <article class="related-post">
-        <a href="${url}" class="related-image-link">
-          <img src="${img}" alt="${safeText(p.title)}" class="related-image" loading="lazy">
-        </a>
+        ${imgHtml}
         <div class="related-content">
           <a href="${url}" class="related-title-link">
-            <h3 class="related-title">${safeText(p.title)}</h3>
+            <h3 class="related-title">${escapeHtml(safeText(p.title))}</h3>
           </a>
 
-          <p class="related-excerpt">${excerpt}${excerpt.length ? "..." : ""}</p>
+          <p class="related-excerpt">${escapeHtml(excerpt)}${
+        excerpt.length ? "..." : ""
+      }</p>
 
-          ${dateText
-            ? `<p class="related-meta">
-                 <span class="related-date">تاریخ انتشار: ${dateText}</span>
-               </p>`
-            : ""
+          ${
+            dateText
+              ? `<p class="related-meta">
+                   <span class="related-date">تاریخ انتشار: ${dateText}</span>
+                 </p>`
+              : ""
           }
         </div>
       </article>
     `;
-  }).join("");
+    })
+    .join("");
 }
 
-// ✅ نسخه جدید رندر سایدبار بدون دکمه «باز کردن»
+// ------------------ Sidebar lists ------------------
+
 function renderRelatedSidebarPosts(posts) {
   const cont = $("#related-posts-widget");
+  if (!cont) return;
+
   if (!posts || !posts.length) {
     cont.innerHTML = `<p style="opacity:.7">مطلبی پیدا نشد.</p>`;
     return;
   }
 
-  cont.innerHTML = posts.map(p => {
-    const img = p.cover_media?.url || "/placeholder.svg?height=100&width=100";
-    const slug = encodeURIComponent(p.slug);
-    const url = `/single-post-page.html?slug=${slug}`;
-    return `
+  cont.innerHTML = posts
+    .map((p) => {
+      const img = p.cover_media?.url || null;
+      const slug = encodeURIComponent(p.slug || "");
+      const url = `/html/single-post-page.html?slug=${slug}`;
+
+      const imgHtml = img
+        ? `<img src="${img}" alt="${escapeHtml(
+            safeText(p.title)
+          )}" class="related-post-image" loading="lazy">`
+        : "";
+
+      return `
       <article class="related-post-item" data-url="${url}">
-        <img src="${img}" alt="${safeText(p.title)}" class="related-post-image" loading="lazy">
+        ${imgHtml}
         <div>
-          <h4 class="related-post-title">${safeText(p.title)}</h4>
-          <p class="related-post-meta">${safeText(p.views_count, 0)} بازدید</p>
+          <h4 class="related-post-title">${escapeHtml(
+            safeText(p.title)
+          )}</h4>
+          <p class="related-post-meta">${safeText(
+            p.views_count,
+            0
+          )} بازدید</p>
         </div>
       </article>
     `;
-  }).join("");
+    })
+    .join("");
 
   bindRelatedSidebarPostClicks();
 }
 
-// ✅ رندر باکس «پر بازدید ترین‌ها» زیر سایدبار، با همان استایل
 function renderMostViewedSidebarPosts(posts) {
   const cont = $("#most-viewed-widget");
   if (!cont) return;
@@ -526,87 +305,200 @@ function renderMostViewedSidebarPosts(posts) {
     return;
   }
 
-  cont.innerHTML = posts.map(p => {
-    const img = p.cover_media?.url || "/placeholder.svg?height=100&width=100";
-    const slug = encodeURIComponent(p.slug);
-    const url = `/single-post-page.html?slug=${slug}`;
-    return `
+  cont.innerHTML = posts
+    .map((p) => {
+      const img = p.cover_media?.url || null;
+      const slug = encodeURIComponent(p.slug || "");
+      const url = `/html/single-post-page.html?slug=${slug}`;
+
+      const imgHtml = img
+        ? `<img src="${img}" alt="${escapeHtml(
+            safeText(p.title)
+          )}" class="related-post-image" loading="lazy">`
+        : "";
+
+      return `
       <article class="related-post-item" data-url="${url}">
-        <img src="${img}" alt="${safeText(p.title)}" class="related-post-image" loading="lazy">
+        ${imgHtml}
         <div>
-          <h4 class="related-post-title">${safeText(p.title)}</h4>
-          <p class="related-post-meta">${safeText(p.views_count, 0)} بازدید</p>
+          <h4 class="related-post-title">${escapeHtml(
+            safeText(p.title)
+          )}</h4>
+          <p class="related-post-meta">${safeText(
+            p.views_count,
+            0
+          )} بازدید</p>
         </div>
       </article>
     `;
-  }).join("");
+    })
+    .join("");
 
-  // همان هندل کلیک را استفاده می‌کنیم
   bindRelatedSidebarPostClicks();
 }
 
 function bindRelatedSidebarPostClicks() {
-  const items = document.querySelectorAll('.related-post-item');
-  items.forEach(item => {
-    const url = item.getAttribute('data-url');
+  document.querySelectorAll(".related-post-item").forEach((item) => {
+    const url = item.getAttribute("data-url");
     if (!url) return;
 
-    const img = item.querySelector('.related-post-image');
-    const title = item.querySelector('.related-post-title');
+    const img = item.querySelector(".related-post-image");
+    const title = item.querySelector(".related-post-title");
 
-    [img, title].forEach(el => {
+    [img, title].forEach((el) => {
       if (!el) return;
-      el.style.cursor = 'pointer';
-      el.addEventListener('click', () => {
+      el.style.cursor = "pointer";
+      el.addEventListener("click", () => {
         window.location.href = url;
       });
     });
   });
 }
 
+// ------------------ Share & reply buttons ------------------
+
 function bindShareButtons() {
-  document.querySelectorAll('.share-btn').forEach(btn => {
+  document.querySelectorAll(".share-btn").forEach((btn) => {
     btn.onclick = null;
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener("click", function (e) {
       e.preventDefault();
 
       const shareTypeMatch = this.className.match(/share-(\w+)/);
       if (!shareTypeMatch) return;
       const shareType = shareTypeMatch[1];
 
-      const title = document.querySelector('.article-title')?.textContent || document.title;
+      const title =
+        document.querySelector(".article-title")?.textContent || document.title;
       const url = window.location.href;
       const text = `${title} - ${window.location.hostname}`;
 
       const shareUrls = {
-        telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-        whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`,
-        twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
-        copy: null
+        telegram: `https://t.me/share/url?url=${encodeURIComponent(
+          url
+        )}&text=${encodeURIComponent(title)}`,
+        whatsapp: `https://wa.me/?text=${encodeURIComponent(
+          text + " " + url
+        )}`,
+        twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          title
+        )}&url=${encodeURIComponent(url)}`,
+        copy: null,
       };
 
-      if (shareType === 'copy') {
-        navigator.clipboard.writeText(url).then(() => alert('لینک کپی شد!'));
+      if (shareType === "copy") {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => alert("لینک کپی شد!"));
       } else if (shareUrls[shareType]) {
-        window.open(shareUrls[shareType], '_blank', 'width=600,height=400');
+        window.open(shareUrls[shareType], "_blank", "width=600,height=400");
       }
     });
   });
 }
 
 function bindReplyButtons() {
-  document.querySelectorAll('.comment-reply').forEach(btn => {
+  document.querySelectorAll(".comment-reply").forEach((btn) => {
     btn.onclick = null;
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener("click", function (e) {
       e.preventDefault();
-      const commentForm = $('.comment-form');
+      const commentForm = $(".comment-form");
       if (!commentForm) return;
-      commentForm.scrollIntoView({ behavior: 'smooth' });
-      const textarea = commentForm.querySelector('textarea');
+      commentForm.scrollIntoView({ behavior: "smooth" });
+      const textarea = commentForm.querySelector("textarea");
       if (textarea) textarea.focus();
     });
   });
 }
+
+// ------------------ API helpers ------------------
+
+const BLOG_API_BASE = "https://atom-game.ir/api/blog";
+
+function getAuthHeaders({ json = false } = {}) {
+  const headers = {
+    Accept: "application/json",
+  };
+
+  if (json) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  try {
+    const possibleKeys = ["accessToken", "access", "token", "authToken"];
+    let token = null;
+    for (const key of possibleKeys) {
+      const val = window.localStorage?.getItem(key);
+      if (val) {
+        token = val;
+        break;
+      }
+    }
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+  } catch {
+    // ...
+  }
+
+  return headers;
+}
+
+async function apiGet(path) {
+  const url = path.startsWith("http") ? path : `${BLOG_API_BASE}${path}`;
+  const res = await fetch(url, {
+    headers: getAuthHeaders({ json: false }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`خطا در دریافت داده از سرور (${res.status})`);
+  }
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function apiPost(path, body) {
+  const url = path.startsWith("http") ? path : `${BLOG_API_BASE}${path}`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: getAuthHeaders({ json: true }),
+    body: JSON.stringify(body),
+  });
+
+  const text = await res.text();
+  let data = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = text;
+  }
+
+  if (!res.ok) {
+    const msg =
+      (data && data.detail) ||
+      (typeof data === "string" ? data : "") ||
+      `خطای ${res.status}`;
+    throw new Error(msg);
+  }
+
+  return data;
+}
+
+function getSlugFromLocation() {
+  try {
+    const url = new URL(window.location.href);
+    const fromQuery = url.searchParams.get("slug");
+    if (fromQuery) return fromQuery;
+    const parts = url.pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1] || null;
+  } catch {
+    return null;
+  }
+}
+
+// ------------------ Comment form ------------------
 
 function bindCommentForm(post) {
   const form = $("#comment-form");
@@ -616,7 +508,8 @@ function bindCommentForm(post) {
 
   const postId = post.id;
   if (!postId) {
-    msg.textContent = "⚠️ ارسال نظر فعلاً ممکن نیست (شناسه‌ی پست از API نیامده).";
+    msg.textContent =
+      "⚠️ ارسال نظر فعلاً ممکن نیست (شناسه‌ی پست از API برنمی‌گردد).";
   }
 
   form.addEventListener("submit", async (e) => {
@@ -624,26 +517,50 @@ function bindCommentForm(post) {
     msg.textContent = "";
 
     if (!postId) {
-      msg.textContent = "شناسه‌ی پست موجود نیست؛ لطفاً به بک‌اند بگو id را در PostDetail برگرداند.";
+      msg.textContent =
+        "شناسه‌ی پست موجود نیست؛ لطفاً در بک‌اند فیلد id را به PostDetail اضافه کنید.";
       return;
     }
 
-    const name = $("#comment-name")?.value.trim();
-    const email = $("#comment-email")?.value.trim();
     const content = $("#comment-content")?.value.trim();
+
+    if (!content) {
+      msg.textContent = "متن نظر نمی‌تواند خالی باشد.";
+      return;
+    }
 
     try {
       const submitBtn = form.querySelector("button[type=submit]");
       if (submitBtn) submitBtn.disabled = true;
       msg.textContent = "در حال ارسال…";
 
-      console.log("Mock comment submission:", { name, email, content });
-      msg.textContent = "✅ نظر شما با موفقیت ارسال شد (شبیه‌سازی شده).";
+      const payload = {
+        post: postId,
+        content,
+      };
+
+      await apiPost(`/comments/`, payload);
+
+      msg.textContent = "✅ نظر شما با موفقیت ثبت شد.";
       form.reset();
 
+      try {
+        const refreshed = await apiGet(
+          `/posts/${encodeURIComponent(post.slug)}/`
+        );
+        if (refreshed && Array.isArray(refreshed.comments)) {
+          renderComments(refreshed.comments);
+          $("#comments-title").textContent = `نظرات (${
+            refreshed.comments_count ?? refreshed.comments.length
+          })`;
+        }
+      } catch (e) {
+        console.warn("خطا در تازه‌سازی نظرات:", e);
+      }
     } catch (err) {
       console.error(err);
-      msg.textContent = "❌ ارسال نظر خطا داشت. دوباره تلاش کنید.";
+      msg.textContent =
+        "❌ ارسال نظر با خطا مواجه شد: " + (err.message || "مشکل ناشناخته");
     } finally {
       const submitBtn = form.querySelector("button[type=submit]");
       if (submitBtn) submitBtn.disabled = false;
@@ -651,33 +568,83 @@ function bindCommentForm(post) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  try {
-    renderBreadcrumb(localData.post);
-    renderPost(localData.post);
-    bindShareButtons();
-    bindCommentForm(localData.post);
+// ------------------ Init ------------------
 
-    renderRelated(localData.relatedPosts);
-    renderRelatedSidebarPosts(localData.relatedSidebarPosts); // سایدبار: پست‌های مرتبط
-    renderMostViewedSidebarPosts(localData.mostViewedSidebarPosts); // سایدبار: پر بازدید ترین‌ها
+document.addEventListener("DOMContentLoaded", async function () {
+  const slug = getSlugFromLocation();
+
+  if (!slug) {
+    $("#post-title").textContent = "پست پیدا نشد";
+    $("#post-content").innerHTML =
+      "<p style='opacity:.7'>اسلاگ پست در آدرس صفحه پیدا نشد.</p>";
+    return;
+  }
+
+  try {
+    const post = await apiGet(`/posts/${encodeURIComponent(slug)}/`);
+    if (!post || !post.slug) {
+      throw new Error("پست موردنظر پیدا نشد.");
+    }
+
+    renderBreadcrumb(post);
+    renderPost(post);
+    bindShareButtons();
+    bindCommentForm(post);
+
+    let related = [];
+    try {
+      const rel = await apiGet(`/posts/${encodeURIComponent(slug)}/related/`);
+      if (Array.isArray(rel)) {
+        related = rel;
+      } else if (rel && Array.isArray(rel.results)) {
+        related = rel.results;
+      }
+    } catch (e) {
+      console.warn("خطا در دریافت مطالب مرتبط:", e);
+    }
+
+    renderRelated(related);
+    renderRelatedSidebarPosts(related.slice(0, 5));
+
+    try {
+      const mv = await apiGet(`/posts/?ordering=-views_count&page_size=5`);
+      let mostViewed = [];
+      if (Array.isArray(mv)) {
+        mostViewed = mv;
+      } else if (mv && Array.isArray(mv.results)) {
+        mostViewed = mv.results;
+      }
+      renderMostViewedSidebarPosts(mostViewed);
+    } catch (e) {
+      console.warn("خطا در دریافت پر بازدیدترین‌ها:", e);
+      if (related.length) {
+        renderMostViewedSidebarPosts(related.slice(0, 5));
+      }
+    }
   } catch (e) {
     console.error(e);
-    $("#post-title").textContent = "پست پیدا نشد یا خطا در بارگذاری اطلاعات.";
-    $("#post-content").innerHTML = `<p style="opacity:.7">${e.message}</p>`;
+    $("#post-title").textContent = "خطا در بارگذاری پست";
+    $("#post-content").innerHTML = `<p style="opacity:.7">${escapeHtml(
+      e.message || "مشکلی در ارتباط با سرور پیش آمد."
+    )}</p>`;
   }
 });
 
-// Optional: log when images come into view
-const images = document.querySelectorAll('img');
-if ('IntersectionObserver' in window) {
-  const imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        console.log('[img] loaded:', entry.target.alt || entry.target.src);
-        imageObserver.unobserve(entry.target);
-      }
+// لاگ ساده برای لود شدن تصاویر (اختیاری)
+document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll("img");
+  if ("IntersectionObserver" in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log(
+            "[img] in view:",
+            entry.target.alt || entry.target.src
+          );
+          imageObserver.unobserve(entry.target);
+        }
+      });
     });
-  });
-  images.forEach(img => imageObserver.observe(img));
-}
+    images.forEach((img) => imageObserver.observe(img));
+  }
+});
