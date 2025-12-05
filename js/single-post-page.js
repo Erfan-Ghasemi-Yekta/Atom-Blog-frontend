@@ -392,7 +392,7 @@ function renderBreadcrumb(post) {
     <span class="breadcrumb-separator">/</span>
     <a href="/blog" class="breadcrumb-link">وبلاگ</a>
     <span class="breadcrumb-separator">/</span>
-    <a href="/blog?category=${encodeURIComponent(category)}" class="breadcrumb-link">${category}</a>
+    <span class="breadcrumb-category">${category}</span>
     <span class="breadcrumb-separator">/</span>
     <span class="breadcrumb-current">${safeText(post.title)}</span>
   `;
