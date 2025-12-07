@@ -1,14 +1,20 @@
+// js/footer.js
 document.addEventListener("DOMContentLoaded", function () {
+    const footerContainer = document.getElementById("footer");
+    if (!footerContainer) {
+        console.warn("⚠️ عنصر با id='footer' پیدا نشد.");
+        return;
+    }
+
     fetch("../html/footer.html")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("footer").innerHTML = data;
-
-            // بعد از لود شدن هدر، بقیه کدها رو اجرا کن
-            initHeaderAndSidebar();
-
-            // اسکرول به بالای صفحه
-            window.scrollTo(0, 0);
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("خطا در دریافت فایل فوتر");
+            }
+            return response.text();
         })
-        .catch(error => console.error("خطا در بارگذاری هدر:", error));
+        .then((data) => {
+            footerContainer.innerHTML = data;
+        })
+        .catch((error) => console.error("خطا در بارگذاری فوتر:", error));
 });
