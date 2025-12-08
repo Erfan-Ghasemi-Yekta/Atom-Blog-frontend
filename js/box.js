@@ -18,6 +18,9 @@ let hasNextPage = true;
 let currentCategory = null; // مثلا 'action-games' یا id دسته
 let currentSearch = '';     // متن جستجو
 
+// ✅ ordering طبق چیزی که بک‌اند گفت
+let currentOrdering = '-published_at';
+
 // -----------------------------
 // Helpers
 // -----------------------------
@@ -148,9 +151,11 @@ function updateLoadMoreButtonState() {
     btn.textContent = 'مشاهده بیشتر';
 }
 
-// ساخت URL بر اساس صفحه + فیلترها (category, search)
 function buildPostsUrl(page) {
     const params = new URLSearchParams();
+
+    // ✅ ordering طبق چیزی که بک‌اند گفت
+    params.set('ordering', '-published_at');
 
     params.set('page', page);
     params.set('page_size', PAGE_SIZE);
@@ -165,6 +170,7 @@ function buildPostsUrl(page) {
 
     return `${POSTS_API_URL}?${params.toString()}`;
 }
+
 
 // گرفتن یک صفحه از پست‌ها از سرور
 async function fetchPostsPage(page) {
