@@ -71,7 +71,7 @@ function normalizePost(post) {
         imageUrl = post.image;
     } else {
         // اگر پروژه‌ت تصویر پیش‌فرض داره، اینو عوض کن
-        imageUrl = '../img/placeholders/blog-cover-placeholder.jpg';
+        imageUrl = 'https://atom-game.ir/img/default-game-banner.svg';
     }
 
     // ✅ تبدیل آدرس نسبی به آدرس کامل روی دامین atom-game.ir
