@@ -49,19 +49,20 @@ function formatPostDate(post) {
 
 // تبدیل داده‌ی Post از API به ساختار کارت
 function normalizePost(post) {
-    // 👇 لینک «بیشتر بخوانید» -> همیشه به صفحه سینگل
     const slug = post.slug || null;
     const readMoreLink = slug
         ? `/html/single-post-page.html?slug=${encodeURIComponent(slug)}`
         : '#';
 
-    // تگ‌ها (متن کنار تصویر)
+    // ✅ دسته‌بندی (متن روی تصویر)
     let tagText = '';
-    if (Array.isArray(post.tags) && post.tags.length > 0) {
-        tagText = post.tags.map(t => t.name).join(' | ');
+
+    if (typeof post.category === 'string') {
+        tagText = post.category;
+    } else if (post.category && typeof post.category === 'object') {
+        tagText = post.category.title || post.category.name || post.category.slug || '';
     }
 
-    // تصویر کاور - چند حالت متداول
     let imageUrl = '';
 
     if (post.cover && post.cover.url) {
@@ -73,11 +74,9 @@ function normalizePost(post) {
     } else if (typeof post.image === 'string') {
         imageUrl = post.image;
     } else {
-        // اگر پروژه‌ت تصویر پیش‌فرض داره، اینو عوض کن
         imageUrl = 'https://atom-game.ir/img/default-game-banner.svg';
     }
 
-    // ✅ تبدیل آدرس نسبی به آدرس کامل روی دامین atom-game.ir
     if (imageUrl && imageUrl.startsWith('/')) {
         imageUrl = 'https://atom-game.ir' + imageUrl;
     }
@@ -87,11 +86,12 @@ function normalizePost(post) {
         title: post.title || '',
         excerpt: post.excerpt || '',
         image: imageUrl,
-        tag: tagText,
+        tag: tagText,            // ✅ اینجا حالا category میاد
         date: formatPostDate(post),
         readMoreLink: readMoreLink
     };
 }
+
 
 // ساخت HTML کارت وبلاگ
 function createBlogCard(blog) {
