@@ -704,3 +704,20 @@ textarea:focus-visible {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
 }
+/* حالت عادی گرید مطالب مرتبط (اگه از قبل داری می‌تونی فقط این قسمت رو اضافه کنی) */
+#related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* وقتی فقط یک پست مرتبط داریم */
+#related-posts.related-single #related-grid {
+    display: flex;          /* دیگه کش نمیاد کل عرض رو بگیره */
+    justify-content: center;
+}
+
+#related-posts.related-single .related-post {
+    max-width: 380px;       /* عرض کارت */
+    width: 100%;
+}

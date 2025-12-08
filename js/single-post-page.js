@@ -196,7 +196,7 @@ function renderComments(comments) {
   bindReplyButtons();
 }
 
-// ------------------ Related posts (main) ------------------
+// ------------------ Related posts (main - مطالب مرتبط زیر محتوا) ------------------
 
 function renderRelated(related) {
   const sec = $("#related-posts");
@@ -204,14 +204,24 @@ function renderRelated(related) {
 
   if (!sec || !grid) return;
 
-  if (!related || !related.length) {
+  const items = Array.isArray(related) ? related : [];
+
+  if (!items.length) {
     sec.style.display = "none";
+    sec.classList.remove("related-single");
     return;
   }
 
   sec.style.display = "block";
 
-  grid.innerHTML = related
+  // اگر فقط یک پست داریم، کلاس مخصوص برای حالت سینگل
+  if (items.length === 1) {
+    sec.classList.add("related-single");
+  } else {
+    sec.classList.remove("related-single");
+  }
+
+  grid.innerHTML = items
     .map((p) => {
       const img = p.cover_media?.url || null;
       const excerpt = safeText(p.excerpt, "").slice(0, 120);
@@ -223,8 +233,8 @@ function renderRelated(related) {
       const imgHtml = img
         ? `<a href="${url}" class="related-image-link">
              <img src="${img}" alt="${escapeHtml(
-            safeText(p.title)
-          )}" class="related-image" loading="lazy">
+              safeText(p.title)
+            )}" class="related-image" loading="lazy">
            </a>`
         : "";
 
@@ -581,6 +591,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     return;
   }
 
+  let sidebarRelated = [];
+  let contentRelated = [];
+
   try {
     const post = await apiGet(`/posts/${encodeURIComponent(slug)}/`);
     if (!post || !post.slug) {
@@ -592,21 +605,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     bindShareButtons();
     bindCommentForm(post);
 
-    // -------- مطالب مرتبط: ساده، همه‌چیز با بک‌اند --------
-    let related = [];
+    // -------- پست‌های مرتبط (سایدبار) — same-category --------
     try {
-      const rel = await apiGet(`/posts/${encodeURIComponent(slug)}/related/`);
-      if (Array.isArray(rel)) {
-        related = rel;
-      } else if (rel && Array.isArray(rel.results)) {
-        related = rel.results;
+      const respSidebar = await apiGet(
+        `/posts/${encodeURIComponent(slug)}/same-category/`
+      );
+      if (Array.isArray(respSidebar)) {
+        sidebarRelated = respSidebar;
+      } else if (respSidebar && Array.isArray(respSidebar.results)) {
+        sidebarRelated = respSidebar.results;
       }
     } catch (e) {
-      console.warn("خطا در دریافت مطالب مرتبط:", e);
+      console.warn("خطا در دریافت پست‌های مرتبط (سایدبار / same-category):", e);
     }
 
-    renderRelated(related);
-    renderRelatedSidebarPosts(related);
+    renderRelatedSidebarPosts(sidebarRelated);
+
+    // -------- مطالب مرتبط (زیر محتوا) — related با حداکثر ۴تا --------
+    try {
+      const respRelated = await apiGet(
+        `/posts/${encodeURIComponent(slug)}/related/?page_size=4`
+      );
+      if (Array.isArray(respRelated)) {
+        contentRelated = respRelated;
+      } else if (respRelated && Array.isArray(respRelated.results)) {
+        contentRelated = respRelated.results;
+      }
+    } catch (e) {
+      console.warn("خطا در دریافت مطالب مرتبط (related):", e);
+      if (!contentRelated.length && sidebarRelated.length) {
+        contentRelated = sidebarRelated;
+      }
+    }
+
+    renderRelated(contentRelated);
 
     // -------- پر بازدیدترین‌ها --------
     try {
@@ -620,8 +652,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       renderMostViewedSidebarPosts(mostViewed);
     } catch (e) {
       console.warn("خطا در دریافت پر بازدیدترین‌ها:", e);
-      if (related.length) {
-        renderMostViewedSidebarPosts(related);
+      if (sidebarRelated.length) {
+        renderMostViewedSidebarPosts(sidebarRelated);
+      } else if (contentRelated.length) {
+        renderMostViewedSidebarPosts(contentRelated);
       }
     }
   } catch (e) {
